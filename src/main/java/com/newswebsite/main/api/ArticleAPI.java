@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -40,8 +41,10 @@ public class ArticleAPI {
     }
 
     @PostMapping
-    public ArticleDTO createArticle(@RequestBody ArticleDTO articleDTO) {
-        return articleModificationService.save(articleDTO);
+    public ResponseEntity<ArticleDTO> createArticle(@RequestBody ArticleDTO articleDTO) {
+        ArticleDTO savedArticle = articleModificationService.save(articleDTO);
+        URI articleURI = URI.create("/api/v1/articles/" + savedArticle.getId());
+        return ResponseEntity.created(articleURI).body(savedArticle);
     }
 
     @PutMapping
