@@ -25,6 +25,7 @@
         <slugify.ver>3.0.6</slugify.ver>
         <javax.validation.ver>2.0.1.Final</javax.validation.ver>
         <hibernate.validator.ver>6.0.13.Final</hibernate.validator.ver>
+        <jwt.ver>0.11.5</jwt.ver>
     </properties>
 
     <dependencies>
@@ -198,6 +199,12 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.validator.ver}</version>
+        </dependency>
+        <!--JWT-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jwt.ver}</version>
         </dependency>
     </dependencies>
 
