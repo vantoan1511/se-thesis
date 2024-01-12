@@ -7,6 +7,8 @@ import com.newswebsite.main.service.IArticleModificationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ArticleModificationService implements IArticleModificationService {
 
@@ -22,5 +24,17 @@ public class ArticleModificationService implements IArticleModificationService {
     public ArticleDTO save(ArticleDTO articleDTO) {
         Article article = mapper.map(articleDTO, Article.class);
         return mapper.map(articleRepo.save(article), ArticleDTO.class);
+    }
+
+    @Override
+    public void delete(Long id) {
+        articleRepo.delete(id);
+    }
+
+    @Override
+    public void deleteArticles(List<Long> ids) {
+        for (long id : ids) {
+            delete(id);
+        }
     }
 }
