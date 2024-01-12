@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller(value = "WebHomeController")
-@RequestMapping("/home")
-public class HomeController {
+@Controller
+@RequestMapping("/login")
+public class LoginController {
 
     @GetMapping
-    public ModelAndView getHomePage() {
-        String viewName = "web/home";
+    public ModelAndView getLoginPage() {
+        String viewName = "web/login";
         ModelAndView view = new ModelAndView(viewName);
         return view;
     }
