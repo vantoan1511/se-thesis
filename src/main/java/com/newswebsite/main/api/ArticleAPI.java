@@ -2,7 +2,6 @@ package com.newswebsite.main.api;
 
 import com.newswebsite.main.dto.ArticleDTO;
 import com.newswebsite.main.http.ErrorResponse;
-import com.newswebsite.main.http.Response;
 import com.newswebsite.main.http.SuccessResponse;
 import com.newswebsite.main.service.IArticleModificationService;
 import com.newswebsite.main.service.IArticleRetrievalService;
