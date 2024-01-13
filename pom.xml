@@ -25,7 +25,7 @@
         <slugify.ver>3.0.6</slugify.ver>
         <javax.validation.ver>2.0.1.Final</javax.validation.ver>
         <hibernate.validator.ver>6.0.13.Final</hibernate.validator.ver>
-        <jwt.ver>0.11.5</jwt.ver>
+        <jwt.ver>0.9.1</jwt.ver>
     </properties>
 
     <dependencies>
@@ -203,9 +203,15 @@
         <!--JWT-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
+            <artifactId>jjwt</artifactId>
             <version>${jwt.ver}</version>
         </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -41,7 +41,6 @@
     </servlet-mapping>
 
     <!-- Spring security filter -->
-    <!--
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -53,7 +52,6 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-    -->
 
     <!--Filter encoding-->
     <filter>
