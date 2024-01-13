@@ -1,0 +1,39 @@
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns="http://www.springframework.org/schema/security"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/security
+         http://www.springframework.org/schema/security/spring-security-3.2.xsd
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <http auto-config="false" use-expressions="true" disable-url-rewriting="true">
+
+        <intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN', 'AUTHOR')"/>
+        <intercept-url pattern="/api/**" method="GET" access="permitAll()"/>
+        <intercept-url pattern="/api/v1/articles" access="hasAnyRole('ADMIN', 'AUTHOR')"/>
+        <intercept-url pattern="/**" access="permitAll()"/>
+
+
+        <access-denied-handler
+                error-page="/access-denied"/>
+        <form-login login-page="/login" default-target-url="/home"
+                    login-processing-url="/perform-login"
+                    username-parameter="username" password-parameter="password"
+                    authentication-success-handler-ref="customAuthSuccessHandler"
+                    authentication-failure-url="/login?invalidCredentials=true"/>
+
+        <logout delete-cookies="JSESSIONID" logout-url="/logout" logout-success-url="/login"/>
+    </http>
+    <authentication-manager>
+        <authentication-provider
+                user-service-ref="customUserDetailsService">
+            <password-encoder ref="bcryptEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <b:bean id="bcryptEncoder"
+            class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <b:bean id="customUserDetailsService"
+            class="com.newswebsite.main.service.impl.CustomUserDetailsService"/>
+    <b:bean id="customAuthSuccessHandler"
+            class="com.newswebsite.main.security.CustomAuthSuccessHandler"/>
+</b:beans>
