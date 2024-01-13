@@ -1,6 +1,7 @@
 package com.newswebsite.main.dto;
 
 import lombok.*;
+import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserDTO implements UserDetails {
+public class UserDTO implements UserDetails, CredentialsContainer {
     private Long id;
     @NotEmpty(message = "Vui lòng nhập email")
     @Email(message = "Email không hợp lệ")
@@ -53,5 +54,10 @@ public class UserDTO implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public void eraseCredentials() {
+        this.password = null;
     }
 }
