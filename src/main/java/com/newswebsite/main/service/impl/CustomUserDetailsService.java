@@ -1,5 +1,6 @@
 package com.newswebsite.main.service.impl;
 
+import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.entity.User;
 import com.newswebsite.main.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = isEmail(username) ? userRepo.findByEmail(username) : userRepo.findByUsername(username);
         if (user == null) throw new UsernameNotFoundException("Không tìm thấy người dùng với thông tin " + username);
-        return user;
+        return UserDTO.builder()
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .enabled(true)
+                .build();
     }
 
     private boolean isEmail(String text) {

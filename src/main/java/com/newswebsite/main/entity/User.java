@@ -1,11 +1,8 @@
 package com.newswebsite.main.entity;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -21,6 +18,10 @@ public class User {
     private String username;
     @Column
     private String password;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
     @Column(name = "avatar_url")
     private String avatarUrl;
     @Column
