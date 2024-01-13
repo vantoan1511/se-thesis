@@ -1,21 +1,29 @@
 package com.newswebsite.main.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Date;
 
 @Builder
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class UserDTO implements UserDetails {
     private Long id;
+    @NotEmpty(message = "Vui lòng nhập email")
+    @Email(message = "Email không hợp lệ")
     private String email;
+    @Size(min = 4, max = 16, message = "Tên đăng nhập có độ dài từ 4-16 ký tự")
     private String username;
+    @Size(min = 8, max = 16, message = "Mật khẩu có độ dài từ 8-16 ký tự")
     private String password;
+    @NotBlank(message = "Vui lòng nhập họ")
     private String firstName;
+    @NotBlank(message = "Vui lòng nhập tên")
     private String lastName;
     private String avatarUrl;
     private String token;
