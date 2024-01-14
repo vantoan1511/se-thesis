@@ -41,9 +41,9 @@
                         </sec:authorize>
                         <sec:authorize access="isAuthenticated()">
                             <li>
-                                <a href="#"><i class="ion-folder"></i>
+                                <a href="#">
                                     <div>
-                                        Xin chào, USER
+                                        Xin chào, <%=SecurityUtil.fullName%>
                                     </div>
                                 </a>
                             </li>
