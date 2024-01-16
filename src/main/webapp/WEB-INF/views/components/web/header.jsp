@@ -1,3 +1,4 @@
+<%@ page import="com.newswebsite.main.security.SecurityUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="../../../../common/taglib.jsp" %>
@@ -43,7 +44,7 @@
                             <li>
                                 <a href="#"><i class="ion-folder"></i>
                                     <div>
-                                        Xin chào, USER
+                                        Xin chào, <%=SecurityUtil.username%>
                                     </div>
                                 </a>
                             </li>

@@ -7,7 +7,7 @@
     <div class="container">
         <div class="brand">
             <a href="#">
-                <img src="/static/web/images/logo.png" alt="Magz Logo">
+                <img src="/static/web/images/toansnewslogo.png" alt="Magz Logo">
             </a>
         </div>
         <div class="mobile-toggle">
@@ -25,7 +25,7 @@
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <li class="for-tablet">
-                        <a href="#">NGUYEN VAN TOAN
+                        <a href="#"><%=SecurityUtil.username%>>
                         </a>
                     </li>
                     <li class="for-tablet"><a href="/logout">Logout</a></li>
