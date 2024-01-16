@@ -6,4 +6,6 @@ public interface IUserModificationService {
     void register(UserDTO newUserDTO);
 
     void resetPassword(String email);
+
+    void changePassword(String token, String newPassword);
 }
