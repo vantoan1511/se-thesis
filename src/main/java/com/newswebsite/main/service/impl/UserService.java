@@ -47,7 +47,7 @@ public class UserService implements IUserModificationService, IUserRetrievalServ
         user.setCreatedAt(new Date());
         user.setEnabled(true);
         user.setAuthorities(Collections.singletonList(roleRepo.findByAuthority(Role.USER.name())));
-        userRepo.save(mapper.map(newUserDTO, User.class));
+        userRepo.save(user);
     }
 
     @Override

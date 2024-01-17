@@ -14,16 +14,24 @@ public class EmailService implements IEmailService {
 
     @Value("${email.password}")
     private String PW;
+    @Value("${email.from}")
+    private String from;
+    @Value("${email.address}")
+    private String address;
+    @Value("${email.smtp.server}")
+    private String smtpServer;
+    @Value("${email.smtp.port}")
+    private int smtpPort;
 
     @Override
     public void sendSimpleEmail(String to, String subject, String text) {
         Email email = EmailBuilder.startingBlank()
-                .from("Toan's News", "vantoan1517@gmail.com")
+                .from(from, address)
                 .to(to)
                 .withSubject(subject)
                 .withHTMLText(text)
                 .buildEmail();
-        Mailer mailer = MailerBuilder.withSMTPServer("smtp.gmail.com", 587, "vantoan1517@gmail.com", PW)
+        Mailer mailer = MailerBuilder.withSMTPServer(smtpServer, smtpPort, address, PW)
                 .withTransportStrategy(TransportStrategy.SMTP_TLS)
                 .buildMailer();
         mailer.sendMail(email);
