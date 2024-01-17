@@ -41,6 +41,7 @@ public class ResetController {
                                  @RequestParam("password") String password,
                                  RedirectAttributes attributes) {
         String viewName = "web/recover";
+        //check password length before
         try {
             userModificationService.changePassword(token, password);
             attributes.addFlashAttribute("message",

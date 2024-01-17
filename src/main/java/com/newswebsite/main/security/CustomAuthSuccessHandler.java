@@ -1,5 +1,6 @@
 package com.newswebsite.main.security;
 
+import com.newswebsite.main.enums.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -39,6 +41,11 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
         if (savedRequest != null && savedRequest.getRedirectUrl() != null) {
             return savedRequest.getRedirectUrl();
+        }
+
+        List<String> roles = SecurityUtil.getAuthorities();
+        if (roles.contains(Role.ADMIN.name()) || roles.contains(Role.WRITER.name())) {
+            return "/admin/home";
         }
         return "/home";
     }

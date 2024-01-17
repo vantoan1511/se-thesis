@@ -2,8 +2,10 @@ package com.newswebsite.main.service.impl;
 
 import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.entity.User;
+import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.exception.EmailNotFoundException;
 import com.newswebsite.main.exception.InvalidUserToken;
+import com.newswebsite.main.repository.RoleRepo;
 import com.newswebsite.main.repository.UserRepo;
 import com.newswebsite.main.service.IEmailService;
 import com.newswebsite.main.service.IUserModificationService;
@@ -16,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,6 +27,9 @@ public class UserService implements IUserModificationService, IUserRetrievalServ
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private RoleRepo roleRepo;
 
     @Autowired
     private IEmailService emailService;
@@ -35,10 +41,12 @@ public class UserService implements IUserModificationService, IUserRetrievalServ
 
     @Override
     public void register(UserDTO newUserDTO) {
+        User user = mapper.map(newUserDTO, User.class);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        newUserDTO.setPassword(passwordEncoder.encode(newUserDTO.getPassword()));
-        newUserDTO.setCreatedAt(new Date());
-        newUserDTO.setEnabled(true);
+        user.setPassword(passwordEncoder.encode(newUserDTO.getPassword()));
+        user.setCreatedAt(new Date());
+        user.setEnabled(true);
+        user.setAuthorities(Collections.singletonList(roleRepo.findByAuthority(Role.USER.name())));
         userRepo.save(mapper.map(newUserDTO, User.class));
     }
 
