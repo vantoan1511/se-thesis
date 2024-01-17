@@ -1,7 +1,7 @@
+<%@ page import="com.newswebsite.main.security.SecurityUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
-<%@ page import="com.vtoan1517.utils.SecurityUtils" %>
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -21,7 +21,12 @@
             </div>
             <div class="info">
                 <a href="#" class="d-block">
-                    <%= SecurityUtils.getPrincipal().getFullName()%>
+                    <c:catch var="error">
+                        <%=SecurityUtil.fullname()%>
+                    </c:catch>
+                    <c:if test="${not empty error}">
+                        UNKNOWN_USER
+                    </c:if>
                 </a>
             </div>
         </div>

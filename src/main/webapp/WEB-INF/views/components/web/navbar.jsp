@@ -25,7 +25,7 @@
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <li class="for-tablet">
-                        <a href="#"><%=SecurityUtil.username%>>
+                        <a href="#"><%=SecurityUtil.username()%>>
                         </a>
                     </li>
                     <li class="for-tablet"><a href="/logout">Logout</a></li>

@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SecurityUtil {
-    public static String username;
-    public static String fullName;
 
-    static {
-        UserDTO loggedInUser = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        username = loggedInUser.getUsername();
-        fullName = loggedInUser.getFirstName().concat(" ").concat(loggedInUser.getLastName());
+    public static String username() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
+    public static String fullname() {
+        UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDTO.getFirstName() + " " + userDTO.getLastName();
+    }
 
     @SuppressWarnings("unchecked")
     public static List<String> getAuthorities() {

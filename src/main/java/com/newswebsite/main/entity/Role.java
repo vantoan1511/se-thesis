@@ -17,13 +17,10 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "authority", unique = true, nullable = false)
     private String authority;
-
     @Column(name = "description")
     private String description;
-
     @ManyToMany(mappedBy = "authorities")
     private List<User> users = new ArrayList<>();
 

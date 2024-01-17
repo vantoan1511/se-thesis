@@ -44,7 +44,7 @@
                             <li>
                                 <a href="#"><i class="ion-folder"></i>
                                     <div>
-                                        Xin chào, <%=SecurityUtil.username%>
+                                        Xin chào, <%=SecurityUtil.username()%>
                                     </div>
                                 </a>
                             </li>
