@@ -3,7 +3,9 @@ package com.newswebsite.main.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -30,4 +32,10 @@ public class User {
     private Date createdAt;
     @Column(columnDefinition = "tinyint default 1")
     private boolean enabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> authorities = new ArrayList<>();
 }
