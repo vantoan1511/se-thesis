@@ -26,7 +26,7 @@
             </button>
         </div>
         <div class="col-auto">
-            <a href="${pageContext.request.contextPath}/admin/articles"
+            <a href="<c:url value="/admin/articles"/>"
                class="btn btn-block btn-default"><i class="ri-close-line text-danger"></i> Huỷ
             </a>
         </div>
@@ -37,7 +37,7 @@
                 </button>
             </div>
             <c:choose>
-                <c:when test="${model.statusCode eq 'draft'}">
+                <c:when test="${model.stateCode eq 'draft'}">
                     <div class="col-sm-auto">
                         <button onclick="handlePublishButtonClick(event, ${model.id})"
                                 id="publish-btn"

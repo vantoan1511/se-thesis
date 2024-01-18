@@ -1,6 +1,8 @@
 package com.newswebsite.main.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -9,8 +11,9 @@ import java.util.Date;
 
 @Entity
 @Table(name = "article")
-@Data
-public class Article {
+@Getter
+@Setter
+public class Article extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +32,14 @@ public class Article {
     private boolean featured;
     @Column(columnDefinition = "bigint default 0")
     private long traffic;
-    @CreatedDate
-    @Column(name = "created_at")
-    private Date createdAt;
-    @LastModifiedDate
-    @Column(name = "last_modified_at")
-    private Date lastModifiedAt;
     @Column(name = "published_at")
     private Date publishedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "state_id", nullable = false)
+    private State state;
 }

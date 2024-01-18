@@ -7,9 +7,9 @@
          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <http auto-config="false" use-expressions="true" disable-url-rewriting="true">
 
-        <intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN', 'AUTHOR')"/>
+        <intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN', 'WRITER')"/>
         <intercept-url pattern="/api/**" method="GET" access="permitAll()"/>
-        <intercept-url pattern="/api/v1/articles" access="hasAnyRole('ADMIN', 'AUTHOR')"/>
+        <intercept-url pattern="/api/v1/articles" access="hasAnyRole('ADMIN', 'WRITER')"/>
         <intercept-url pattern="/**" access="permitAll()"/>
 
 

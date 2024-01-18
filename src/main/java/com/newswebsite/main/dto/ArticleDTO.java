@@ -1,18 +1,15 @@
 package com.newswebsite.main.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.newswebsite.main.enums.ArticleState;
+import lombok.*;
 
 import java.util.Date;
 
-@Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class ArticleDTO {
-    private Long id;
+@NoArgsConstructor
+@Getter
+@Setter
+public class ArticleDTO extends AuditDTO {
     private String title;
     private String alias;
     private String thumbnailUrl;
@@ -20,7 +17,9 @@ public class ArticleDTO {
     private String text;
     private boolean featured;
     private long traffic;
-    private Date createdAt;
-    private Date lastModifiedAt;
     private Date publishedAt;
+    private String categoryCode;
+    private String categoryName;
+    private String stateCode = ArticleState.DRAFT.name();
+    private String stateName;
 }

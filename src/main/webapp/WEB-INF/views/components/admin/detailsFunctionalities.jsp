@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-body row">
         <div class="col-auto">
-            <a href="${pageContext.request.contextPath}/admin/articles" class="btn btn-block btn-default">
+            <a href="<c:url value="/admin/articles"/>" class="btn btn-block btn-default">
                 <i class="fas fa-undo text-success"></i> Quay lại
             </a>
         </div>
@@ -14,7 +14,7 @@
                         class="btn btn-block btn-default"><i class="ri-slideshow-2-line"></i> Xem trước
                 </button>
             </div>
-            <c:if test="${model.statusCode eq 'published'}">
+            <c:if test="${model.stateCode eq 'published'}">
                 <div class="col-sm-auto">
                     <button onclick="handlePublishButtonClick(event, ${model.id}, false)"
                             class="btn btn-block bg-gradient-success">
@@ -22,7 +22,7 @@
                     </button>
                 </div>
             </c:if>
-            <c:if test="${model.statusCode eq 'pending'}">
+            <c:if test="${model.stateCode eq 'pending'}">
                 <div class="col-sm-auto">
                     <button onclick="handleApproveButtonClick(event, ${model.id})"
                             class="btn btn-block bg-gradient-success">

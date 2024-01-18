@@ -1,11 +1,11 @@
 $(document).ready(() => {
     //init ckeditor
     CKEDITOR.plugins.addExternal('video', '/static/ckeditor/plugins/video/', 'plugin.js');
-    CKEDITOR.replace('content', {
+    CKEDITOR.replace('text', {
         extraPlugins: 'video'
     });
     NiceSelect.bind(document.getElementById("categoryCode"));
-    NiceSelect.bind(document.getElementById("accessCode"));
+    /*NiceSelect.bind(document.getElementById("accessCode"));*/
 })
 
 const handlePreviewButtonClick = (event) => {

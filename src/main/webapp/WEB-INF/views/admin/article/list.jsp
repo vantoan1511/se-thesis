@@ -26,14 +26,12 @@
 
     <!-- Main content -->
     <section class="content">
-        <c:choose>
-            <c:when test="${pageContext.request.userPrincipal.name eq 'admin'}">
-                <%@include file="../../components/admin/listFunctionalities.jsp" %>
-            </c:when>
-            <c:otherwise>
-                <%@include file="../../components/author/listFunctionalities.jsp" %>
-            </c:otherwise>
-        </c:choose>
+        <sec:authorize access="hasRole('ADMIN')">
+            <%@include file="../../components/admin/listFunctionalities.jsp" %>
+        </sec:authorize>
+        <sec:authorize access="hasRole('WRITER')">
+            <%@include file="../../components/author/listFunctionalities.jsp" %>
+        </sec:authorize>
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -58,6 +56,7 @@
                     <div class="col-md-1">
                         <div class="row">
                             <select id="limit-select" class="col form-control custom-select">
+                                <option value="1">1</option>
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="20">20</option>
@@ -93,7 +92,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach varStatus="loop" var="article" items="${model.data}">
+                    <c:forEach varStatus="loop" var="article" items="${model.content}">
                         <tr>
                             <td>
                                 <div class="form-check icheck-material-red">
@@ -107,39 +106,36 @@
                             </td>
                             <td>${article.id}</td>
                             <td class="text-center" style="font-size: 1.5rem">
-                                <c:choose>
-                                    <c:when test="${article.featured}">
-                                        <i class="ri-star-fill text-yellow"></i>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <i class="ri-star-line"></i>
-                                    </c:otherwise>
-                                </c:choose>
+                                <a href="#">
+                                    <c:choose>
+                                        <c:when test="${article.featured}">
+                                            <i class="ri-star-fill text-yellow"></i>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <i class="ri-star-line"></i>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </a>
                             </td>
-                            <td class="status-cell text-center">${article.statusName}</td>
+                            <td class="status-cell text-center"><c:out value="${article.stateName}"/></td>
                             <td>
                                 <a class="text-truncate"
                                    href="/admin/articles/${article.id}">
                                         ${article.title} <i class="ri-edit-box-line"></i>
                                 </a>
                                 <p style="font-size: 85%">
-                                    Alias: ${article.slug}<br>
+                                    Alias: ${article.alias}<br>
                                     Category: <a href="#">${article.categoryName}</a>
                                 </p>
                             </td>
-                            <td>${article.accessName}</td>
+                            <td>ACCESS_NAME</td>
                             <td>
-                                <fmt:formatDate value="${article.createdDate}" pattern="HH:mm dd/MM/yyyy"/>
+                                <fmt:formatDate value="${article.createdAt}" pattern="HH:mm dd/MM/yyyy"/>
                             </td>
                             <td>
-                                <c:choose>
-                                    <c:when test="${article.createdBy eq pageContext.request.userPrincipal.name}">
-                                        Tôi
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${article.createdBy}
-                                    </c:otherwise>
-                                </c:choose>
+                                <c:catch var="error">
+                                    <c:out value="${article.createdBy}"/>
+                                </c:catch>
                             </td>
                             <td>
                                 <c:choose>
@@ -158,7 +154,7 @@
             </div>
             <div class="card-footer clear-fix row">
                 <div class="col-auto">
-                    <span>Trang ${model.page} - Hiển thị ${model.data.size()} trong số ${model.totalItems} mục.</span>
+                    <span>Trang ${model.number + 1} - Hiển thị ${model.numberOfElements} trong số ${model.totalElements} mục.</span>
                 </div>
                 <div class="col-auto">
                     <ul id="pagination" class="pagination-sm"></ul>
@@ -167,23 +163,22 @@
         </div>
     </section>
     <!---->
-
-    <form id="form-submit" action="${pageContext.request.contextPath}/admin/articles" method="get">
+    <form id="form-submit" action="<c:url value="/admin/articles"/>" method="get">
         <input type="hidden" name="tab" value="${param.tab}">
-        <input type="hidden" value="${model.page}" name="page" id="page">
-        <input type="hidden" value="${model.limit}" name="limit" id="limit">
-        <input type="hidden" value="${model.sortBy}" name="sortBy" id="sortBy">
-        <input type="hidden" value="${model.sortOrder}" name="sortOrder" id="sortOrder">
+        <input type="hidden" value="${model.number+1}" name="page" id="page">
+        <input type="hidden" value="${model.size}" name="limit" id="limit">
+        <input type="hidden" value="${sortBy}" name="sortBy" id="sortBy">
+        <input type="hidden" value="${sortOrder}" name="sortOrder" id="sortOrder">
     </form>
 </div>
 <script>
     $(document).ready(() => {
-        var currentPage = ${model.page};
+        var currentPage = ${model.number+1};
         var totalPages = ${model.totalPages};
-        var sortBy = '${model.sortBy}';
-        var sortOrder = '${model.sortOrder}';
-        var limit = ${model.limit};
-        var totalItems = ${model.totalItems};
+        var sortBy = '${sortBy}';
+        var sortOrder = '${sortOrder}';
+        var limit = ${model.size};
+        var totalItems = ${model.totalElements};
 
         $('#sort-by option').each(function () {
             var value = $(this).attr('value');

@@ -66,7 +66,7 @@ public class UserService implements IUserModificationService, IUserRetrievalServ
     @Override
     public void changePassword(String token, String newPassword) {
         User user = userRepo.findByToken(token);
-        if (user == null) throw new InvalidUserToken("Token không hợp lệ hoặc đã hết hạn");
+        if (user == null) throw new InvalidUserToken(msg.getMessage("user.token.invalid", null, null));
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(newPassword));
         user.setToken(null);
@@ -91,7 +91,7 @@ public class UserService implements IUserModificationService, IUserRetrievalServ
     @Override
     public UserDTO findByToken(String token) {
         User user = userRepo.findByToken(token);
-        if (user == null) throw new InvalidUserToken("Token không hợp lệ hoặc đã hết hạn");
+        if (user == null) throw new InvalidUserToken(msg.getMessage("user.token.invalid", null, null));
         user.setPassword(null);
         return mapper.map(user, UserDTO.class);
     }

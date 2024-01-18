@@ -129,8 +129,10 @@ const handleMultipleApproveButtonClick = (event) => {
 const handleSaveButtonClick = (event, formSelector, saveAndClose, saveAndNew) => {
     event.preventDefault();
     let data = getFormData(formSelector);
-    data["content"] = getCKEditorContent();
+    data["text"] = getCKEditorContent();
     let id = data["id"];
+    console.log(data);
+    console.log("ID >> ", id)
     let successCallback = (result) => {
         showSuccessAlert('Các thay đổi đã được lưu', () => {
             if (saveAndClose) location.replace('/admin/articles')
@@ -138,7 +140,7 @@ const handleSaveButtonClick = (event, formSelector, saveAndClose, saveAndNew) =>
             else location.replace('/admin/articles/' + result.id)
         })
     }
-    if (id !== 0) {
+    if (id !== '') {
         handlePutRequest('/api/v1/articles', data, (result) => successCallback(result), (xhr) => errorCallback(xhr))
     } else {
         handlePostRequest('/api/v1/articles', data, (result) => successCallback(result), (xhr) => errorCallback(xhr))

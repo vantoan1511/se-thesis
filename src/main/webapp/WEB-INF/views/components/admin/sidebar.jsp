@@ -49,6 +49,12 @@
             <ul class="nav nav-pills nav-sidebar flex-column"
                 data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
+                    <a href="<c:url value="/admin/home"/>" class="nav-link">
+                        <i class="ri-home-line nav-icon"></i>
+                        <p>Trang chủ</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <span class="nav-header">QUẢN LÝ BÀI VIẾT</span>
                 </li>
                 <li class="nav-item">

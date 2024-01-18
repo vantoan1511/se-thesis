@@ -123,7 +123,7 @@ const getFormData = (formSelector) => {
     return data;
 }
 const getCKEditorContent = () => {
-    return CKEDITOR.instances.content.getData();
+    return CKEDITOR.instances.text.getData();
 }
 
 const handleImageInspect = (event, url) => {

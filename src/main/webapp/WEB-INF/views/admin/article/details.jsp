@@ -16,7 +16,7 @@
                 onclick="handlePreviewCloseButtonClick(event)"
                 class="btn btn-default"><i class="ri-close-line text-danger"></i> Đóng
         </button>
-        <iframe class="preview-frame" src="/${model.slug}?previewMode=true"></iframe>
+        <iframe class="preview-frame" src="/${model.alias}?previewMode=true"></iframe>
     </div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -33,14 +33,12 @@
         <%--@elvariable id="model" type=""--%>
         <form:form modelAttribute="model" id="form">
             <form:hidden path="id"/>
-            <c:choose>
-                <c:when test="${pageContext.request.userPrincipal.name eq 'admin'}">
-                    <%@ include file="../../components/admin/detailsFunctionalities.jsp" %>
-                </c:when>
-                <c:otherwise>
-                    <%@ include file="../../components/author/detailsFunctionalities.jsp" %>
-                </c:otherwise>
-            </c:choose>
+            <sec:authorize access="hasRole('ADMIN')">
+                <%@ include file="../../components/admin/detailsFunctionalities.jsp" %>
+            </sec:authorize>
+            <sec:authorize access="hasRole('WRITER')">
+                <%@ include file="../../components/author/detailsFunctionalities.jsp" %>
+            </sec:authorize>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -51,8 +49,10 @@
                                         placeholder="VD: Bài viết 1"/>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="slug">Alias</label>
-                            <form:input path="slug" id="slug" class="form-control form-control-border" readonly="false"
+                            <label for="alias">Alias</label>
+                            <form:input path="alias" id="alias"
+                                        class="form-control form-control-border"
+                                        readonly="false"
                                         placeholder="Được khởi tạo tự động dựa trên tiêu đề"/>
                             <p class="text-gray">Alias sẽ được sử dụng làm một phần cho URL bài viết</p>
                         </div>
@@ -96,11 +96,11 @@
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <div class="form-group">
-                                        <label for="statusCode">Trạng thái</label>
-                                        <form:select path="statusCode"
+                                        <form:label path="stateCode">Trạng thái</form:label>
+                                        <form:select path="stateCode"
                                                      cssClass="form-control"
                                                      disabled="true">
-                                            <form:options items="${status}"/>
+                                            <form:options items="${states}"/>
                                         </form:select>
                                     </div>
                                     <div class="form-group">
@@ -119,17 +119,17 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Truy cập</label>
-                                        <form:select path="accessCode" id="accessCode"
-                                                     cssClass="wide">
-                                            <form:options items="${access}"/>
-                                        </form:select>
+                                            <%--<form:select path="accessCode" id="accessCode"
+                                                         cssClass="wide">
+                                                <form:options items="${access}"/>
+                                            </form:select>--%>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="article-content" role="tabpanel"
                              aria-labelledby="article-content-tab">
-                            <form:textarea path="content" cssClass="form-control"/>
+                            <form:textarea path="text" cssClass="form-control"/>
                         </div>
                         <div class="tab-pane fade" id="media-and-links" role="tabpanel"
                              aria-labelledby="media-and-links-tab">
@@ -147,8 +147,6 @@
                     </div>
                 </div>
             </div>
-            <form:hidden path="statusCode"/>
-            <form:hidden path="traffic"/>
         </form:form>
     </section>
 </div>

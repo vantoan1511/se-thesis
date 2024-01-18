@@ -6,4 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface IArticleRetrievalService {
     Page<ArticleDTO> findAll(Pageable pageable);
+
+    ArticleDTO findById(long id);
 }

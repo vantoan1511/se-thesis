@@ -25,4 +25,9 @@ public class ArticleRetrievalService implements IArticleRetrievalService {
         return articleRepo.findAll(pageable)
                 .map(item -> mapper.map(item, ArticleDTO.class));
     }
+
+    @Override
+    public ArticleDTO findById(long id) {
+        return mapper.map(articleRepo.findOne(id), ArticleDTO.class);
+    }
 }
