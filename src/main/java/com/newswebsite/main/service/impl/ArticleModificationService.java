@@ -7,11 +7,11 @@ import com.newswebsite.main.entity.State;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
 import com.newswebsite.main.exception.CategoryCodeNotFoundException;
-import com.newswebsite.main.exception.InvalidArticleOperationException;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
 import com.newswebsite.main.repository.StateRepo;
 import com.newswebsite.main.service.IArticleModificationService;
+import com.newswebsite.main.utils.SlugGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -45,17 +45,33 @@ public class ArticleModificationService implements IArticleModificationService {
         Category category = categoryRepo.findByCategoryCode(articleDTO.getCategoryCode());
         if (category == null)
             throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + articleDTO.getCategoryCode());
+
         Article article = mapper.map(articleDTO, Article.class);
         article.setCategory(category);
+
         State state = stateRepo.findByStateCode(ArticleState.DRAFT.name());
         article.setState(state);
+
+        Article oldArticle = new Article();
         if (articleDTO.getId() != null) {
-            Article oldArticle = articleRepo.findOne(articleDTO.getId());
+            oldArticle = articleRepo.findOne(articleDTO.getId());
             article.setCreatedAt(oldArticle.getCreatedAt());
             article.setCreatedBy(oldArticle.getCreatedBy());
             article.setTraffic(oldArticle.getTraffic());
             article.setState(oldArticle.getState());
         }
+        String newAlias = SlugGenerator.slugify.slugify(articleDTO.getAlias());
+        String oldAlias = oldArticle.getAlias();
+
+        if (!newAlias.equals(oldAlias)) {
+            if (newAlias.isBlank()) {
+                newAlias = SlugGenerator.generateUniqueSlug(articleDTO.getTitle());
+            }
+            if (!isUniqueAlias(newAlias)) {
+                newAlias = SlugGenerator.generateUniqueSlug(newAlias);
+            }
+        }
+        article.setAlias(newAlias);
         return mapper.map(articleRepo.save(article), ArticleDTO.class);
     }
 
@@ -63,6 +79,8 @@ public class ArticleModificationService implements IArticleModificationService {
     @Transactional
     public void changeState(ArticleState state, long id) {
         Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        String currentState = article.getState().getStateCode();
         article.setState(stateRepo.findByStateCode(state.name()));
         articleRepo.save(article);
     }
@@ -79,5 +97,9 @@ public class ArticleModificationService implements IArticleModificationService {
         for (long id : ids) {
             delete(id);
         }
+    }
+
+    private boolean isUniqueAlias(String alias) {
+        return articleRepo.findByAlias(alias) == null;
     }
 }

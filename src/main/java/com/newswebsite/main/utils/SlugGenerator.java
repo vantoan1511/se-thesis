@@ -3,17 +3,10 @@ package com.newswebsite.main.utils;
 import com.github.slugify.Slugify;
 
 public class SlugGenerator {
+    public final static Slugify slugify = Slugify.builder().build();
 
-    private static Slugify instance;
-
-    public String generateUniqueSlug(String baseSlug) {
+    public static String generateUniqueSlug(String baseSlug) {
         String uniqueSuffix = "-" + System.currentTimeMillis();
-        return instance.slugify(baseSlug) + uniqueSuffix;
-    }
-
-    public static Slugify getInstance() {
-        if (instance == null)
-            instance = Slugify.builder().build();
-        return instance;
+        return slugify.slugify(baseSlug) + uniqueSuffix;
     }
 }
