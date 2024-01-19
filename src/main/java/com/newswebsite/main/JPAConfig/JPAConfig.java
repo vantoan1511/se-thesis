@@ -1,5 +1,8 @@
 package com.newswebsite.main.JPAConfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -19,6 +22,17 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = {"com.newswebsite.main.repository"})
 @EnableTransactionManagement
 public class JPAConfig {
+
+    @Value("${datasource.driver}")
+    private String dataSourceDriver;
+    @Value("${datasource.url}")
+    private String dataSourceUrl;
+    @Value("${datasource.username}")
+    private String dataSourceUsername;
+    @Value("${datasource.password}")
+    private String dataSourcePassword;
+    @Value("${hibernate.hbm2ddl.auto}")
+    private String hbm2ddl;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -51,7 +65,7 @@ public class JPAConfig {
         //properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         //properties.setProperty("hibernate.hbm2ddl.auto", "create");
         //properties.setProperty("hibernate.hbm2ddl.auto", "none");
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.hbm2ddl.auto", hbm2ddl);
         properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
         return properties;
     }
@@ -59,10 +73,10 @@ public class JPAConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/news-website-2024?createDatabaseIfNotExist=true");
-        dataSource.setUsername("user");
-        dataSource.setPassword("user");
+        dataSource.setDriverClassName(dataSourceDriver);
+        dataSource.setUrl(dataSourceUrl);
+        dataSource.setUsername(dataSourceUsername);
+        dataSource.setPassword(dataSourcePassword);
         return dataSource;
     }
 
