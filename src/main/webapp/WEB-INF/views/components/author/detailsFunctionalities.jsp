@@ -37,7 +37,7 @@
                 </button>
             </div>
             <c:choose>
-                <c:when test="${model.stateCode eq 'draft'}">
+                <c:when test="${model.stateCode eq 'DRAFT'}">
                     <div class="col-sm-auto">
                         <button onclick="handlePublishButtonClick(event, ${model.id})"
                                 id="publish-btn"

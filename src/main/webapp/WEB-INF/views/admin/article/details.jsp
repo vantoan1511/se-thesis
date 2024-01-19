@@ -84,16 +84,6 @@
                         <div class="tab-pane fade active show" id="general" role="tabpanel"
                              aria-labelledby="content-general-tab">
                             <div class="row">
-                                <div class="col-md-8 col-sm-12">
-                                    <div class="form-group">
-                                        <label>Mô tả ngắn</label>
-                                        <form:textarea id="description"
-                                                       path="description"
-                                                       cssClass="form-control form-control-border"
-                                                       rows="5"
-                                                       placeholder="Mô tả bài viết"/>
-                                    </div>
-                                </div>
                                 <div class="col-md-4 col-sm-12">
                                     <div class="form-group">
                                         <form:label path="stateCode">Trạng thái</form:label>
@@ -117,12 +107,31 @@
                                             <label for="featured">Đánh dấu nổi bật</label>
                                         </div>
                                     </div>
+                                        <%--<div class="form-group">
+                                            <label>Truy cập</label>
+                                                <form:select path="accessCode" id="accessCode"
+                                                             cssClass="wide">
+                                                    <form:options items="${access}"/>
+                                                </form:select>
+                                        </div>--%>
                                     <div class="form-group">
-                                        <label>Truy cập</label>
-                                            <%--<form:select path="accessCode" id="accessCode"
-                                                         cssClass="wide">
-                                                <form:options items="${access}"/>
-                                            </form:select>--%>
+                                        <label>Chi tiết</label>
+                                        <p>Đã tạo: <fmt:formatDate value="${model.createdAt}"
+                                                                   pattern="dd/MM/yyyy HH:mm:ss"/></p>
+                                        <p>Bởi: <c:out value="${model.createdBy}"/></p>
+                                        <p>Lần sửa đổi cuối: <fmt:formatDate value="${model.lastModifiedAt}"
+                                                                             pattern="dd/MM/yyyy HH:mm:ss"/></p>
+                                        <p>Bởi: <c:out value="${model.lastModifiedBy}"/></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="form-group">
+                                        <label>Mô tả ngắn</label>
+                                        <form:textarea id="description"
+                                                       path="description"
+                                                       cssClass="form-control form-control-border"
+                                                       rows="5"
+                                                       placeholder="Mô tả bài viết"/>
                                     </div>
                                 </div>
                             </div>
