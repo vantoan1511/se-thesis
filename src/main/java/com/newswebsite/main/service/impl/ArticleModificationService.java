@@ -7,6 +7,7 @@ import com.newswebsite.main.entity.State;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
 import com.newswebsite.main.exception.CategoryCodeNotFoundException;
+import com.newswebsite.main.exception.InvalidArticleOperationException;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
 import com.newswebsite.main.repository.StateRepo;
@@ -15,10 +16,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ArticleModificationService implements IArticleModificationService {
@@ -41,6 +40,7 @@ public class ArticleModificationService implements IArticleModificationService {
     }
 
     @Override
+    @Transactional
     public ArticleDTO save(ArticleDTO articleDTO) {
         Category category = categoryRepo.findByCategoryCode(articleDTO.getCategoryCode());
         if (category == null)
@@ -60,20 +60,21 @@ public class ArticleModificationService implements IArticleModificationService {
     }
 
     @Override
-    public void submitArticle(long id) {
+    @Transactional
+    public void changeState(ArticleState state, long id) {
         Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        State state = stateRepo.findByStateCode(ArticleState.SUBMITTED.name());
-        article.setState(state);
+        article.setState(stateRepo.findByStateCode(state.name()));
         articleRepo.save(article);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         articleRepo.delete(id);
     }
 
     @Override
+    @Transactional
     public void deleteArticles(List<Long> ids) {
         for (long id : ids) {
             delete(id);

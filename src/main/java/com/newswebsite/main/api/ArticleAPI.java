@@ -1,7 +1,7 @@
 package com.newswebsite.main.api;
 
 import com.newswebsite.main.dto.ArticleDTO;
-import com.newswebsite.main.http.ErrorResponse;
+import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.http.SuccessResponse;
 import com.newswebsite.main.service.IArticleModificationService;
 import com.newswebsite.main.service.IArticleRetrievalService;
@@ -55,45 +55,46 @@ public class ArticleAPI {
     @PutMapping("/{id}/{action}")
     public Object handleAction(@PathVariable("id") long id,
                                @PathVariable("action") String action) {
-        try {
-            switch (action) {
-                case "submit" -> articleModificationService.submitArticle(id);
-                default -> throw new IllegalArgumentException("Invalid action: " + action);
+        String message;
+        switch (action) {
+            case "submit" -> {
+                articleModificationService.changeState(ArticleState.PENDING, id);
+                message = "Đã gửi yêu cầu duyệt bài";
             }
-            return ResponseEntity.ok(SuccessResponse.builder()
-                    .timestamp(new Date())
-                    .statusCode(HttpStatus.OK.value())
-                    .message("Đã gửi yêu cầu duyệt bài")
-                    .content(id)
-                    .build());
-        } catch (RuntimeException ex) {
-            return ErrorResponse.builder()
-                    .timestamp(new Date())
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .error(HttpStatus.NOT_FOUND.name())
-                    .message(ex.getMessage())
-                    .build();
+            case "approve" -> {
+                articleModificationService.changeState(ArticleState.APPROVED, id);
+                message = "Bài viết đã được chấp thuận để đăng tải";
+            }
+            case "reject" -> {
+                articleModificationService.changeState(ArticleState.DRAFT, id);
+                message = "Bài viết đã bị từ chối";
+            }
+            case "publish" -> {
+                articleModificationService.changeState(ArticleState.PUBLISHED, id);
+                message = "Bài viết đã đăng tải";
+            }
+            case "trash" -> {
+                articleModificationService.changeState(ArticleState.TRASH, id);
+                message = "Bài viết đã chuyển vào thùng rác";
+            }
+            default -> throw new IllegalArgumentException("Thao tác không hợp lệ: " + action);
         }
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .timestamp(new Date())
+                .statusCode(HttpStatus.OK.value())
+                .message(message)
+                .content(id)
+                .build());
     }
 
     @DeleteMapping
     public Object deleteArticles(@RequestBody List<Long> ids) {
-        try {
-            articleModificationService.deleteArticles(ids);
-            return ResponseEntity.ok(SuccessResponse.builder()
-                    .timestamp(new Date())
-                    .statusCode(HttpStatus.OK.value())
-                    .message("Deleted successfully!")
-                    .content(ids)
-                    .build());
-        } catch (Exception ex) {
-            return ErrorResponse.builder()
-                    .timestamp(new Date())
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .error(HttpStatus.NOT_FOUND.name())
-                    .message(ex.getMessage())
-                    .build();
-        }
+        articleModificationService.deleteArticles(ids);
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .timestamp(new Date())
+                .statusCode(HttpStatus.OK.value())
+                .message("Đã xóa thành công ")
+                .content(ids)
+                .build());
     }
-
 }

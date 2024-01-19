@@ -1,7 +1,10 @@
 package com.newswebsite.main.dto;
 
 import com.newswebsite.main.enums.ArticleState;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
