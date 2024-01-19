@@ -8,5 +8,7 @@
         <class>com.newswebsite.main.entity.Article</class>
         <class>com.newswebsite.main.entity.User</class>
         <class>com.newswebsite.main.entity.Role</class>
+        <class>com.newswebsite.main.entity.Category</class>
+        <class>com.newswebsite.main.entity.State</class>
     </persistence-unit>
 </persistence>
