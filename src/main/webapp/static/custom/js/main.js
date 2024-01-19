@@ -159,6 +159,18 @@ const handleArticleSubmitButton = (event, id, publish = true) => {
             })
         }, (xhr) => errorCallback(xhr))
 }
+const handleArticlePublishButton = (event, id, publish = true) => {
+    event.preventDefault();
+    let url = publish ? '/api/v1/articles/' + id + '/publish' : '/api/v1/articles/' + id + '/reject'
+    let successText = publish ? 'Đã đăng tải bài viết' : 'Đã hủy đăng tải bài viết'
+    console.log(url)
+    handlePutRequest(url, undefined,
+        () => {
+            showSuccessAlert(successText, () => {
+                location.reload()
+            })
+        }, (xhr) => errorCallback(xhr))
+}
 const handleApproveButtonClick = (event, id) => {
     event.preventDefault();
     showWarningAlert('Chấp nhận yêu cầu đăng tải bài viết', result => {

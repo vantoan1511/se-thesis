@@ -85,7 +85,6 @@
                         <th class="text-center">Nổi bật</th>
                         <th>Trạng thái</th>
                         <th>Tiêu đề</th>
-                        <th>Truy cập</th>
                         <th>Đã tạo</th>
                         <th>Tác giả</th>
                         <th></th>
@@ -128,7 +127,6 @@
                                     Category: <a href="#">${article.categoryName}</a>
                                 </p>
                             </td>
-                            <td>ACCESS_NAME</td>
                             <td>
                                 <fmt:formatDate value="${article.createdAt}" pattern="HH:mm dd/MM/yyyy"/>
                             </td>

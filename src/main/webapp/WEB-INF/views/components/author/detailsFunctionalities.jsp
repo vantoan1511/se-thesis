@@ -41,12 +41,20 @@
                         </button>
                     </div>
                 </c:when>
+                <c:when test="${model.stateCode eq 'APPROVED'}">
+                    <div class="col-sm-auto">
+                        <button onclick="handleArticlePublishButton(event, ${model.id})"
+                                class="btn btn-block bg-gradient-success">
+                            <i class="ri-send-plane-line"></i> Đăng tải
+                        </button>
+                    </div>
+                </c:when>
                 <c:otherwise>
                     <div class="col-sm-auto">
                         <button onclick="handleArticleSubmitButton(event, ${model.id}, false)"
                                 id="unpublish-btn"
                                 class="btn btn-block btn-default">
-                            <i class="ri-close-circle-line"></i> Hủy yêu cầu
+                            <i class="ri-close-circle-line"></i> Gỡ bài viết
                         </button>
                     </div>
                 </c:otherwise>
