@@ -7,6 +7,8 @@ import com.newswebsite.main.entity.State;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
 import com.newswebsite.main.exception.CategoryCodeNotFoundException;
+import com.newswebsite.main.exception.InvalidArticleOperationException;
+import com.newswebsite.main.exception.InvalidArticleStateException;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
 import com.newswebsite.main.repository.StateRepo;
@@ -17,6 +19,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -24,7 +27,6 @@ public class ArticleModificationService implements IArticleModificationService {
 
     private final ArticleRepo articleRepo;
     private final CategoryRepo categoryRepo;
-
     private final StateRepo stateRepo;
     private final MessageSource msg;
     private final ModelMapper mapper = new ModelMapper();
@@ -37,6 +39,136 @@ public class ArticleModificationService implements IArticleModificationService {
         this.categoryRepo = categoryRepo;
         this.msg = msg;
         this.stateRepo = stateRepo;
+    }
+
+    @Override
+    @Transactional
+    public void submit(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (!article.getState().getStateCode().equals(ArticleState.DRAFT.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
+        State pendingState = stateRepo.findByStateCode(ArticleState.PENDING.name());
+        article.setState(pendingState);
+        articleRepo.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void trash(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (!article.getState().getStateCode().equals(ArticleState.DRAFT.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
+        State trashState = stateRepo.findByStateCode(ArticleState.TRASH.name());
+        article.setState(trashState);
+        articleRepo.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void approve(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (!article.getState().getStateCode().equals(ArticleState.PENDING.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
+        State approvedState = stateRepo.findByStateCode(ArticleState.APPROVED.name());
+        article.setState(approvedState);
+        articleRepo.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void reject(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (!article.getState().getStateCode().equals(ArticleState.PENDING.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
+        State draftState = stateRepo.findByStateCode(ArticleState.DRAFT.name());
+        article.setState(draftState);
+        articleRepo.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void publish(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (!article.getState().getStateCode().equals(ArticleState.APPROVED.name()) &&
+                !article.getState().getStateCode().equals(ArticleState.UNPUBLISHED.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
+        State publishedState = stateRepo.findByStateCode(ArticleState.PUBLISHED.name());
+        article.setState(publishedState);
+        articleRepo.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void edit(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (!article.getState().getStateCode().equals(ArticleState.APPROVED.name()) &&
+                !article.getState().getStateCode().equals(ArticleState.UNPUBLISHED.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
+        State draftState = stateRepo.findByStateCode(ArticleState.DRAFT.name());
+        article.setState(draftState);
+        articleRepo.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void unPublish(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (!article.getState().getStateCode().equals(ArticleState.PUBLISHED.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
+        State unPublishedState = stateRepo.findByStateCode(ArticleState.UNPUBLISHED.name());
+        article.setState(unPublishedState);
+        articleRepo.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void restore(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (!article.getState().getStateCode().equals(ArticleState.TRASH.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
+        State draftState = stateRepo.findByStateCode(ArticleState.DRAFT.name());
+        article.setState(draftState);
+        articleRepo.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void approveMultiple(List<Long> ids) {
+        for (long id : ids) {
+            approve(id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void rejectMultiple(List<Long> ids) {
+        for (long id : ids) {
+            reject(id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void trashMultiple(List<Long> ids) {
+        for (long id : ids) {
+            trash(id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void restoreMultiple(List<Long> ids) {
+        for (long id : ids) {
+            restore(id);
+        }
     }
 
     @Override
@@ -55,6 +187,8 @@ public class ArticleModificationService implements IArticleModificationService {
         Article oldArticle = new Article();
         if (articleDTO.getId() != null) {
             oldArticle = articleRepo.findOne(articleDTO.getId());
+            if (!oldArticle.getState().getStateCode().equals(ArticleState.DRAFT.name()))
+                throw new InvalidArticleOperationException("Bài viết hiện không thể chỉnh sửa");
             article.setCreatedAt(oldArticle.getCreatedAt());
             article.setCreatedBy(oldArticle.getCreatedBy());
             article.setTraffic(oldArticle.getTraffic());
@@ -77,17 +211,11 @@ public class ArticleModificationService implements IArticleModificationService {
 
     @Override
     @Transactional
-    public void changeState(ArticleState state, long id) {
+    public void delete(Long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        String currentState = article.getState().getStateCode();
-        article.setState(stateRepo.findByStateCode(state.name()));
-        articleRepo.save(article);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Long id) {
+        if (!article.getState().getStateCode().equals(ArticleState.TRASH.name()))
+            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
         articleRepo.delete(id);
     }
 

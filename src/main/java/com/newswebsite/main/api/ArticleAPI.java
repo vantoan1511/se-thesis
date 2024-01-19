@@ -58,24 +58,36 @@ public class ArticleAPI {
         String message;
         switch (action) {
             case "submit" -> {
-                articleModificationService.changeState(ArticleState.PENDING, id);
-                message = "Đã gửi yêu cầu duyệt bài";
+                articleModificationService.submit(id);
+                message = "Đã gửi yêu cầu đăng tải bài viết";
             }
             case "approve" -> {
-                articleModificationService.changeState(ArticleState.APPROVED, id);
-                message = "Bài viết đã được chấp thuận để đăng tải";
+                articleModificationService.approve(id);
+                message = "Yêu cầu đăng tải bải viết đã được chấp thuận";
             }
             case "reject" -> {
-                articleModificationService.changeState(ArticleState.DRAFT, id);
-                message = "Bài viết đã bị từ chối";
+                articleModificationService.reject(id);
+                message = "Yêu cầu đăng tải bải viết đã bị từ chối";
             }
             case "publish" -> {
-                articleModificationService.changeState(ArticleState.PUBLISHED, id);
-                message = "Bài viết đã đăng tải";
+                articleModificationService.publish(id);
+                message = "Bài viết đã được đăng tải";
             }
             case "trash" -> {
-                articleModificationService.changeState(ArticleState.TRASH, id);
+                articleModificationService.trash(id);
                 message = "Bài viết đã chuyển vào thùng rác";
+            }
+            case "edit" -> {
+                articleModificationService.edit(id);
+                message = "Bài viết đã chuyển sang chế độ chỉnh sửa";
+            }
+            case "unpublish" -> {
+                articleModificationService.unPublish(id);
+                message = "Bài viết đã tạm ngừng đăng tải";
+            }
+            case "restore" -> {
+                articleModificationService.restore(id);
+                message = "Bài viết đã được khôi phục";
             }
             default -> throw new IllegalArgumentException("Thao tác không hợp lệ: " + action);
         }
@@ -84,6 +96,37 @@ public class ArticleAPI {
                 .statusCode(HttpStatus.OK.value())
                 .message(message)
                 .content(id)
+                .build());
+    }
+
+    @PutMapping("/{action}")
+    public Object handleActions(@PathVariable("action") String action,
+                                @RequestBody List<Long> ids) {
+        String message;
+        switch (action) {
+            case "approve" -> {
+                articleModificationService.approveMultiple(ids);
+                message = "Yêu cầu đăng tải bải viết đã được chấp thuận";
+            }
+            case "reject" -> {
+                articleModificationService.rejectMultiple(ids);
+                message = "Yêu cầu đăng tải bải viết đã bị từ chối";
+            }
+            case "trash" -> {
+                articleModificationService.trashMultiple(ids);
+                message = "Bài viết đã chuyển vào thùng rác";
+            }
+            case "restore" -> {
+                articleModificationService.restoreMultiple(ids);
+                message = "Bài viết đã được khôi phục";
+            }
+            default -> throw new IllegalArgumentException("Thao tác không hợp lệ: " + action);
+        }
+        return ResponseEntity.ok(SuccessResponse.builder()
+                .timestamp(new Date())
+                .statusCode(HttpStatus.OK.value())
+                .message(message)
+                .content(ids)
                 .build());
     }
 
