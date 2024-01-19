@@ -147,10 +147,11 @@ const handleSaveButtonClick = (event, formSelector, saveAndClose, saveAndNew) =>
     }
 }
 
-const handlePublishButtonClick = (event, id, publish = true) => {
+const handleArticleSubmitButton = (event, id, publish = true) => {
     event.preventDefault();
-    let url = publish ? '/api/v1/articles/' + id + '/publish' : '/api/v1/articles/' + id + '/unpublish'
+    let url = publish ? '/api/v1/articles/' + id + '/submit' : '/api/v1/articles/' + id + '/reject'
     let successText = publish ? 'Đã gửi yêu cầu đăng tải bài viết' : 'Đã hủy đăng tải bài viết'
+    console.log(url)
     handlePutRequest(url, undefined,
         () => {
             showSuccessAlert(successText, () => {

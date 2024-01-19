@@ -25,11 +25,6 @@
                 <i class="ri-file-add-line text-success"></i> Lưu & Mới
             </button>
         </div>
-        <div class="col-auto">
-            <a href="<c:url value="/admin/articles"/>"
-               class="btn btn-block btn-default"><i class="ri-close-line text-danger"></i> Huỷ
-            </a>
-        </div>
         <c:if test="${model.id ne 0}">
             <div class="col-sm-auto">
                 <button onclick="handlePreviewButtonClick(event)"
@@ -39,7 +34,7 @@
             <c:choose>
                 <c:when test="${model.stateCode eq 'DRAFT'}">
                     <div class="col-sm-auto">
-                        <button onclick="handlePublishButtonClick(event, ${model.id})"
+                        <button onclick="handleArticleSubmitButton(event, ${model.id})"
                                 id="publish-btn"
                                 class="btn btn-block bg-gradient-success">
                             <i class="ri-send-plane-line"></i> Đăng tải
@@ -48,14 +43,19 @@
                 </c:when>
                 <c:otherwise>
                     <div class="col-sm-auto">
-                        <button onclick="handlePublishButtonClick(event, ${model.id}, false)"
+                        <button onclick="handleArticleSubmitButton(event, ${model.id}, false)"
                                 id="unpublish-btn"
                                 class="btn btn-block btn-default">
-                            <i class="ri-close-circle-line"></i> Hủy đăng tải
+                            <i class="ri-close-circle-line"></i> Hủy yêu cầu
                         </button>
                     </div>
                 </c:otherwise>
             </c:choose>
         </c:if>
+        <div class="col-auto">
+            <a href="<c:url value="/admin/articles"/>"
+               class="btn btn-block btn-default"><i class="ri-arrow-left-line text-danger"></i> Quay lại
+            </a>
+        </div>
     </div>
 </div>
