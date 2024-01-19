@@ -52,6 +52,30 @@ public class ArticleAPI {
         return articleModificationService.save(articleDTO);
     }
 
+    @PutMapping("/{id}/{action}")
+    public Object handleAction(@PathVariable("id") long id,
+                               @PathVariable("action") String action) {
+        try {
+            switch (action) {
+                case "submit" -> articleModificationService.submitArticle(id);
+                default -> throw new IllegalArgumentException("Invalid action: " + action);
+            }
+            return ResponseEntity.ok(SuccessResponse.builder()
+                    .timestamp(new Date())
+                    .statusCode(HttpStatus.OK.value())
+                    .message("Đã gửi yêu cầu duyệt bài")
+                    .content(id)
+                    .build());
+        } catch (RuntimeException ex) {
+            return ErrorResponse.builder()
+                    .timestamp(new Date())
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .error(HttpStatus.NOT_FOUND.name())
+                    .message(ex.getMessage())
+                    .build();
+        }
+    }
+
     @DeleteMapping
     public Object deleteArticles(@RequestBody List<Long> ids) {
         try {
