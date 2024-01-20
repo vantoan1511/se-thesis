@@ -8,7 +8,6 @@ import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
 import com.newswebsite.main.exception.CategoryCodeNotFoundException;
 import com.newswebsite.main.exception.InvalidArticleOperationException;
-import com.newswebsite.main.exception.InvalidArticleStateException;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
 import com.newswebsite.main.repository.StateRepo;
@@ -19,7 +18,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -46,9 +44,9 @@ public class ArticleModificationService implements IArticleModificationService {
     public void submit(long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.DRAFT.name()))
+        if (!article.getState().getCode().equals(ArticleState.DRAFT.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State pendingState = stateRepo.findByStateCode(ArticleState.PENDING.name());
+        State pendingState = stateRepo.findByCode(ArticleState.PENDING.name());
         article.setState(pendingState);
         articleRepo.save(article);
     }
@@ -58,9 +56,9 @@ public class ArticleModificationService implements IArticleModificationService {
     public void trash(long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.DRAFT.name()))
+        if (!article.getState().getCode().equals(ArticleState.DRAFT.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State trashState = stateRepo.findByStateCode(ArticleState.TRASH.name());
+        State trashState = stateRepo.findByCode(ArticleState.TRASH.name());
         article.setState(trashState);
         articleRepo.save(article);
     }
@@ -70,9 +68,9 @@ public class ArticleModificationService implements IArticleModificationService {
     public void approve(long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.PENDING.name()))
+        if (!article.getState().getCode().equals(ArticleState.PENDING.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State approvedState = stateRepo.findByStateCode(ArticleState.APPROVED.name());
+        State approvedState = stateRepo.findByCode(ArticleState.APPROVED.name());
         article.setState(approvedState);
         articleRepo.save(article);
     }
@@ -82,9 +80,9 @@ public class ArticleModificationService implements IArticleModificationService {
     public void reject(long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.PENDING.name()))
+        if (!article.getState().getCode().equals(ArticleState.PENDING.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State draftState = stateRepo.findByStateCode(ArticleState.DRAFT.name());
+        State draftState = stateRepo.findByCode(ArticleState.DRAFT.name());
         article.setState(draftState);
         articleRepo.save(article);
     }
@@ -94,10 +92,10 @@ public class ArticleModificationService implements IArticleModificationService {
     public void publish(long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.APPROVED.name()) &&
-                !article.getState().getStateCode().equals(ArticleState.UNPUBLISHED.name()))
+        if (!article.getState().getCode().equals(ArticleState.APPROVED.name()) &&
+                !article.getState().getCode().equals(ArticleState.UNPUBLISHED.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State publishedState = stateRepo.findByStateCode(ArticleState.PUBLISHED.name());
+        State publishedState = stateRepo.findByCode(ArticleState.PUBLISHED.name());
         article.setState(publishedState);
         articleRepo.save(article);
     }
@@ -107,10 +105,10 @@ public class ArticleModificationService implements IArticleModificationService {
     public void edit(long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.APPROVED.name()) &&
-                !article.getState().getStateCode().equals(ArticleState.UNPUBLISHED.name()))
+        if (!article.getState().getCode().equals(ArticleState.APPROVED.name()) &&
+                !article.getState().getCode().equals(ArticleState.UNPUBLISHED.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State draftState = stateRepo.findByStateCode(ArticleState.DRAFT.name());
+        State draftState = stateRepo.findByCode(ArticleState.DRAFT.name());
         article.setState(draftState);
         articleRepo.save(article);
     }
@@ -120,9 +118,9 @@ public class ArticleModificationService implements IArticleModificationService {
     public void unPublish(long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.PUBLISHED.name()))
+        if (!article.getState().getCode().equals(ArticleState.PUBLISHED.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State unPublishedState = stateRepo.findByStateCode(ArticleState.UNPUBLISHED.name());
+        State unPublishedState = stateRepo.findByCode(ArticleState.UNPUBLISHED.name());
         article.setState(unPublishedState);
         articleRepo.save(article);
     }
@@ -132,9 +130,9 @@ public class ArticleModificationService implements IArticleModificationService {
     public void restore(long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.TRASH.name()))
+        if (!article.getState().getCode().equals(ArticleState.TRASH.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State draftState = stateRepo.findByStateCode(ArticleState.DRAFT.name());
+        State draftState = stateRepo.findByCode(ArticleState.DRAFT.name());
         article.setState(draftState);
         articleRepo.save(article);
     }
@@ -181,13 +179,13 @@ public class ArticleModificationService implements IArticleModificationService {
         Article article = mapper.map(articleDTO, Article.class);
         article.setCategory(category);
 
-        State state = stateRepo.findByStateCode(ArticleState.DRAFT.name());
+        State state = stateRepo.findByCode(ArticleState.DRAFT.name());
         article.setState(state);
 
         Article oldArticle = new Article();
         if (articleDTO.getId() != null) {
             oldArticle = articleRepo.findOne(articleDTO.getId());
-            if (!oldArticle.getState().getStateCode().equals(ArticleState.DRAFT.name()))
+            if (!oldArticle.getState().getCode().equals(ArticleState.DRAFT.name()))
                 throw new InvalidArticleOperationException("Bài viết hiện không thể chỉnh sửa");
             article.setCreatedAt(oldArticle.getCreatedAt());
             article.setCreatedBy(oldArticle.getCreatedBy());
@@ -214,7 +212,7 @@ public class ArticleModificationService implements IArticleModificationService {
     public void delete(Long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getStateCode().equals(ArticleState.TRASH.name()))
+        if (!article.getState().getCode().equals(ArticleState.TRASH.name()))
             throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
         articleRepo.delete(id);
     }
