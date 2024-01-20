@@ -1,16 +1,14 @@
 package com.newswebsite.main.controller.admin;
 
 import com.newswebsite.main.dto.ArticleDTO;
+import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.IArticleRetrievalService;
 import com.newswebsite.main.service.ICategoryService;
 import com.newswebsite.main.service.IStateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,20 +37,31 @@ public class ArticleController {
                                     @RequestParam(name = "limit", defaultValue = "10") int limit,
                                     @RequestParam(name = "by", defaultValue = "lastModifiedAt") String by,
                                     @RequestParam(name = "order", defaultValue = "DESC") String order) {
+        String viewName = "admin/article/list";
         String username = SecurityUtil.username();
         List<String> authorities = SecurityUtil.getAuthorities();
 
         Sort.Direction direction = Sort.Direction.fromString(order);
         Pageable pageable = new PageRequest(page - 1, limit, new Sort(direction, by));
 
-        Page<ArticleDTO> contents;
+        Page<ArticleDTO> contents = null;
         if (authorities.contains(Role.ADMIN.name())) {
             contents = articleRetrievalService.findAll(pageable);
         } else {
-            contents = articleRetrievalService.findAll(pageable);
+            switch (tab) {
+                case "all" -> contents = articleRetrievalService.findAllByAuthorAndStateCode(username, null, pageable);
+                case "published" ->
+                        contents = articleRetrievalService.findAllByAuthorAndStateCode(username, ArticleState.PUBLISHED.name(), pageable);
+                case "pending" ->
+                        contents = articleRetrievalService.findAllByAuthorAndStateCode(username, ArticleState.PENDING.name(), pageable);
+                case "trash" ->
+                        contents = articleRetrievalService.findAllByAuthorAndStateCode(username, ArticleState.TRASH.name(), pageable);
+                case "featured" ->
+                        contents = articleRetrievalService.findAllByFeaturedAndAuthor(true, username, pageable);
+                default -> viewName = "admin/404";
+            }
         }
 
-        String viewName = "admin/article/list";
         ModelAndView view = new ModelAndView(viewName);
         view.addObject("model", contents);
         view.addObject("sortBy", by);
