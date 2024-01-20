@@ -52,7 +52,11 @@ function showBottomErrorToast(text, timer) {
 }
 
 const getResponseTextAsJSON = (XmlHttpRequest) => {
-    return JSON.parse(XmlHttpRequest.responseText);
+    try {
+        return JSON.parse(XmlHttpRequest.responseText);
+    } catch (e) {
+        return {message: 'Lỗi hệ thống không xác định'};
+    }
 }
 
 const errorCallback = (xhr) => {
