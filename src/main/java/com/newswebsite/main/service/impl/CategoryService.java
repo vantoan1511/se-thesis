@@ -6,7 +6,6 @@ import com.newswebsite.main.exception.CategoryCodeNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.CategoryRepo;
 import com.newswebsite.main.service.ICategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryDTO findByCode(String code) {
-        Category category = categoryRepo.findByCategoryCode(code);
+        Category category = categoryRepo.findByCode(code);
         if (category == null)
             throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + code);
         return mapper.map(category, CategoryDTO.class);
@@ -36,7 +35,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Map<String, String> findAll() {
-        return mapper.map(categoryRepo.findAll(), Category::getCategoryCode, Category::getCategoryName);
+        return mapper.map(categoryRepo.findAll(), Category::getCode, Category::getName);
     }
 
     @Override

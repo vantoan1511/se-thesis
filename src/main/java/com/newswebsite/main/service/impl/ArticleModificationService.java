@@ -172,7 +172,7 @@ public class ArticleModificationService implements IArticleModificationService {
     @Override
     @Transactional
     public ArticleDTO save(ArticleDTO articleDTO) {
-        Category category = categoryRepo.findByCategoryCode(articleDTO.getCategoryCode());
+        Category category = categoryRepo.findByCode(articleDTO.getCategoryCode());
         if (category == null)
             throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + articleDTO.getCategoryCode());
 

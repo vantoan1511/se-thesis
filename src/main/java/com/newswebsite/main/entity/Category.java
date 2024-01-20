@@ -15,9 +15,9 @@ public class Category extends Audit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "category_code", unique = true, nullable = false)
-    private String categoryCode;
+    private String code;
     @Column(name = "category_name")
-    private String categoryName;
+    private String name;
 
     @OneToMany(mappedBy = "category")
     private List<Article> articles;
