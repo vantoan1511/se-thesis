@@ -13,6 +13,13 @@
         <c:choose>
             <c:when test="${param.tab eq 'trash'}">
                 <div class="col-md-auto col-sm-3">
+                    <button onclick="handleMultipleRestoreButton(event, '.check-box:checked')"
+                            class="btn btn-block btn-default"
+                            title="Khôi phục">
+                        <i class="ri-arrow-go-back-line text-success"></i> Khôi phục
+                    </button>
+                </div>
+                <div class="col-md-auto col-sm-3">
                     <button onclick="handleMultipleDeleteButtonClick(event, '.check-box:checked')"
                             class="btn btn-block btn-default"
                             title="Xóa">
