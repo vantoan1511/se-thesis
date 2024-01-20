@@ -136,17 +136,20 @@
                                 </c:catch>
                             </td>
                             <td>
-                                <c:choose>
-                                    <c:when test="${pageContext.request.userPrincipal.name eq 'admin'}">
-                                        <%@ include file="../../components/admin/articleOnListOptions.jsp" %>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <%@ include file="../../components/author/articleOnListOptions.jsp" %>
-                                    </c:otherwise>
-                                </c:choose>
+                                <sec:authorize access="hasRole('ADMIN')">
+                                    <%@ include file="../../components/admin/articleOnListOptions.jsp" %>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('WRITER')">
+                                    <%@ include file="../../components/author/articleOnListOptions.jsp" %>
+                                </sec:authorize>
                             </td>
                         </tr>
                     </c:forEach>
+                    <c:if test="${model.numberOfElements lt 1}">
+                        <tr>
+                            <td colspan="8" class="text-center">Trống</td>
+                        </tr>
+                    </c:if>
                     </tbody>
                 </table>
             </div>
