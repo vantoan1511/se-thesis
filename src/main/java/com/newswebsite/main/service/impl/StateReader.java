@@ -5,7 +5,7 @@ import com.newswebsite.main.entity.State;
 import com.newswebsite.main.exception.StateCodeNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.StateRepo;
-import com.newswebsite.main.service.IStateService;
+import com.newswebsite.main.service.IStateReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class StateService implements IStateService {
+public class StateReader implements IStateReader {
 
     @Autowired
     private StateRepo stateRepo;
@@ -36,9 +36,4 @@ public class StateService implements IStateService {
         return mapper.map(stateRepo.findAll(), State::getCode, State::getName);
     }
 
-    @Override
-    public StateDTO save(StateDTO stateDTO) {
-        State state = mapper.map(stateDTO, State.class);
-        return mapper.map(stateRepo.save(state), StateDTO.class);
-    }
 }

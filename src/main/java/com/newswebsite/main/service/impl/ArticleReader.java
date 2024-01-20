@@ -6,8 +6,7 @@ import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.ArticleRepo;
-import com.newswebsite.main.service.IArticleRetrievalService;
-import org.modelmapper.ModelMapper;
+import com.newswebsite.main.service.IArticleReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
@@ -15,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ArticleRetrievalService implements IArticleRetrievalService {
+public class ArticleReader implements IArticleReader {
     private final ArticleRepo articleRepo;
 
     private final MessageSource msg;
@@ -23,7 +22,7 @@ public class ArticleRetrievalService implements IArticleRetrievalService {
     private final CollectionMapper mapper = new CollectionMapper();
 
     @Autowired
-    public ArticleRetrievalService(ArticleRepo articleRepo, MessageSource msg) {
+    public ArticleReader(ArticleRepo articleRepo, MessageSource msg) {
         this.articleRepo = articleRepo;
         this.msg = msg;
     }

@@ -1,11 +1,10 @@
 package com.newswebsite.main.service;
 
 import com.newswebsite.main.dto.ArticleDTO;
-import com.newswebsite.main.enums.ArticleState;
 
 import java.util.List;
 
-public interface IArticleModificationService {
+public interface IArticleWriter {
 
     void submit(long id);
 

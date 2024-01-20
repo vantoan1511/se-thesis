@@ -4,11 +4,10 @@ import com.newswebsite.main.dto.StateDTO;
 
 import java.util.Map;
 
-public interface IStateService {
+public interface IStateReader {
 
     StateDTO findByStateCode(String stateCode);
 
     Map<String, String> findAll();
 
-    StateDTO save(StateDTO stateDTO);
 }

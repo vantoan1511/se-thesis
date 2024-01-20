@@ -4,9 +4,9 @@ import com.newswebsite.main.dto.ArticleDTO;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
-import com.newswebsite.main.service.IArticleRetrievalService;
+import com.newswebsite.main.service.IArticleReader;
 import com.newswebsite.main.service.ICategoryService;
-import com.newswebsite.main.service.IStateService;
+import com.newswebsite.main.service.IStateReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
@@ -23,13 +23,13 @@ import java.util.List;
 public class ArticleController {
 
     @Autowired
-    private IArticleRetrievalService articleRetrievalService;
+    private IArticleReader articleRetrievalService;
 
     @Autowired
     private ICategoryService categoryService;
 
     @Autowired
-    private IStateService stateService;
+    private IStateReader stateReader;
 
     @GetMapping
     public ModelAndView getListPage(@RequestParam(name = "tab", required = false, defaultValue = "all") String tab,
@@ -80,7 +80,7 @@ public class ArticleController {
         ModelAndView mav = new ModelAndView(viewName);
         mav.addObject("article", articleDTO);
         mav.addObject("categories", categoryService.findAll());
-        mav.addObject("states", stateService.findAll());
+        mav.addObject("states", stateReader.findAll());
         return mav;
     }
 }

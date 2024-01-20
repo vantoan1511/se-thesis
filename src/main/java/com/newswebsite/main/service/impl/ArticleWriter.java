@@ -11,9 +11,10 @@ import com.newswebsite.main.exception.InvalidArticleOperationException;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
 import com.newswebsite.main.repository.StateRepo;
-import com.newswebsite.main.service.IArticleModificationService;
+import com.newswebsite.main.service.IArticleWriter;
 import com.newswebsite.main.utils.SlugGenerator;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class ArticleModificationService implements IArticleModificationService {
+public class ArticleWriter implements IArticleWriter {
 
     private final ArticleRepo articleRepo;
     private final CategoryRepo categoryRepo;
@@ -29,10 +30,11 @@ public class ArticleModificationService implements IArticleModificationService {
     private final MessageSource msg;
     private final ModelMapper mapper = new ModelMapper();
 
-    public ArticleModificationService(ArticleRepo articleRepo,
-                                      CategoryRepo categoryRepo,
-                                      MessageSource msg,
-                                      StateRepo stateRepo) {
+    @Autowired
+    public ArticleWriter(ArticleRepo articleRepo,
+                         CategoryRepo categoryRepo,
+                         MessageSource msg,
+                         StateRepo stateRepo) {
         this.articleRepo = articleRepo;
         this.categoryRepo = categoryRepo;
         this.msg = msg;

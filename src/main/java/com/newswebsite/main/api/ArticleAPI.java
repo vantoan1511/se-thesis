@@ -1,10 +1,9 @@
 package com.newswebsite.main.api;
 
 import com.newswebsite.main.dto.ArticleDTO;
-import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.http.SuccessResponse;
-import com.newswebsite.main.service.IArticleModificationService;
-import com.newswebsite.main.service.IArticleRetrievalService;
+import com.newswebsite.main.service.IArticleWriter;
+import com.newswebsite.main.service.IArticleReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +19,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/articles")
 public class ArticleAPI {
-    private final IArticleRetrievalService articleRetrievalService;
-    private final IArticleModificationService articleModificationService;
+    private final IArticleReader articleReader;
+    private final IArticleWriter articleWriter;
 
     @Autowired
-    public ArticleAPI(IArticleRetrievalService articleRetrievalService, IArticleModificationService articleModificationService) {
-        this.articleRetrievalService = articleRetrievalService;
-        this.articleModificationService = articleModificationService;
+    public ArticleAPI(IArticleReader articleReader, IArticleWriter articleWriter) {
+        this.articleReader = articleReader;
+        this.articleWriter = articleWriter;
     }
 
     @GetMapping
@@ -37,19 +36,19 @@ public class ArticleAPI {
 
         Sort.Direction direction = order.equalsIgnoreCase("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = new PageRequest(page - 1, size, new Sort(direction, by));
-        return articleRetrievalService.findAll(pageable);
+        return articleReader.findAll(pageable);
     }
 
     @PostMapping
     public ResponseEntity<ArticleDTO> createArticle(@RequestBody ArticleDTO articleDTO) {
-        ArticleDTO savedArticle = articleModificationService.save(articleDTO);
+        ArticleDTO savedArticle = articleWriter.save(articleDTO);
         URI articleURI = URI.create("/api/v1/articles/" + savedArticle.getId());
         return ResponseEntity.created(articleURI).body(savedArticle);
     }
 
     @PutMapping
     public ArticleDTO updateArticle(@RequestBody ArticleDTO articleDTO) {
-        return articleModificationService.save(articleDTO);
+        return articleWriter.save(articleDTO);
     }
 
     @PutMapping("/{id}/{action}")
@@ -58,35 +57,35 @@ public class ArticleAPI {
         String message;
         switch (action) {
             case "submit" -> {
-                articleModificationService.submit(id);
+                articleWriter.submit(id);
                 message = "Đã gửi yêu cầu đăng tải bài viết";
             }
             case "approve" -> {
-                articleModificationService.approve(id);
+                articleWriter.approve(id);
                 message = "Yêu cầu đăng tải bải viết đã được chấp thuận";
             }
             case "reject" -> {
-                articleModificationService.reject(id);
+                articleWriter.reject(id);
                 message = "Yêu cầu đăng tải bải viết đã bị từ chối";
             }
             case "publish" -> {
-                articleModificationService.publish(id);
+                articleWriter.publish(id);
                 message = "Bài viết đã được đăng tải";
             }
             case "trash" -> {
-                articleModificationService.trash(id);
+                articleWriter.trash(id);
                 message = "Bài viết đã chuyển vào thùng rác";
             }
             case "edit" -> {
-                articleModificationService.edit(id);
+                articleWriter.edit(id);
                 message = "Bài viết đã chuyển sang chế độ chỉnh sửa";
             }
             case "unpublish" -> {
-                articleModificationService.unPublish(id);
+                articleWriter.unPublish(id);
                 message = "Bài viết đã tạm ngừng đăng tải";
             }
             case "restore" -> {
-                articleModificationService.restore(id);
+                articleWriter.restore(id);
                 message = "Bài viết đã được khôi phục";
             }
             default -> throw new IllegalArgumentException("Thao tác không hợp lệ: " + action);
@@ -105,19 +104,19 @@ public class ArticleAPI {
         String message;
         switch (action) {
             case "approve" -> {
-                articleModificationService.approveMultiple(ids);
+                articleWriter.approveMultiple(ids);
                 message = "Yêu cầu đăng tải bải viết đã được chấp thuận";
             }
             case "reject" -> {
-                articleModificationService.rejectMultiple(ids);
+                articleWriter.rejectMultiple(ids);
                 message = "Yêu cầu đăng tải bải viết đã bị từ chối";
             }
             case "trash" -> {
-                articleModificationService.trashMultiple(ids);
+                articleWriter.trashMultiple(ids);
                 message = "Bài viết đã chuyển vào thùng rác";
             }
             case "restore" -> {
-                articleModificationService.restoreMultiple(ids);
+                articleWriter.restoreMultiple(ids);
                 message = "Bài viết đã được khôi phục";
             }
             default -> throw new IllegalArgumentException("Thao tác không hợp lệ: " + action);
@@ -132,7 +131,7 @@ public class ArticleAPI {
 
     @DeleteMapping
     public Object deleteArticles(@RequestBody List<Long> ids) {
-        articleModificationService.deleteArticles(ids);
+        articleWriter.deleteArticles(ids);
         return ResponseEntity.ok(SuccessResponse.builder()
                 .timestamp(new Date())
                 .statusCode(HttpStatus.OK.value())

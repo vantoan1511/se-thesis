@@ -1,6 +1,6 @@
 package com.newswebsite.main.controller.web;
 
-import com.newswebsite.main.service.IArticleRetrievalService;
+import com.newswebsite.main.service.IArticleReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     @Autowired
-    private IArticleRetrievalService articleRetrievalService;
+    private IArticleReader articleRetrievalService;
 
     @GetMapping
     public ModelAndView getHomePage() {

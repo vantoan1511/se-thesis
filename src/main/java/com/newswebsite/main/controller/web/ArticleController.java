@@ -4,7 +4,7 @@ import com.newswebsite.main.dto.ArticleDTO;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
-import com.newswebsite.main.service.IArticleRetrievalService;
+import com.newswebsite.main.service.IArticleReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ArticleController {
 
     @Autowired
-    private IArticleRetrievalService articleRetrievalService;
+    private IArticleReader articleRetrievalService;
 
     @GetMapping
     public ModelAndView getDetails(@PathVariable("alias") String alias,
