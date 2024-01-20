@@ -165,6 +165,21 @@ const handleSaveButtonClick = (event, formSelector, saveAndClose, saveAndNew) =>
     }
 }
 
+const handleArticleEditButton = (event, id) => {
+    event.preventDefault();
+    let url = `/api/v1/articles/${id}/edit`;
+    let successText = 'Đã chuyển sang chế độ chỉnh sửa'
+    showWarningAlert('Bài viết sẽ được lưu ở trạng thái Nháp và sẽ phải gửi xét duyệt lại', (result) => {
+        if (result.isConfirmed) {
+            handlePutRequest(url, undefined, () => {
+                showSuccessAlert(successText, () => {
+                    location.reload()
+                })
+            }, (xhr) => errorCallback(xhr))
+        }
+    })
+}
+
 const handleArticleSubmitButton = (event, id, publish = true) => {
     event.preventDefault();
     let url = publish ? '/api/v1/articles/' + id + '/submit' : '/api/v1/articles/' + id + '/reject'
@@ -179,7 +194,7 @@ const handleArticleSubmitButton = (event, id, publish = true) => {
 }
 const handleArticlePublishButton = (event, id, publish = true) => {
     event.preventDefault();
-    let url = publish ? '/api/v1/articles/' + id + '/publish' : '/api/v1/articles/' + id + '/reject'
+    let url = publish ? '/api/v1/articles/' + id + '/publish' : '/api/v1/articles/' + id + '/unpublish'
     let successText = publish ? 'Đã đăng tải bài viết' : 'Đã hủy đăng tải bài viết'
     console.log(url)
     handlePutRequest(url, undefined,
