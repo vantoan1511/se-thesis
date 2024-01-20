@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface StateRepo extends JpaRepository<State, Long> {
-    State findByStateCode(String stateCode);
+    State findByCode(String code);
 
     List<State> findAll();
 }

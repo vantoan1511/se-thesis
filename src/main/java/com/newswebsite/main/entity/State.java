@@ -15,9 +15,9 @@ public class State {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "state_code", unique = true, nullable = false)
-    private String stateCode;
+    private String code;
     @Column(name = "state_name")
-    private String stateName;
+    private String name;
 
     @OneToMany(mappedBy = "state")
     private List<Article> articles;

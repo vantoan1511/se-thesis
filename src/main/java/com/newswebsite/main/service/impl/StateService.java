@@ -25,7 +25,7 @@ public class StateService implements IStateService {
 
     @Override
     public StateDTO findByStateCode(String stateCode) {
-        State state = stateRepo.findByStateCode(stateCode);
+        State state = stateRepo.findByCode(stateCode);
         if (state == null)
             throw new StateCodeNotFoundException(msg.getMessage("state.not.found", null, null) + stateCode);
         return mapper.map(state, StateDTO.class);
@@ -33,7 +33,7 @@ public class StateService implements IStateService {
 
     @Override
     public Map<String, String> findAll() {
-        return mapper.map(stateRepo.findAll(), State::getStateCode, State::getStateName);
+        return mapper.map(stateRepo.findAll(), State::getCode, State::getName);
     }
 
     @Override
