@@ -84,6 +84,24 @@ const handleMultipleTrashButtonClick = (event, selector) => {
                 }, (xhr) => errorCallback(xhr));
     })
 }
+
+const handleMultipleRestoreButton = (event, selector) => {
+    event.preventDefault();
+    let ids = getElementsID(selector);
+    if (ids.length === 0) {
+        showErrorToast('Không có mục nào được chọn', 2000)
+        return;
+    }
+    showWarningAlert(ids.length + ' mục sẽ được khôi phục', (result) => {
+        if (result.isConfirmed)
+            handlePutRequest('/api/v1/articles/restore', ids,
+                () => {
+                    showSuccessAlert(ids.length + ' mục đã được khôi phục', () => {
+                        location.reload()
+                    })
+                }, (xhr) => errorCallback(xhr));
+    })
+}
 const handleMultipleDeleteButtonClick = (event, selector) => {
     event.preventDefault();
     let ids = getElementsID(selector);
