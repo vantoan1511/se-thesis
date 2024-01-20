@@ -32,6 +32,8 @@
     <%--Custom style--%>
     <link rel="stylesheet" href="/static/custom/css/styles.css">
     <link rel="stylesheet" href="/static/niceselect/css/nice-select2.css">
+    <link rel="stylesheet"
+          href="<c:url value="/static/admin/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css"/>">
     <!-- Jquery -->
     <script src="<c:url value="/static/admin/plugins/jquery/jquery.min.js"/>"></script>
 
@@ -65,6 +67,7 @@
 <script src="<c:url value="/static/admin/dist/js/adminlte.js"/>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
 <!-- Custom -->
+<script src="<c:url value="/static/admin/plugins/bootstrap-switch/js/bootstrap-switch.min.js"/>"></script>
 <script src="<c:url value="/static/custom/js/utils.js"/>"></script>
 <script src="<c:url value="/static/custom/js/main.js"/>"></script>
 <script src="<c:url value="/static/niceselect/js/nice-select2.js"/>"></script>

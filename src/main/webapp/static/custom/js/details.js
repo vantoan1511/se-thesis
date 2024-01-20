@@ -5,7 +5,7 @@ $(document).ready(() => {
         extraPlugins: 'video'
     });
     NiceSelect.bind(document.getElementById("categoryCode"));
-    /*NiceSelect.bind(document.getElementById("accessCode"));*/
+    $('#featured').bootstrapSwitch();
 })
 
 const handlePreviewButtonClick = (event) => {

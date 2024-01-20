@@ -102,18 +102,18 @@
                                         </form:select>
                                     </div>
                                     <div class="form-group">
-                                        <div class="icheck-material-lightgreen icheck-inline">
-                                            <form:checkbox path="featured" id="featured"/>
-                                            <label for="featured">Đánh dấu nổi bật</label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="featured">Nổi bật</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <form:checkbox path="featured"
+                                                               id="featured"/>
+                                            </div>
                                         </div>
                                     </div>
-                                        <%--<div class="form-group">
-                                            <label>Truy cập</label>
-                                                <form:select path="accessCode" id="accessCode"
-                                                             cssClass="wide">
-                                                    <form:options items="${access}"/>
-                                                </form:select>
-                                        </div>--%>
                                     <div class="form-group">
                                         <label>Chi tiết</label>
                                         <p>Đã tạo: <fmt:formatDate value="${model.createdAt}"
@@ -122,6 +122,10 @@
                                         <p>Lần sửa đổi cuối: <fmt:formatDate value="${model.lastModifiedAt}"
                                                                              pattern="dd/MM/yyyy HH:mm:ss"/></p>
                                         <p>Bởi: <c:out value="${model.lastModifiedBy}"/></p>
+                                        <c:if test="${not empty model.publishedAt}">
+                                            <p>Đăng tải: <fmt:formatDate value="${model.publishedAt}"
+                                                                         pattern="dd/MM/yyyy HH:mm:ss"/></p>
+                                        </c:if>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-sm-12">
