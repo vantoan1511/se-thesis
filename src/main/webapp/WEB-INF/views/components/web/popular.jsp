@@ -9,12 +9,12 @@
             <article class="article-mini">
                 <div class="inner">
                     <figure>
-                        <a href="/${article.slug}">
+                        <a href="/${article.alias}">
                             <img src="${article.thumbnailUrl}" alt="${article.title}">
                         </a>
                     </figure>
                     <div class="padding">
-                        <h1><a href="/${article.slug}">${article.title}</a>
+                        <h1><a href="/${article.alias}">${article.title}</a>
                         </h1>
                     </div>
                 </div>

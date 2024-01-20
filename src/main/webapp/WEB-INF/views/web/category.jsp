@@ -37,7 +37,7 @@
                         <article class="col-md-12 article-list">
                             <div class="inner">
                                 <figure>
-                                    <a href="/${article.slug}">
+                                    <a href="/${article.alias}">
                                         <img src="${article.thumbnailUrl}">
                                     </a>
                                 </figure>
@@ -50,14 +50,14 @@
                                                                           pattern="HH:mm dd/MM/yyyy"/>
                                         </div>
                                     </div>
-                                    <h1><a href="/${article.slug}">${article.title}</a>
+                                    <h1><a href="/${article.alias}">${article.title}</a>
                                     </h1>
                                     <p>${article.description}</p>
                                     <footer>
                                         <a href="#" class="love""><i class="ion-ios-eye-outline"></i>
                                         <div>${article.traffic}</div>
                                         </a>
-                                        <a class="btn btn-primary more" href="/${article.slug}">
+                                        <a class="btn btn-primary more" href="/${article.alias}">
                                             <div>Đọc tiếp</div>
                                             <div><i class="ion-ios-arrow-thin-right"></i></div>
                                         </a>

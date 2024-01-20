@@ -8,8 +8,9 @@ $(document).ready(() => {
     $('#featured').bootstrapSwitch();
 })
 
-const handlePreviewButtonClick = (event) => {
+const handlePreviewButtonClick = (event, alias) => {
     event.preventDefault();
+    $('.preview-frame').attr('src', `/${alias}?previewMode=true`)
     $('#iframe-container').removeClass("hidden");
     $('body').css('overflow', 'hidden');
 }

@@ -10,7 +10,7 @@
                 <div class="col-md-3 col-sm-12">
                     <div class="brand">
                         <a href="/home">
-                            <img src="/static/web/images/toansnewslogo.png" alt="logo">
+                            <img src="<c:url value="/static/web/images/toansnewslogo.png"/>" alt="logo">
                         </a>
                     </div>
                 </div>

@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-body row">
         <c:choose>
-            <c:when test="${model.stateCode eq 'DRAFT'}">
+            <c:when test="${article.stateCode eq 'DRAFT'}">
                 <div class="col-md-3 col-sm-auto">
                     <button onclick="handleSaveButtonClick(event, '#form', false, false)"
                             id="saveBtn"
@@ -28,42 +28,44 @@
                     </button>
                 </div>
             </c:when>
+            <c:when test="${article.stateCode eq 'PENDING'}">
+            </c:when>
             <c:otherwise>
                 <div class="col-md-3 col-sm-auto">
-                    <button onclick="handleArticleEditButton(event, ${model.id})"
+                    <button onclick="handleArticleEditButton(event, ${article.id})"
                             class="btn btn-block bg-gradient-success">
                         <i class="ri-edit-box-line"></i> Chỉnh sửa
                     </button>
                 </div>
             </c:otherwise>
         </c:choose>
-        <c:if test="${not empty model.id}">
+        <c:if test="${not empty article.id}">
             <div class="col-sm-auto">
-                <button onclick="handlePreviewButtonClick(event)"
+                <button onclick="handlePreviewButtonClick(event,'${article.alias}')"
                         class="btn btn-block btn-default"><i class="ri-slideshow-2-line"></i> Xem trước
                 </button>
             </div>
             <c:choose>
-                <c:when test="${model.stateCode eq 'DRAFT'}">
+                <c:when test="${article.stateCode eq 'DRAFT'}">
                     <div class="col-sm-auto">
-                        <button onclick="handleArticleSubmitButton(event, ${model.id})"
+                        <button onclick="handleArticleSubmitButton(event, ${article.id})"
                                 id="publish-btn"
                                 class="btn btn-block bg-gradient-success">
                             <i class="ri-send-plane-line"></i> Gửi duyệt
                         </button>
                     </div>
                 </c:when>
-                <c:when test="${model.stateCode eq 'APPROVED' or model.stateCode eq 'UNPUBLISHED'}">
+                <c:when test="${article.stateCode eq 'APPROVED' or article.stateCode eq 'UNPUBLISHED'}">
                     <div class="col-sm-auto">
-                        <button onclick="handleArticlePublishButton(event, ${model.id})"
+                        <button onclick="handleArticlePublishButton(event, ${article.id})"
                                 class="btn btn-block bg-gradient-success">
                             <i class="ri-send-plane-line"></i> Đăng tải
                         </button>
                     </div>
                 </c:when>
-                <c:when test="${model.stateCode eq 'PUBLISHED'}">
+                <c:when test="${article.stateCode eq 'PUBLISHED'}">
                     <div class="col-sm-auto">
-                        <button onclick="handleArticlePublishButton(event, ${model.id}, false)"
+                        <button onclick="handleArticlePublishButton(event, ${article.id}, false)"
                                 class="btn btn-block btn-default">
                             <i class="ri-close-circle-line"></i> Gỡ bài viết
                         </button>
@@ -71,7 +73,7 @@
                 </c:when>
                 <c:otherwise>
                     <div class="col-sm-auto">
-                        <button onclick="handleArticleSubmitButton(event, ${model.id}, false)"
+                        <button onclick="handleArticleSubmitButton(event, ${article.id}, false)"
                                 id="unpublish-btn"
                                 class="btn btn-block btn-default">
                             <i class="ri-close-circle-line"></i>Hủy yêu cầu

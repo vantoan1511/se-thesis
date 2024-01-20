@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>${model.title}</title>
+    <title>${article.title}</title>
 </head>
 <body>
 <!-- Content Wrapper. Contains page content -->
@@ -16,13 +16,13 @@
                 onclick="handlePreviewCloseButtonClick(event)"
                 class="btn btn-default"><i class="ri-close-line text-danger"></i> Đóng
         </button>
-        <iframe class="preview-frame" src="/${model.alias}?previewMode=true"></iframe>
+        <iframe class="preview-frame" src=""></iframe>
     </div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <h1>Bài viết: ${model.title}</h1>
+                <h1>Bài viết: ${article.title}</h1>
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -30,8 +30,8 @@
 
     <!-- Main content -->
     <section class="content">
-        <%--@elvariable id="model" type=""--%>
-        <form:form modelAttribute="model" id="form">
+        <%--@elvariable id="article" type=""--%>
+        <form:form modelAttribute="article" id="form">
             <form:hidden path="id"/>
             <sec:authorize access="hasRole('ADMIN')">
                 <%@ include file="../../components/admin/detailsFunctionalities.jsp" %>
@@ -116,14 +116,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Chi tiết</label>
-                                        <p>Đã tạo: <fmt:formatDate value="${model.createdAt}"
+                                        <p>Đã tạo: <fmt:formatDate value="${article.createdAt}"
                                                                    pattern="dd/MM/yyyy HH:mm:ss"/></p>
-                                        <p>Bởi: <c:out value="${model.createdBy}"/></p>
-                                        <p>Lần sửa đổi cuối: <fmt:formatDate value="${model.lastModifiedAt}"
+                                        <p>Bởi: <c:out value="${article.createdBy}"/></p>
+                                        <p>Lần sửa đổi cuối: <fmt:formatDate value="${article.lastModifiedAt}"
                                                                              pattern="dd/MM/yyyy HH:mm:ss"/></p>
-                                        <p>Bởi: <c:out value="${model.lastModifiedBy}"/></p>
-                                        <c:if test="${not empty model.publishedAt}">
-                                            <p>Đăng tải: <fmt:formatDate value="${model.publishedAt}"
+                                        <p>Bởi: <c:out value="${article.lastModifiedBy}"/></p>
+                                        <c:if test="${not empty article.publishedAt}">
+                                            <p>Đăng tải: <fmt:formatDate value="${article.publishedAt}"
                                                                          pattern="dd/MM/yyyy HH:mm:ss"/></p>
                                         </c:if>
                                     </div>
@@ -150,7 +150,7 @@
                                 <label for="thumbnailUrl">Ảnh bìa</label>
                                 <form:input path="thumbnailUrl"
                                             class="form-control"
-                                            value="${model.thumbnailUrl}"
+                                            value="${article.thumbnailUrl}"
                                             placeholder="Dán đường dẫn vào đây"/>
                             </div>
                         </div>

@@ -1,4 +1,3 @@
-<%@ page import="com.vtoan1517.utils.SecurityUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="../../../../common/taglib.jsp" %>
@@ -35,7 +34,7 @@
             </a>
         </div>
         <input type="hidden" name="id" value="">
-        <input type="hidden" name="articleSlug" value="${article.slug}">
+        <input type="hidden" name="articleSlug" value="${article.alias}">
         <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}">
         <input type="hidden" name="parentId" value="">
     </form>

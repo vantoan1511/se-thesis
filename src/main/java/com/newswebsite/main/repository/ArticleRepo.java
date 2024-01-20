@@ -9,6 +9,8 @@ public interface ArticleRepo extends JpaRepository<Article, Long> {
 
     Article findByAlias(String alias);
 
+    Article findByAliasAndStateCode(String alias, String stateCode);
+
     Page<Article> findAll(Pageable pageable);
 
     Page<Article> findAllByCreatedByAndStateCode(String createdBy, String stateCode, Pageable pageable);

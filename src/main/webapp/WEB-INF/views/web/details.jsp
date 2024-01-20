@@ -22,14 +22,14 @@
                     <header>
                         <h1>${article.title}</h1>
                         <ul class="details">
-                            <li>Đã đăng lúc <fmt:formatDate value="${article.publishedDate}"
+                            <li>Đã đăng lúc <fmt:formatDate value="${article.publishedAt}"
                                                             pattern="HH:mm dd/MM/yyyy"/>
                             </li>
                             <li><a href="/categories/${article.categoryCode}">${article.categoryName}</a></li>
                             <li>Bởi <a href="#">${article.createdBy}</a></li>
                         </ul>
                     </header>
-                    <div class="main">${article.content}</div>
+                    <div class="main">${article.text}</div>
                     <footer>
                         <div class="col"></div>
                         <div class="col">

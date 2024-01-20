@@ -70,17 +70,16 @@ public class ArticleController {
     }
 
     @GetMapping({"/new", "/{id}"})
-    public ModelAndView modifyArticle(@PathVariable(name = "id", required = false) Long id) {
+    public ModelAndView modifyArticle(@PathVariable(name = "id", required = false) Long id,
+                                      @RequestParam(value = "previewMode", required = false) boolean previewMode) {
+        String viewName = previewMode ? "web/details" : "admin/article/details";
         List<String> roles = SecurityUtil.getAuthorities();
 
         ArticleDTO articleDTO = id == null ? new ArticleDTO() : articleRetrievalService.findById(id);
 
-        String viewName = "admin/article/details";
-
         ModelAndView mav = new ModelAndView(viewName);
-        mav.addObject("model", articleDTO);
+        mav.addObject("article", articleDTO);
         mav.addObject("categories", categoryService.findAll());
-        /*mav.addObject("access", accessService.findAll());*/
         mav.addObject("states", stateService.findAll());
         return mav;
     }
