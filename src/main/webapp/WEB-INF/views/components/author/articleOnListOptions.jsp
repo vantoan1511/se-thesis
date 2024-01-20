@@ -10,7 +10,7 @@
     <div class="dropdown-menu dropdown-menu-right" role="menu" style>
         <c:catch var="error">
             <c:choose>
-                <c:when test="${article.statusCode eq 'trash'}">
+                <c:when test="${article.stateCode eq 'TRASH'}">
                     <button onclick="handleDeleteButtonClick(event, ${article.id})"
                             class="dropdown-item btn btn-default btn-sm">
                         <i class="ri-delete-bin-line text-danger"></i> Xóa
