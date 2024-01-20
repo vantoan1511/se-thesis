@@ -83,8 +83,8 @@
             </c:choose>
         </c:if>
         <div class="col-auto">
-            <a href="<c:url value="/admin/articles"/>"
-               class="btn btn-block btn-default"><i class="ri-arrow-left-line text-danger"></i> Quay lại
+            <a href="<c:url value="/admin/articles"/>" class="btn btn-block btn-default">
+                <i class="fas fa-undo text-success"></i> Quay lại
             </a>
         </div>
     </div>

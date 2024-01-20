@@ -208,8 +208,11 @@ const handleApproveButtonClick = (event, id) => {
     event.preventDefault();
     showWarningAlert('Chấp nhận yêu cầu đăng tải bài viết', result => {
         if (result.isConfirmed) {
-            handlePutRequest('/api/v1/articles/' + id + '/approve', undefined, () => {
-                location.reload()
+            handlePutRequest('/api/v1/articles/' + id + '/approve', undefined, (resp) => {
+                console.log(resp)
+                showSuccessAlert(resp.message, () => {
+                    location.reload()
+                })
             }, (xhr) => errorCallback(xhr))
         }
     })
