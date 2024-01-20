@@ -15,11 +15,11 @@
                         <a href="/categories/${article.categoryCode}">${article.categoryName}</a>
                     </div>
                     <h1>
-                        <a href="/${article.slug}">
+                        <a href="/${article.alias}">
                                 ${article.title}
                         </a>
                     </h1>
-                    <div class="time"><fmt:formatDate value="${article.modifiedDate}" pattern="HH:mm dd/MM/yyyy"/></div>
+                    <div class="time"><fmt:formatDate value="${article.publishedAt}" pattern="HH:mm dd/MM/yyyy"/></div>
                 </div>
             </article>
         </div>

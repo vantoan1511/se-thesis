@@ -15,7 +15,7 @@
             <div class="col-sm-auto">
                 <button onclick="handleArticlePublishButton(event, ${article.id}, false)"
                         class="btn btn-block bg-gradient-success">
-                    <i class="fas fa-paper-plane" aria-hidden="true"></i> Hủy đăng tải
+                    <i class="fas fa-paper-plane" aria-hidden="true"></i> Gỡ xuống
                 </button>
             </div>
         </c:if>
