@@ -217,7 +217,19 @@ const handleApproveButtonClick = (event, id) => {
         }
     })
 }
-
+const handleArticleRestoreButton = (event, id) => {
+    event.preventDefault();
+    showWarningAlert('Khôi phục bài viết', result => {
+        if (result.isConfirmed) {
+            handlePutRequest(`/api/v1/articles/${id}/restore`, undefined, (resp) => {
+                console.log(resp)
+                showSuccessAlert(resp.message, () => {
+                    location.reload()
+                })
+            }, (xhr) => errorCallback(xhr))
+        }
+    })
+}
 /**
  * Storage page
  */
