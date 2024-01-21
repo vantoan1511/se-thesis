@@ -21,7 +21,7 @@
         </c:if>
         <div class="col-sm-auto">
             <button onclick="handlePreviewButtonClick(event, '${article.alias}')"
-                    class="btn btn-block btn-default"><i class="ri-slideshow-2-line"></i> Xem trước
+                    class="btn btn-block btn-default"><i class="ri-slideshow-2-line"></i> Chế độ xem
             </button>
         </div>
         <div class="col-auto">
