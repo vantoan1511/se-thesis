@@ -40,7 +40,7 @@
                             <select name="sort-by" id="sort-by" class="col form-control custom-select">
                                 <option value="title">Tiêu đề</option>
                                 <option value="categoryId">Chuyên mục</option>
-                                <option value="modifiedDate">Ngày sửa đổi</option>
+                                <option value="lastModifiedAt">Ngày sửa đổi</option>
                                 <option value="createdBy">Tác giả</option>
                             </select>
                         </div>
@@ -168,8 +168,8 @@
         <input type="hidden" name="tab" value="${param.tab}">
         <input type="hidden" value="${model.number+1}" name="page" id="page">
         <input type="hidden" value="${model.size}" name="limit" id="limit">
-        <input type="hidden" value="${sortBy}" name="sortBy" id="sortBy">
-        <input type="hidden" value="${sortOrder}" name="sortOrder" id="sortOrder">
+        <input type="hidden" value="${sortBy}" name="by" id="sortBy">
+        <input type="hidden" value="${sortOrder}" name="order" id="sortOrder">
     </form>
 </div>
 <script>
