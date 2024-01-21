@@ -8,10 +8,12 @@ import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
 import com.newswebsite.main.exception.CategoryCodeNotFoundException;
 import com.newswebsite.main.exception.InvalidArticleOperationException;
+import com.newswebsite.main.exception.StateCodeNotFoundException;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
 import com.newswebsite.main.repository.StateRepo;
 import com.newswebsite.main.service.IArticleWriter;
+import com.newswebsite.main.service.IStateService;
 import com.newswebsite.main.utils.SlugGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class ArticleWriter implements IArticleWriter {
     private final MessageSource msg;
     private final ModelMapper mapper = new ModelMapper();
 
+    private IStateService stateService;
+
     @Autowired
     public ArticleWriter(ArticleRepo articleRepo,
                          CategoryRepo categoryRepo,
@@ -44,98 +48,72 @@ public class ArticleWriter implements IArticleWriter {
     @Override
     @Transactional
     public void submit(long id) {
-        Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getCode().equals(ArticleState.DRAFT.name()))
-            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State pendingState = stateRepo.findByCode(ArticleState.PENDING.name());
-        article.setState(pendingState);
+        Article article = getArticleFromId(id);
+        stateService = createStateService(article.getState().getCode());
+        stateService.submit(article);
         articleRepo.save(article);
     }
 
     @Override
     @Transactional
     public void trash(long id) {
-        Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getCode().equals(ArticleState.DRAFT.name()))
-            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State trashState = stateRepo.findByCode(ArticleState.TRASH.name());
-        article.setState(trashState);
+        Article article = getArticleFromId(id);
+        stateService = createStateService(article.getState().getCode());
+        stateService.toTrash(article);
         articleRepo.save(article);
     }
 
     @Override
     @Transactional
     public void approve(long id) {
-        Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getCode().equals(ArticleState.PENDING.name()))
-            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State approvedState = stateRepo.findByCode(ArticleState.APPROVED.name());
-        article.setState(approvedState);
+        Article article = getArticleFromId(id);
+        stateService = createStateService(article.getState().getCode());
+        stateService.approve(article);
         articleRepo.save(article);
     }
 
     @Override
     @Transactional
     public void reject(long id) {
-        Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getCode().equals(ArticleState.PENDING.name()))
-            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State draftState = stateRepo.findByCode(ArticleState.DRAFT.name());
-        article.setState(draftState);
+        Article article = getArticleFromId(id);
+        stateService = createStateService(article.getState().getCode());
+        stateService.reject(article);
         articleRepo.save(article);
     }
 
     @Override
     @Transactional
     public void publish(long id) {
-        Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getCode().equals(ArticleState.APPROVED.name()) &&
-                !article.getState().getCode().equals(ArticleState.UNPUBLISHED.name()))
-            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State publishedState = stateRepo.findByCode(ArticleState.PUBLISHED.name());
-        article.setState(publishedState);
+        Article article = getArticleFromId(id);
+        stateService = createStateService(article.getState().getCode());
+        stateService.publish(article);
         articleRepo.save(article);
     }
 
     @Override
     @Transactional
     public void edit(long id) {
-        Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getCode().equals(ArticleState.APPROVED.name()) &&
-                !article.getState().getCode().equals(ArticleState.UNPUBLISHED.name()))
-            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State draftState = stateRepo.findByCode(ArticleState.DRAFT.name());
-        article.setState(draftState);
+        Article article = getArticleFromId(id);
+        stateService = createStateService(article.getState().getCode());
+        stateService.edit(article);
         articleRepo.save(article);
     }
 
     @Override
     @Transactional
     public void unPublish(long id) {
-        Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getCode().equals(ArticleState.PUBLISHED.name()))
-            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State unPublishedState = stateRepo.findByCode(ArticleState.UNPUBLISHED.name());
-        article.setState(unPublishedState);
+        Article article = getArticleFromId(id);
+        stateService = createStateService(article.getState().getCode());
+        stateService.unPublish(article);
         articleRepo.save(article);
     }
 
     @Override
     @Transactional
     public void restore(long id) {
-        Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
-        if (!article.getState().getCode().equals(ArticleState.TRASH.name()))
-            throw new InvalidArticleOperationException(msg.getMessage("article.operation.invalid", null, null));
-        State draftState = stateRepo.findByCode(ArticleState.DRAFT.name());
-        article.setState(draftState);
+        Article article = getArticleFromId(id);
+        stateService = createStateService(article.getState().getCode());
+        stateService.restore(article);
         articleRepo.save(article);
     }
 
@@ -229,5 +207,37 @@ public class ArticleWriter implements IArticleWriter {
 
     private boolean isUniqueAlias(String alias) {
         return articleRepo.findByAlias(alias) == null;
+    }
+
+    private Article getArticleFromId(long id) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        return article;
+    }
+
+    private IStateService createStateService(String currentState) {
+        switch (currentState) {
+            case "DRAFT" -> {
+                return new DraftState(stateRepo, currentState);
+            }
+            case "PENDING" -> {
+                return new PendingState(stateRepo, currentState);
+            }
+            case "APPROVED" -> {
+                return new ApprovedState(stateRepo, currentState);
+            }
+            case "PUBLISHED" -> {
+                return new PublishedState(stateRepo, currentState);
+            }
+            case "UNPUBLISHED" -> {
+                return new UnPublishedState(stateRepo, currentState);
+            }
+            case "TRASH" -> {
+                return new TrashState(stateRepo, currentState);
+            }
+            default -> {
+                throw new StateCodeNotFoundException("Unknown state");
+            }
+        }
     }
 }
