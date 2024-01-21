@@ -75,9 +75,9 @@
                                 tiện</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="settings-tab" data-toggle="pill"
-                               href="#settings" role="tab"
-                               aria-controls="settings" aria-selected="false">Tuỳ chỉnh</a>
+                            <a class="nav-link" id="details-tab" data-toggle="pill"
+                               href="#details" role="tab"
+                               aria-controls="details" aria-selected="false">Chi tiết</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="tab-content">
@@ -114,19 +114,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Chi tiết</label>
-                                        <p>Đã tạo: <fmt:formatDate value="${article.createdAt}"
-                                                                   pattern="dd/MM/yyyy HH:mm:ss"/></p>
-                                        <p>Bởi: <c:out value="${article.createdBy}"/></p>
-                                        <p>Lần sửa đổi cuối: <fmt:formatDate value="${article.lastModifiedAt}"
-                                                                             pattern="dd/MM/yyyy HH:mm:ss"/></p>
-                                        <p>Bởi: <c:out value="${article.lastModifiedBy}"/></p>
-                                        <c:if test="${not empty article.publishedAt}">
-                                            <p>Đăng tải: <fmt:formatDate value="${article.publishedAt}"
-                                                                         pattern="dd/MM/yyyy HH:mm:ss"/></p>
-                                        </c:if>
-                                    </div>
                                 </div>
                                 <div class="col-md-8 col-sm-12">
                                     <div class="form-group">
@@ -154,8 +141,23 @@
                                             placeholder="Dán đường dẫn vào đây"/>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="settings" role="tabpanel"
-                             aria-labelledby="settings-tab">
+                        <div class="tab-pane fade" id="details" role="tabpanel"
+                             aria-labelledby="details-tab">
+                            <div>
+                                <h3>Chi tiết</h3>
+                                <p>Đã tạo: <fmt:formatDate value="${article.createdAt}"
+                                                           pattern="dd/MM/yyyy HH:mm:ss"/></p>
+                                <p>Bởi: <c:out value="${article.createdBy}"/></p>
+                                <p>Lần sửa đổi cuối: <fmt:formatDate value="${article.lastModifiedAt}"
+                                                                     pattern="dd/MM/yyyy HH:mm:ss"/></p>
+                                <p>Bởi: <c:out value="${article.lastModifiedBy}"/></p>
+                                <p>
+                                    Đăng tải: <c:if test="${not empty article.publishedAt}"><fmt:formatDate
+                                        value="${article.publishedAt}"
+                                        pattern="dd/MM/yyyy HH:mm:ss"/></c:if><c:if
+                                        test="${empty article.publishedAt}">Chưa đăng tải</c:if>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
