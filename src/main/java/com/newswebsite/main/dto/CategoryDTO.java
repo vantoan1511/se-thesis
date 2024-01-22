@@ -8,8 +8,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoryDTO extends AuditDTO {
-    private String code;
-    private String name;
+public class CategoryDTO extends ContentDTO {
     private List<ArticleDTO> articles;
 }

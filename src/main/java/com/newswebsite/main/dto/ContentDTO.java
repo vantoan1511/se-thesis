@@ -11,10 +11,15 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AuditDTO {
+public class ContentDTO {
     private Long id;
+    private String alias;
+    private String title;
+    private String description;
     private Date createdAt;
     private Date lastModifiedAt;
     private String createdBy;
     private String lastModifiedBy;
+    private Date publishedAt;
+
 }

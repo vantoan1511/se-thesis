@@ -6,23 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class ArticleDTO extends AuditDTO {
-    private String title;
-    private String alias;
+public class ArticleDTO extends ContentDTO {
     private String thumbnailUrl;
-    private String description;
     private String text;
     private boolean featured;
     private long traffic;
-    private Date publishedAt;
-    private String categoryCode;
-    private String categoryName;
+    private String categoryAlias;
+    private String categoryTitle;
     private String stateCode = ArticleState.DRAFT.name();
     private String stateName;
 }
