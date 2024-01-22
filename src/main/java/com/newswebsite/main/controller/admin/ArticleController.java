@@ -5,7 +5,7 @@ import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.IArticleReader;
-import com.newswebsite.main.service.ICategoryService;
+import com.newswebsite.main.service.ICategoryReader;
 import com.newswebsite.main.service.IStateReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -26,7 +26,7 @@ public class ArticleController {
     private IArticleReader articleReader;
 
     @Autowired
-    private ICategoryService categoryService;
+    private ICategoryReader categoryReader;
 
     @Autowired
     private IStateReader stateReader;
@@ -86,7 +86,7 @@ public class ArticleController {
 
         ModelAndView mav = new ModelAndView(viewName);
         mav.addObject("article", articleDTO);
-        mav.addObject("categories", categoryService.findAll());
+        mav.addObject("categories", categoryReader.getCategoriesMap());
         mav.addObject("states", stateReader.findAll());
         return mav;
     }

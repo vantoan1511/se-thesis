@@ -5,14 +5,14 @@ import com.newswebsite.main.entity.Category;
 import com.newswebsite.main.exception.CategoryCodeNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.CategoryRepo;
-import com.newswebsite.main.service.ICategoryService;
+import com.newswebsite.main.service.ICategoryReader;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
-public class CategoryService implements ICategoryService {
+public class CategoryReader implements ICategoryReader {
 
     private final CategoryRepo categoryRepo;
 
@@ -20,7 +20,7 @@ public class CategoryService implements ICategoryService {
 
     private final CollectionMapper mapper = new CollectionMapper();
 
-    public CategoryService(CategoryRepo categoryRepo, MessageSource msg) {
+    public CategoryReader(CategoryRepo categoryRepo, MessageSource msg) {
         this.categoryRepo = categoryRepo;
         this.msg = msg;
     }
@@ -34,13 +34,7 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Map<String, String> findAll() {
+    public Map<String, String> getCategoriesMap() {
         return mapper.map(categoryRepo.findAll(), Category::getCode, Category::getName);
-    }
-
-    @Override
-    public CategoryDTO save(CategoryDTO categoryDTO) {
-        Category category = mapper.map(categoryDTO, Category.class);
-        return mapper.map(categoryRepo.save(category), CategoryDTO.class);
     }
 }

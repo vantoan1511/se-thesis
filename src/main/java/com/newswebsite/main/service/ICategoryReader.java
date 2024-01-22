@@ -4,10 +4,8 @@ import com.newswebsite.main.dto.CategoryDTO;
 
 import java.util.Map;
 
-public interface ICategoryService {
+public interface ICategoryReader {
     CategoryDTO findByCode(String code);
 
-    Map<String, String> findAll();
-
-    CategoryDTO save(CategoryDTO categoryDTO);
+    Map<String, String> getCategoriesMap();
 }
