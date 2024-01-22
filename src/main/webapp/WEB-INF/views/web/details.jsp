@@ -16,7 +16,7 @@
             <div class="col-md-8">
                 <ol class="breadcrumb">
                     <li><a href="#">Trang chủ</a></li>
-                    <li class="active">${article.categoryName}</li>
+                    <li class="active">${article.categoryTitle}</li>
                 </ol>
                 <article class="article main-article">
                     <header>
@@ -25,7 +25,7 @@
                             <li>Đã đăng lúc <fmt:formatDate value="${article.publishedAt}"
                                                             pattern="HH:mm dd/MM/yyyy"/>
                             </li>
-                            <li><a href="/categories/${article.categoryCode}">${article.categoryName}</a></li>
+                            <li><a href="/categories/${article.categoryAlias}">${article.categoryTitle}</a></li>
                             <li>Bởi <a href="#">${article.createdBy}</a></li>
                         </ul>
                     </header>

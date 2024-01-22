@@ -123,8 +123,8 @@
                                         ${article.title} <i class="ri-edit-box-line"></i>
                                 </a>
                                 <p style="font-size: 85%">
-                                    Alias: ${article.alias}<br>
-                                    Category: <a href="#">${article.categoryName}</a>
+                                    Alias: <a href="/${article.alias}">${article.alias}</a><br>
+                                    Chuyên mục: <a href="#">${article.categoryTitle}</a>
                                 </p>
                             </td>
                             <td>

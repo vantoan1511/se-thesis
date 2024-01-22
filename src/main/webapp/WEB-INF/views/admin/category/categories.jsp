@@ -94,10 +94,10 @@
                             <td>
                                 <a class="text-truncate"
                                    href="#">
-                                        ${category.name} <i class="ri-edit-box-line"></i>
+                                        ${category.title} <i class="ri-edit-box-line"></i>
                                 </a>
                                 <p style="font-size: 85%">
-                                    Alias: ${category.code}<br>
+                                    Alias: ${category.alias}<br>
                                     Bài viết: <c:out value="${category.articles.size()}"/>
                                 </p>
                             </td>
