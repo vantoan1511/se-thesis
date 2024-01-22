@@ -1,12 +1,15 @@
 package com.newswebsite.main.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
-@Builder
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class CategoryDTO {
-    private long id;
-    private String categoryCode;
-    private String categoryName;
+@Setter
+public class CategoryDTO extends AuditDTO {
+    private String code;
+    private String name;
+    private List<ArticleDTO> articles;
 }
