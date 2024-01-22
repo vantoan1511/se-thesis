@@ -23,7 +23,7 @@ import java.util.List;
 public class ArticleController {
 
     @Autowired
-    private IArticleReader articleRetrievalService;
+    private IArticleReader articleReader;
 
     @Autowired
     private ICategoryService categoryService;
@@ -45,19 +45,26 @@ public class ArticleController {
         Pageable pageable = new PageRequest(page - 1, limit, new Sort(direction, by));
 
         Page<ArticleDTO> contents = null;
+
         if (authorities.contains(Role.ADMIN.name())) {
-            contents = articleRetrievalService.findAll(pageable);
+            switch (tab) {
+                case "all" -> contents = articleReader.getNotTrashArticles(pageable);
+                case "published" -> contents = articleReader.getPublishedArticles(pageable);
+                case "pending" -> contents = articleReader.getPendingArticles(pageable);
+                case "trash" -> contents = articleReader.getTrashArticles(pageable);
+                case "featured" -> contents = articleReader.getFeaturedArticles(pageable);
+                default -> viewName = "admin/404";
+            }
         } else {
             switch (tab) {
-                case "all" -> contents = articleRetrievalService.findAllByAuthorAndStateCode(username, null, pageable);
+                case "all" -> contents = articleReader.findAllByAuthorAndStateCode(username, null, pageable);
                 case "published" ->
-                        contents = articleRetrievalService.findAllByAuthorAndStateCode(username, ArticleState.PUBLISHED.name(), pageable);
+                        contents = articleReader.findAllByAuthorAndStateCode(username, ArticleState.PUBLISHED.name(), pageable);
                 case "pending" ->
-                        contents = articleRetrievalService.findAllByAuthorAndStateCode(username, ArticleState.PENDING.name(), pageable);
+                        contents = articleReader.findAllByAuthorAndStateCode(username, ArticleState.PENDING.name(), pageable);
                 case "trash" ->
-                        contents = articleRetrievalService.findAllByAuthorAndStateCode(username, ArticleState.TRASH.name(), pageable);
-                case "featured" ->
-                        contents = articleRetrievalService.findAllByFeaturedAndAuthor(true, username, pageable);
+                        contents = articleReader.findAllByAuthorAndStateCode(username, ArticleState.TRASH.name(), pageable);
+                case "featured" -> contents = articleReader.findAllByFeaturedAndAuthor(true, username, pageable);
                 default -> viewName = "admin/404";
             }
         }
@@ -75,7 +82,7 @@ public class ArticleController {
         String viewName = previewMode ? "web/details" : "admin/article/details";
         List<String> roles = SecurityUtil.getAuthorities();
 
-        ArticleDTO articleDTO = id == null ? new ArticleDTO() : articleRetrievalService.findById(id);
+        ArticleDTO articleDTO = id == null ? new ArticleDTO() : articleReader.findById(id);
 
         ModelAndView mav = new ModelAndView(viewName);
         mav.addObject("article", articleDTO);

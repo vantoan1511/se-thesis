@@ -57,6 +57,36 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
+    public Page<ArticleDTO> getFeaturedArticles(Pageable pageable) {
+        return articleRepo.findAllByFeatured(true, pageable)
+                .map(item -> mapper.map(item, ArticleDTO.class));
+    }
+
+    @Override
+    public Page<ArticleDTO> getPendingArticles(Pageable pageable) {
+        return articleRepo.findAllByStateCode(ArticleState.PENDING.name(), pageable)
+                .map(item -> mapper.map(item, ArticleDTO.class));
+    }
+
+    @Override
+    public Page<ArticleDTO> getPublishedArticles(Pageable pageable) {
+        return articleRepo.findAllByStateCode(ArticleState.PUBLISHED.name(), pageable)
+                .map(item -> mapper.map(item, ArticleDTO.class));
+    }
+
+    @Override
+    public Page<ArticleDTO> getTrashArticles(Pageable pageable) {
+        return articleRepo.findAllByStateCode(ArticleState.TRASH.name(), pageable)
+                .map(item -> mapper.map(item, ArticleDTO.class));
+    }
+
+    @Override
+    public Page<ArticleDTO> getNotTrashArticles(Pageable pageable) {
+        return articleRepo.findAllByStateCodeNot(ArticleState.TRASH.name(), pageable)
+                .map(item -> mapper.map(item, ArticleDTO.class));
+    }
+
+    @Override
     public Page<ArticleDTO> findAllByAuthorAndStateCode(String author, String stateCode, Pageable pageable) {
         Page<Article> contents = stateCode == null ?
                 articleRepo.findAllByCreatedByAndStateCodeNot(author, ArticleState.TRASH.name(), pageable) :

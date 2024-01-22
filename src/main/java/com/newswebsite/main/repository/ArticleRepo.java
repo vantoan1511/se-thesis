@@ -13,6 +13,12 @@ public interface ArticleRepo extends JpaRepository<Article, Long> {
 
     Page<Article> findAll(Pageable pageable);
 
+    Page<Article> findAllByFeatured(boolean featured, Pageable pageable);
+
+    Page<Article> findAllByStateCode(String stateCode, Pageable pageable);
+
+    Page<Article> findAllByStateCodeNot(String stateCode, Pageable pageable);
+
     Page<Article> findAllByCreatedByAndStateCode(String createdBy, String stateCode, Pageable pageable);
 
     Page<Article> findAllByCreatedByAndStateCodeNot(String createdBy, String stateCode, Pageable pageable);
