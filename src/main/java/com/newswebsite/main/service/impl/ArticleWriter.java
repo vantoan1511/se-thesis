@@ -152,7 +152,7 @@ public class ArticleWriter implements IArticleWriter {
     @Override
     @Transactional
     public ArticleDTO save(ArticleDTO articleDTO) {
-        Category category = categoryRepo.findByCode(articleDTO.getCategoryCode());
+        Category category = categoryRepo.findByAlias(articleDTO.getCategoryCode());
         if (category == null)
             throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + articleDTO.getCategoryCode());
 

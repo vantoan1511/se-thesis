@@ -28,7 +28,7 @@ public class CategoryReader implements ICategoryReader {
 
     @Override
     public CategoryDTO findByCode(String code) {
-        Category category = categoryRepo.findByCode(code);
+        Category category = categoryRepo.findByAlias(code);
         if (category == null)
             throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + code);
         return mapper.map(category, CategoryDTO.class);
@@ -41,6 +41,6 @@ public class CategoryReader implements ICategoryReader {
 
     @Override
     public Map<String, String> getCategoriesMap() {
-        return mapper.map(categoryRepo.findAll(), Category::getCode, Category::getName);
+        return mapper.map(categoryRepo.findAll(), Category::getAlias, Category::getTitle);
     }
 }

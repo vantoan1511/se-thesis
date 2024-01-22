@@ -17,7 +17,14 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Audit {
+public class Content {
+
+    @Column(name = "title", nullable = false)
+    private String title;
+    @Column(name = "alias", unique = true, nullable = false)
+    private String alias;
+    @Column(name = "description")
+    private String description;
     @CreatedBy
     @Column(name = "created_by")
     private String createdBy;
@@ -30,4 +37,6 @@ public class Audit {
     @LastModifiedDate
     @Column(name = "last_modified_at")
     private Date lastModifiedAt;
+    @Column(name = "published_at")
+    private Date publishedAt;
 }

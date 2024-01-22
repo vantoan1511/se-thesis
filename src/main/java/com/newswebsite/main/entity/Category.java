@@ -10,14 +10,10 @@ import java.util.List;
 @Table(name = "category")
 @Getter
 @Setter
-public class Category extends Audit {
+public class Category extends Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "category_code", unique = true, nullable = false)
-    private String code;
-    @Column(name = "category_name")
-    private String name;
 
     @OneToMany(mappedBy = "category")
     private List<Article> articles;
