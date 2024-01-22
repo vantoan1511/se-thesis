@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,12 +32,21 @@ public class CategoryController {
         Sort.Direction direction = Sort.Direction.fromString(order);
         Pageable pageable = new PageRequest(page - 1, limit, new Sort(direction, by));
 
-        Page<CategoryDTO> contents;
-
         ModelAndView view = new ModelAndView(viewName);
-        view.addObject("model", categoryReader.getCategoriesMap());
+        view.addObject("categories", categoryReader.getCategories());
         view.addObject("sortBy", by);
         view.addObject("sortOrder", order);
+        return view;
+    }
+
+    @GetMapping({"/new", "/{categoryCode}"})
+    public ModelAndView createOrUpdate(@PathVariable(value = "categoryCode", required = false) String categoryCode) {
+        String viewName = "admin/category/details";
+
+        CategoryDTO categoryDTO = categoryCode != null ? categoryReader.findByCode(categoryCode) : new CategoryDTO();
+
+        ModelAndView view = new ModelAndView(viewName);
+        view.addObject("category", categoryDTO);
         return view;
     }
 }
