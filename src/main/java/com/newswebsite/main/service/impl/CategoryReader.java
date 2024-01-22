@@ -9,6 +9,7 @@ import com.newswebsite.main.service.ICategoryReader;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -31,6 +32,11 @@ public class CategoryReader implements ICategoryReader {
         if (category == null)
             throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + code);
         return mapper.map(category, CategoryDTO.class);
+    }
+
+    @Override
+    public List<CategoryDTO> getCategories() {
+        return mapper.map(categoryRepo.findAll(), CategoryDTO.class);
     }
 
     @Override
