@@ -27,6 +27,7 @@
         <hibernate.validator.ver>6.0.13.Final</hibernate.validator.ver>
         <jwt.ver>0.9.1</jwt.ver>
         <java.mail.ver>8.5.1</java.mail.ver>
+        <common.file.ver>1.5</common.file.ver>
     </properties>
 
     <dependencies>
@@ -217,6 +218,12 @@
             <groupId>org.simplejavamail</groupId>
             <artifactId>simple-java-mail</artifactId>
             <version>${java.mail.ver}</version>
+        </dependency>
+        <!--common file upload-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${common.file.ver}</version>
         </dependency>
     </dependencies>
 
