@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -14,6 +15,7 @@ import java.util.Date;
 public class ContentDTO {
     private Long id;
     private String alias;
+    @NotBlank(message = "Tiêu đề là bắt buộc")
     private String title;
     private String description;
     private Date createdAt;
