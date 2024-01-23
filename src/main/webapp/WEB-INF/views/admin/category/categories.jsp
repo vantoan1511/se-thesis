@@ -93,7 +93,7 @@
                             <td>${category.id}</td>
                             <td>
                                 <a class="text-truncate"
-                                   href="#">
+                                   href="/admin/categories/${category.alias}">
                                         ${category.title} <i class="ri-edit-box-line"></i>
                                 </a>
                                 <p style="font-size: 85%">
@@ -106,6 +106,17 @@
                             </td>
                             <td><c:out value="${category.createdBy}"/></td>
                             <td>
+                                <div class="btn-group">
+                                    <button type="button"
+                                            class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown"
+                                            aria-expanded="false"></button>
+                                    <div class="dropdown-menu dropdown-menu-right" role="menu" style>
+                                        <button onclick=""
+                                                class="dropdown-item btn btn-default btn-sm">
+                                            <i class="ri-delete-bin-line text-danger"></i> Xóa
+                                        </button>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </c:forEach>

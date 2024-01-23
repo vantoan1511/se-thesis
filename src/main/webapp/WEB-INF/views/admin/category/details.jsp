@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>${category.name}</title>
+    <title>${category.title}</title>
 </head>
 <body>
 <!-- Content Wrapper. Contains page content -->
@@ -14,7 +14,7 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <h1>Chuyên mục: ${category.name}</h1>
+                <h1>Chuyên mục: ${category.title}</h1>
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -25,46 +25,61 @@
         <%--@elvariable id="category" type=""--%>
         <form:form modelAttribute="category" id="form">
             <form:hidden path="id"/>
-            <sec:authorize access="hasRole('ADMIN')">
-                <%@ include file="../../components/admin/detailsFunctionalities.jsp" %>
-            </sec:authorize>
-            <sec:authorize access="hasRole('WRITER')">
-                <%@ include file="../../components/author/detailsFunctionalities.jsp" %>
-            </sec:authorize>
+
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-md-3 col-sm-auto">
+                        <button onclick="handleCategorySaveButton(event, '#form', false, false)"
+                                id="saveBtn"
+                                class="btn btn-block bg-gradient-success">
+                            <i class="ri-save-line"></i> Lưu
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <button onclick="handleCategorySaveButton(event, '#form', true, false)"
+                                id="saveAndCloseBtn"
+                                class="btn btn-block btn-default">
+                            <i class="ri-check-double-line text-success"></i> Lưu & Đóng
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <button onclick="handleCategorySaveButton(event, '#form', false, true)"
+                                id="saveAndNewBtn"
+                                class="btn btn-block btn-default">
+                            <i class="ri-file-add-line text-success"></i> Lưu & Mới
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <a href="<c:url value="/admin/categories"/>" class="btn btn-block btn-default">
+                            <i class="fas fa-undo text-success"></i> Quay lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="title">Tiêu đề</label>
-                            <form:input path="name" cssClass="form-control form-control-border"
+                            <form:input path="title" cssClass="form-control form-control-border"
                                         cssErrorClass="is-invalid"
-                                        placeholder="VD: Bài viết 1"/>
+                                        placeholder="VD: Thể thao"/>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="alias">Alias</label>
-                            <form:input path="code" id="alias"
+                            <form:input path="alias" id="alias"
                                         class="form-control form-control-border"
                                         readonly="false"
-                                        placeholder="Được khởi tạo tự động dựa trên tiêu đề"/>
-                            <p class="text-gray">Alias sẽ được sử dụng làm một phần cho URL bài viết</p>
+                                        placeholder="Để trống để khởi tạo tự động dựa trên tiêu đề"/>
+                            <p class="text-gray">Alias sẽ được sử dụng làm một phần cho URL</p>
                         </div>
                     </div>
                     <ul class="nav nav-tabs" id="content-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="content-general-tab" data-toggle="pill"
-                               href="#general" role="tab" aria-controls="general"
-                               aria-selected="true">Thông tin chung</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="article-content-tab" data-toggle="pill"
-                               href="#article-content" role="tab"
-                               aria-controls="article-content" aria-selected="false">Nội dung</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="media-and-links-tab" data-toggle="pill"
-                               href="#media-and-links" role="tab"
-                               aria-controls="media-and-links" aria-selected="false">Hình ảnh & Đa phương
-                                tiện</a>
+                            <a class="nav-link active" id="description-tab" data-toggle="pill"
+                               href="#description" role="tab" aria-controls="description"
+                               aria-selected="true">Mô tả</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="details-tab" data-toggle="pill"
@@ -72,33 +87,47 @@
                                aria-controls="details" aria-selected="false">Chi tiết</a>
                         </li>
                     </ul>
-                    <div class="tab-content" id="tab-content">
-                        <div class="tab-pane fade active show" id="general" role="tabpanel"
-                             aria-labelledby="content-general-tab">
-                        </div>
-                        <div class="tab-pane fade" id="article-content" role="tabpanel"
-                             aria-labelledby="article-content-tab">
-                        </div>
-                        <div class="tab-pane fade" id="media-and-links" role="tabpanel"
-                             aria-labelledby="media-and-links-tab">
+                    <div class="tab-content" id="tab-description">
+                        <div class="tab-pane fade active show" id="description" role="tabpanel"
+                             aria-labelledby="description-tab">
+                            <div class="row  mt-3">
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label>Chuyên mục cha</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <form:label path="description">Mô tả</form:label>
+                                    <form:textarea path="description"
+                                                   placeholder="Mô tả"
+                                                   cssClass="form-control form-control-border"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="details" role="tabpanel"
                              aria-labelledby="details-tab">
-                            <div>
-                                <h3>Chi tiết</h3>
-                                <p>Đã tạo: <fmt:formatDate value="${category.createdAt}"
-                                                           pattern="dd/MM/yyyy HH:mm:ss"/></p>
-                                <p>Bởi: <c:out value="${category.createdBy}"/></p>
-                                <p>Lần sửa đổi cuối: <fmt:formatDate value="${category.lastModifiedAt}"
-                                                                     pattern="dd/MM/yyyy HH:mm:ss"/></p>
-                                <p>Bởi: <c:out value="${category.lastModifiedBy}"/></p>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <h5>Chi tiết</h5>
+                                    <p>Đã tạo: <fmt:formatDate value="${category.createdAt}"
+                                                               pattern="dd/MM/yyyy HH:mm:ss"/></p>
+                                    <p>Bởi: <c:out value="${category.createdBy}"/></p>
+                                    <p>Lần sửa đổi cuối: <fmt:formatDate value="${category.lastModifiedAt}"
+                                                                         pattern="dd/MM/yyyy HH:mm:ss"/></p>
+                                    <p>Bởi: <c:out value="${category.lastModifiedBy}"/></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Bài viết: <c:out value="${category.articles.size()}"/></h5>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="card-footer"></div>
             </div>
         </form:form>
     </section>
 </div>
+<script src="<c:url value="/static/custom/js/category/main.js"/>"></script>
 </body>
 </html>
