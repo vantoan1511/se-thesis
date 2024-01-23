@@ -50,6 +50,7 @@ public class CategoryController {
 
         ModelAndView view = new ModelAndView(viewName);
         view.addObject("category", categoryDTO);
+        view.addObject("categories", categoryReader.getCategoriesMap());
         return view;
     }
 }
