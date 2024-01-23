@@ -17,3 +17,18 @@ function handleCategorySaveButton(event, selector, saveAndClose, saveAndNew) {
         handlePostRequest('/api/v1/categories', data, (result) => successCallback(result), (xhr) => errorCallback(xhr))
     }
 }
+
+function handleCategoryDeleteButton(event, id) {
+    event.preventDefault();
+    let data = [id]
+    console.log('IDS >> ', data);
+    showWarningAlert('Chuyên mục và các bài viết liên quan sẽ bị xóa và không thể khôi phục', result => {
+        if (result.isConfirmed) {
+            handleDeleteRequest('/api/v1/categories', data, () => {
+                showSuccessAlert('Đã xóa thành công', () => {
+                    location.reload()
+                })
+            }, (xhr) => errorCallback(xhr))
+        }
+    })
+}
