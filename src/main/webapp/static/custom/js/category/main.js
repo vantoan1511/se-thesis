@@ -1,3 +1,7 @@
+$(document).ready(() => {
+    NiceSelect.bind(document.getElementById("parentAlias"));
+})
+
 function handleCategorySaveButton(event, selector, saveAndClose, saveAndNew) {
     event.preventDefault();
     let data = getFormData(selector);
