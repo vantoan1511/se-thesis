@@ -273,7 +273,7 @@ const handleUploadButtonClick = async (e) => {
                     formData.append('file', file);
                     formData.append('title', titleInput);
                     $.ajax({
-                        url: '/api/v1/media',
+                        url: '/api/v1/files',
                         type: 'POST',
                         data: formData,
                         processData: false,

@@ -111,7 +111,7 @@
                     <span class="nav-header"> QUẢN LÝ TÀI NGUYÊN </span>
                 </li>
                 <li class="nav-item">
-                    <a href="<c:url value="/admin/storage"/>" class="nav-link">
+                    <a href="<c:url value="/admin/my-storage"/>" class="nav-link">
                         <i class="ri-hard-drive-3-fill nav-icon"></i>
                         <p>Kho lưu trữ</p>
                     </a>
