@@ -9,5 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CategoryDTO extends ContentDTO {
+    private String parentAlias;
+    private List<CategoryDTO> subCategories;
     private List<ArticleDTO> articles;
 }
