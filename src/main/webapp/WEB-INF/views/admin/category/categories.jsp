@@ -3,12 +3,10 @@
 <%@ include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>Danh sách chuyên mục bài viết</title>
 </head>
-
 <body>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -38,23 +36,6 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="row">
-                            <select name="sort-by" id="sort-by" class="col form-control custom-select">
-                                <option value="title">Tiêu đề</option>
-                                <option value="lastModifiedAt">Ngày sửa đổi</option>
-                                <option value="createdBy">Tác giả</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="row">
-                            <select name="sort-order" id="sort-order" class="col form-control custom-select">
-                                <option value="ASC">Tăng dần</option>
-                                <option value="DESC">Giảm dần</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="card-body p-0">
