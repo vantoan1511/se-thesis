@@ -2,7 +2,7 @@ package com.newswebsite.main.api;
 
 import com.newswebsite.main.dto.CategoryDTO;
 import com.newswebsite.main.http.SuccessResponse;
-import com.newswebsite.main.service.ICategoryWriter;
+import com.newswebsite.main.service.categoryservice.ICategoryWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

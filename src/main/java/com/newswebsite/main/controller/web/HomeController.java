@@ -1,6 +1,6 @@
 package com.newswebsite.main.controller.web;
 
-import com.newswebsite.main.service.IArticleReader;
+import com.newswebsite.main.service.articleservice.IArticleReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,8 +2,8 @@ package com.newswebsite.main.api;
 
 import com.newswebsite.main.dto.ArticleDTO;
 import com.newswebsite.main.http.SuccessResponse;
-import com.newswebsite.main.service.IArticleWriter;
-import com.newswebsite.main.service.IArticleReader;
+import com.newswebsite.main.service.articleservice.IArticleWriter;
+import com.newswebsite.main.service.articleservice.IArticleReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,7 @@
 package com.newswebsite.main.validator;
 
 import com.newswebsite.main.dto.UserDTO;
-import com.newswebsite.main.service.IUserRetrievalService;
+import com.newswebsite.main.service.userservice.IUserRetrievalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

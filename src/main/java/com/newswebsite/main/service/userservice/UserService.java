@@ -1,4 +1,4 @@
-package com.newswebsite.main.service.impl;
+package com.newswebsite.main.service.userservice;
 
 import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.entity.User;
@@ -7,9 +7,7 @@ import com.newswebsite.main.exception.EmailNotFoundException;
 import com.newswebsite.main.exception.InvalidUserToken;
 import com.newswebsite.main.repository.RoleRepo;
 import com.newswebsite.main.repository.UserRepo;
-import com.newswebsite.main.service.IEmailService;
-import com.newswebsite.main.service.IUserModificationService;
-import com.newswebsite.main.service.IUserRetrievalService;
+import com.newswebsite.main.service.emailservice.IEmailService;
 import com.newswebsite.main.utils.EmailContentUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

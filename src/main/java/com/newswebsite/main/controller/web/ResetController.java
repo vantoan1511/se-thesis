@@ -1,7 +1,7 @@
 package com.newswebsite.main.controller.web;
 
-import com.newswebsite.main.service.IUserModificationService;
-import com.newswebsite.main.service.IUserRetrievalService;
+import com.newswebsite.main.service.userservice.IUserModificationService;
+import com.newswebsite.main.service.userservice.IUserRetrievalService;
 import com.newswebsite.main.utils.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

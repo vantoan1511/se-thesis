@@ -1,9 +1,9 @@
-package com.newswebsite.main.service.impl;
+package com.newswebsite.main.service.stateservice;
 
 import com.newswebsite.main.entity.Article;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.repository.StateRepo;
-import com.newswebsite.main.service.IStateService;
+import com.newswebsite.main.service.stateservice.IStateService;
 
 public class TrashState extends IStateService {
     public TrashState(StateRepo stateRepo) {

@@ -1,4 +1,4 @@
-package com.newswebsite.main.service;
+package com.newswebsite.main.service.fileservice;
 
 import com.newswebsite.main.dto.response.FileResponse;
 import org.springframework.data.domain.Page;

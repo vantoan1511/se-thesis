@@ -1,11 +1,11 @@
-package com.newswebsite.main.service.impl;
+package com.newswebsite.main.service.stateservice;
 
 import com.newswebsite.main.dto.StateDTO;
 import com.newswebsite.main.entity.State;
 import com.newswebsite.main.exception.StateCodeNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.StateRepo;
-import com.newswebsite.main.service.IStateReader;
+import com.newswebsite.main.service.stateservice.IStateReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;

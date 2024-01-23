@@ -3,7 +3,7 @@ package com.newswebsite.main.api;
 import com.newswebsite.main.dto.request.FileRequest;
 import com.newswebsite.main.dto.response.FileResponse;
 import com.newswebsite.main.http.ErrorResponse;
-import com.newswebsite.main.service.IFileWriter;
+import com.newswebsite.main.service.fileservice.IFileWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

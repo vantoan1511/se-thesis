@@ -1,11 +1,11 @@
-package com.newswebsite.main.service.impl;
+package com.newswebsite.main.service.categoryservice;
 
 import com.newswebsite.main.dto.CategoryDTO;
 import com.newswebsite.main.entity.Category;
 import com.newswebsite.main.exception.CategoryCodeNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.CategoryRepo;
-import com.newswebsite.main.service.ICategoryWriter;
+import com.newswebsite.main.service.categoryservice.ICategoryWriter;
 import com.newswebsite.main.utils.SlugGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

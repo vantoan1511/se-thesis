@@ -1,8 +1,7 @@
 package com.newswebsite.main.controller.admin;
 
-import com.newswebsite.main.dto.request.FileRequest;
 import com.newswebsite.main.dto.response.FileResponse;
-import com.newswebsite.main.service.IFileReader;
+import com.newswebsite.main.service.fileservice.IFileReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;

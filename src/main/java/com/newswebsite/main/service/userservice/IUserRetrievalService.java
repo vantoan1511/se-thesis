@@ -1,4 +1,4 @@
-package com.newswebsite.main.service;
+package com.newswebsite.main.service.userservice;
 
 import com.newswebsite.main.dto.UserDTO;
 

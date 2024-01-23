@@ -1,4 +1,4 @@
-package com.newswebsite.main.service;
+package com.newswebsite.main.service.stateservice;
 
 import com.newswebsite.main.dto.StateDTO;
 

@@ -1,4 +1,4 @@
-package com.newswebsite.main.service.impl;
+package com.newswebsite.main.service.userservice;
 
 import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.entity.User;

@@ -33,7 +33,7 @@
     <b:bean id="bcryptEncoder"
             class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
     <b:bean id="customUserDetailsService"
-            class="com.newswebsite.main.service.impl.CustomUserDetailsService"/>
+            class="com.newswebsite.main.service.userservice.CustomUserDetailsService"/>
     <b:bean id="customAuthSuccessHandler"
             class="com.newswebsite.main.security.CustomAuthSuccessHandler"/>
 </b:beans>

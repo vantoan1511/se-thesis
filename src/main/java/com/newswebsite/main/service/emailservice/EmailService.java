@@ -1,6 +1,5 @@
-package com.newswebsite.main.service.impl;
+package com.newswebsite.main.service.emailservice;
 
-import com.newswebsite.main.service.IEmailService;
 import org.simplejavamail.api.email.Email;
 import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.api.mailer.config.TransportStrategy;

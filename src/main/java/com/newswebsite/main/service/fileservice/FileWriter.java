@@ -1,11 +1,10 @@
-package com.newswebsite.main.service.impl;
+package com.newswebsite.main.service.fileservice;
 
 import com.newswebsite.main.constant.Application;
 import com.newswebsite.main.dto.request.FileRequest;
 import com.newswebsite.main.dto.response.FileResponse;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.FileRepo;
-import com.newswebsite.main.service.IFileWriter;
 import com.newswebsite.main.utils.SlugGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

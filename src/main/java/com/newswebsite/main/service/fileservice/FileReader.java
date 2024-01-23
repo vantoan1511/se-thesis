@@ -1,11 +1,10 @@
-package com.newswebsite.main.service.impl;
+package com.newswebsite.main.service.fileservice;
 
 import com.newswebsite.main.dto.response.FileResponse;
 import com.newswebsite.main.entity.File;
 import com.newswebsite.main.exception.FileNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.FileRepo;
-import com.newswebsite.main.service.IFileReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
