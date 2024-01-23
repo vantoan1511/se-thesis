@@ -3,7 +3,6 @@ package com.newswebsite.main.controller.admin;
 import com.newswebsite.main.dto.CategoryDTO;
 import com.newswebsite.main.service.ICategoryReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,8 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/admin/categories")
 public class CategoryController {
 
+    private final ICategoryReader categoryReader;
+
     @Autowired
-    private ICategoryReader categoryReader;
+    public CategoryController(ICategoryReader categoryReader) {
+        this.categoryReader = categoryReader;
+    }
 
     @GetMapping
     public ModelAndView getList(@RequestParam(name = "tab", required = false, defaultValue = "all") String tab,
@@ -39,11 +42,11 @@ public class CategoryController {
         return view;
     }
 
-    @GetMapping({"/new", "/{categoryCode}"})
-    public ModelAndView createOrUpdate(@PathVariable(value = "categoryCode", required = false) String categoryCode) {
+    @GetMapping({"/new", "/{categoryAlias}"})
+    public ModelAndView createOrUpdate(@PathVariable(value = "categoryAlias", required = false) String categoryAlias) {
         String viewName = "admin/category/details";
 
-        CategoryDTO categoryDTO = categoryCode != null ? categoryReader.findByCode(categoryCode) : new CategoryDTO();
+        CategoryDTO categoryDTO = categoryAlias != null ? categoryReader.findByCode(categoryAlias) : new CategoryDTO();
 
         ModelAndView view = new ModelAndView(viewName);
         view.addObject("category", categoryDTO);
