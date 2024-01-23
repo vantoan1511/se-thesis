@@ -37,13 +37,13 @@ public class CategoryWriter implements ICategoryWriter {
         }
 
         String newAlias = StringUtils.hasText(category.getAlias()) ? category.getAlias() : category.getTitle();
-        String oldAlias = oldCategory.getAlias();
+        String oldAlias = oldCategory != null ? oldCategory.getAlias() : null;
         if (!newAlias.equals(oldAlias) && !isUniqueAlias(newAlias)) {
             newAlias = SlugGenerator.generateUniqueSlug(newAlias);
         } else {
             newAlias = SlugGenerator.slugify.slugify(newAlias);
         }
-        
+
         category.setAlias(newAlias);
         category.setPublishedAt(new Date());
         category.setParent(parent);
