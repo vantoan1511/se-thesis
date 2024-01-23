@@ -94,6 +94,11 @@
                                 <div class="col-md-4 col-sm-12">
                                     <div class="form-group">
                                         <label>Chuyên mục cha</label>
+                                        <form:select path="parentAlias"
+                                                     cssClass="wide">
+                                            <form:option value="">--Chọn chuyên mục--</form:option>
+                                            <form:options items="${categories}"/>
+                                        </form:select>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
