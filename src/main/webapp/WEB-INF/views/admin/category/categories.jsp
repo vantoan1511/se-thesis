@@ -111,7 +111,7 @@
                                             class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown"
                                             aria-expanded="false"></button>
                                     <div class="dropdown-menu dropdown-menu-right" role="menu" style>
-                                        <button onclick=""
+                                        <button onclick="handleCategoryDeleteButton(event, ${category.id})"
                                                 class="dropdown-item btn btn-default btn-sm">
                                             <i class="ri-delete-bin-line text-danger"></i> Xóa
                                         </button>
@@ -133,5 +133,6 @@
     </section>
     <!---->
 </div>
+<script src="<c:url value="/static/custom/js/category/main.js"/>"></script>
 </body>
 </html>
