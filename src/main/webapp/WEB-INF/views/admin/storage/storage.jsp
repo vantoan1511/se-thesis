@@ -76,9 +76,9 @@
                                 </a>
                                 <p style="font-size: 85%">
                                     URL: <a onclick="handleCopyToClipboard(event, '${file.url}')"
-                                       title="Click để copy url"
-                                       href="#">${file.url} <i class="ri-clipboard-line"></i>
-                                    </a>
+                                            title="Click để copy url"
+                                            href="#">${file.url} <i class="ri-clipboard-line"></i>
+                                </a>
                                 </p>
                             </td>
                             <td>
@@ -87,7 +87,23 @@
                             <td>
                                 <c:out value="${file.createdBy}"/>
                             </td>
-                            <td></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button"
+                                            class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown"
+                                            aria-expanded="false"></button>
+                                    <div class="dropdown-menu dropdown-menu-right" role="menu" style>
+                                        <button onclick="handleImageInspect(event, `${file.url}`)"
+                                                class="dropdown-item btn btn-default btn-sm">
+                                            <i class="ri-search-line text-success"></i> Xem
+                                        </button>
+                                        <button onclick="handleImageDeleteButton(event, `${file.id}`)"
+                                                class="dropdown-item btn btn-default btn-sm">
+                                            <i class="ri-delete-bin-line text-danger"></i> Xóa
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     </c:forEach>
                     <c:if test="${files.numberOfElements lt 1}">
@@ -102,5 +118,6 @@
         </div>
     </section>
 </div>
+<script src="<c:url value="/static/custom/js/storage/main.js"/>"></script>
 </body>
 </html>

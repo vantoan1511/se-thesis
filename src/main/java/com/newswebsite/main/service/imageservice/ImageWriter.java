@@ -4,6 +4,7 @@ import com.newswebsite.main.constant.Application;
 import com.newswebsite.main.dto.request.ImageRequest;
 import com.newswebsite.main.dto.response.ImageResponse;
 import com.newswebsite.main.entity.Image;
+import com.newswebsite.main.exception.ImageNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.ImageRepo;
 import com.newswebsite.main.utils.SlugGenerator;
@@ -11,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletContext;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class ImageWriter implements IImageWriter {
@@ -68,7 +71,22 @@ public class ImageWriter implements IImageWriter {
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
-
+        Image image = imageRepo.findOne(id);
+        if (image == null) throw new ImageNotFoundException("Hình ảnh không tồn tại ");
+        File file = new File(image.getDirectory());
+        if (file.exists() && file.delete()) {
+            imageRepo.delete(id);
+        }
     }
+
+    @Override
+    @Transactional
+    public void deleteMultiple(List<Long> ids) {
+        for (long id : ids) {
+            delete(id);
+        }
+    }
+
 }
