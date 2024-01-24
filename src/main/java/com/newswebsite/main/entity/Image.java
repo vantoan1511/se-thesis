@@ -6,10 +6,10 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "file")
+@Table(name = "image")
 @Getter
 @Setter
-public class File extends Content {
+public class Image extends Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

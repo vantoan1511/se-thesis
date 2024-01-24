@@ -10,7 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FileRequest extends ContentRequest {
+public class ImageRequest extends ContentRequest {
     private CommonsMultipartFile file;
     private String directory;
 }

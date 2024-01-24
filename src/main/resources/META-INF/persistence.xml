@@ -10,7 +10,7 @@
         <class>com.newswebsite.main.entity.Role</class>
         <class>com.newswebsite.main.entity.Category</class>
         <class>com.newswebsite.main.entity.State</class>
-        <class>com.newswebsite.main.entity.File</class>
+        <class>com.newswebsite.main.entity.Image</class>
 
     </persistence-unit>
 </persistence>

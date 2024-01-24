@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FileResponse extends ContentResponse {
+public class ImageResponse extends ContentResponse {
     private long size;
     private String url;
     private String directory;

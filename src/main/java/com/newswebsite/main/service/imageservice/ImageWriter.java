@@ -1,10 +1,11 @@
-package com.newswebsite.main.service.fileservice;
+package com.newswebsite.main.service.imageservice;
 
 import com.newswebsite.main.constant.Application;
-import com.newswebsite.main.dto.request.FileRequest;
-import com.newswebsite.main.dto.response.FileResponse;
+import com.newswebsite.main.dto.request.ImageRequest;
+import com.newswebsite.main.dto.response.ImageResponse;
+import com.newswebsite.main.entity.Image;
 import com.newswebsite.main.mapper.CollectionMapper;
-import com.newswebsite.main.repository.FileRepo;
+import com.newswebsite.main.repository.ImageRepo;
 import com.newswebsite.main.utils.SlugGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,10 @@ import java.io.File;
 import java.io.IOException;
 
 @Service
-public class FileWriter implements IFileWriter {
+public class ImageWriter implements IImageWriter {
 
     @Autowired
-    private FileRepo fileRepo;
+    private ImageRepo imageRepo;
 
     @Autowired
     private ServletContext servletContext;
@@ -25,7 +26,7 @@ public class FileWriter implements IFileWriter {
     private final CollectionMapper mapper = new CollectionMapper();
 
     @Override
-    public FileResponse handleUpload(FileRequest fileRequest) throws IOException {
+    public ImageResponse handleUpload(ImageRequest fileRequest) throws IOException {
         String prefix = Application.BASE_URL;
         if (fileRequest.getFile() != null) {
             String originalFileName = fileRequest.getFile().getOriginalFilename();
@@ -48,7 +49,7 @@ public class FileWriter implements IFileWriter {
             }
 
             fileRequest.getFile().transferTo(destDir);
-            FileResponse fileResponse = new FileResponse();
+            ImageResponse fileResponse = new ImageResponse();
             fileResponse.setDirectory(destOnSys);
             fileResponse.setUrl(url);
             fileResponse.setAlias(fileAlias);
@@ -60,10 +61,10 @@ public class FileWriter implements IFileWriter {
     }
 
     @Override
-    public FileResponse save(FileResponse fileResponse) {
-        com.newswebsite.main.entity.File file = mapper.map(fileResponse, com.newswebsite.main.entity.File.class);
-        file = fileRepo.save(file);
-        return mapper.map(file, FileResponse.class);
+    public ImageResponse save(ImageResponse fileResponse) {
+        Image image = mapper.map(fileResponse, Image.class);
+        image = imageRepo.save(image);
+        return mapper.map(image, ImageResponse.class);
     }
 
     @Override
