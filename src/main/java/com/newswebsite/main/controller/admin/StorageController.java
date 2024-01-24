@@ -1,6 +1,7 @@
 package com.newswebsite.main.controller.admin;
 
 import com.newswebsite.main.dto.response.ImageResponse;
+import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.imageservice.IImageReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +21,10 @@ public class StorageController {
     @GetMapping
     public ModelAndView getList() {
         String viewName = "admin/storage/storage";
+        String username = SecurityUtil.username();
 
         ModelAndView view = new ModelAndView(viewName);
-        view.addObject("files", fileReader.getFiles("writer", new PageRequest(0, 10)));
+        view.addObject("files", fileReader.getFiles(username, new PageRequest(0, 10)));
         return view;
     }
 
