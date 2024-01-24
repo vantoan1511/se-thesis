@@ -1,16 +1,19 @@
 package com.newswebsite.main.service.imageservice;
 
+import com.newswebsite.main.dto.ImageDTO;
 import com.newswebsite.main.dto.request.ImageRequest;
 import com.newswebsite.main.dto.response.ImageResponse;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface IImageWriter {
-    ImageResponse handleUpload(ImageRequest fileRequest) throws IOException;
+    ImageDTO handleUpload(CommonsMultipartFile file) throws IOException;
 
-    ImageResponse save(ImageResponse fileResponse);
+    ImageDTO save(ImageDTO imageDTO);
 
     void delete(long id);
+
     void deleteMultiple(List<Long> ids);
 }

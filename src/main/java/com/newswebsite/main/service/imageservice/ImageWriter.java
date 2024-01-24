@@ -1,6 +1,7 @@
 package com.newswebsite.main.service.imageservice;
 
 import com.newswebsite.main.constant.Application;
+import com.newswebsite.main.dto.ImageDTO;
 import com.newswebsite.main.dto.request.ImageRequest;
 import com.newswebsite.main.dto.response.ImageResponse;
 import com.newswebsite.main.entity.Image;
@@ -10,11 +11,14 @@ import com.newswebsite.main.repository.ImageRepo;
 import com.newswebsite.main.utils.SlugGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,45 +33,49 @@ public class ImageWriter implements IImageWriter {
     private final CollectionMapper mapper = new CollectionMapper();
 
     @Override
-    public ImageResponse handleUpload(ImageRequest fileRequest) throws IOException {
-        String prefix = Application.BASE_URL;
-        if (fileRequest.getFile() != null) {
-            String originalFileName = fileRequest.getFile().getOriginalFilename();
-            long fileSize = fileRequest.getFile().getSize();
-            String fileTitle = fileRequest.getTitle().isBlank() ? originalFileName : fileRequest.getTitle();
+    public ImageDTO handleUpload(CommonsMultipartFile file) throws IOException {
+        if (file != null) {
+            String originalFileName = file.getOriginalFilename();
             String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            String fileName = SlugGenerator.generateUniqueSlug("uploaded-image").concat(fileExtension);
 
-            if (!fileTitle.contains(fileExtension)) {
-                fileTitle += fileExtension;
+            String directory = servletContext.getRealPath("/") + "resources\\images\\" + fileName;
+
+            File destDir = new File(directory);
+            if (!destDir.exists() && destDir.mkdirs()) {
+                file.transferTo(destDir);
+                return new ImageDTO(file.getSize(), Application.BASE_URL.concat("/resources/images/").concat(fileName), directory);
             }
-
-            String fileAlias = SlugGenerator.slugify.slugify(fileTitle);
-            String directory = "resources\\images\\" + fileTitle;
-            String url = prefix + "/resources/images/" + fileTitle;
-            String destOnSys = servletContext.getRealPath("/") + directory;
-
-            File destDir = new File(destOnSys);
-            if (!destDir.exists()) {
-                destDir.mkdirs();
-            }
-
-            fileRequest.getFile().transferTo(destDir);
-            ImageResponse fileResponse = new ImageResponse();
-            fileResponse.setDirectory(destOnSys);
-            fileResponse.setUrl(url);
-            fileResponse.setAlias(fileAlias);
-            fileResponse.setSize(fileSize);
-            fileResponse.setTitle(fileTitle);
-            return fileResponse;
         }
         return null;
     }
 
     @Override
-    public ImageResponse save(ImageResponse fileResponse) {
-        Image image = mapper.map(fileResponse, Image.class);
+    public ImageDTO save(ImageDTO imageDTO) {
+        Image image = mapper.map(imageDTO, Image.class);
+        image.setPublishedAt(new Date());
+        Image oldImage = new Image();
+        if (imageDTO.getId() != null) {
+            oldImage = imageRepo.findOne(imageDTO.getId());
+            if (oldImage == null) throw new ImageNotFoundException("Tập tin không tồn tại");
+            image.setSize(oldImage.getSize());
+            image.setDirectory(oldImage.getDirectory());
+            image.setUrl(oldImage.getUrl());
+            image.setCreatedAt(oldImage.getCreatedAt());
+            image.setCreatedBy(oldImage.getCreatedBy());
+            image.setPublishedAt(oldImage.getPublishedAt());
+        }
+
+        String newAlias = StringUtils.hasText(imageDTO.getAlias()) ? imageDTO.getAlias() : imageDTO.getTitle();
+        newAlias = SlugGenerator.slugify.slugify(newAlias);
+        String oldAlias = oldImage.getAlias();
+        if (!newAlias.equals(oldAlias) && !isUniqueAlias(newAlias)) {
+            newAlias = SlugGenerator.generateUniqueSlug(newAlias);
+        }
+
+        image.setAlias(newAlias);
         image = imageRepo.save(image);
-        return mapper.map(image, ImageResponse.class);
+        return mapper.map(image, ImageDTO.class);
     }
 
     @Override
@@ -89,4 +97,7 @@ public class ImageWriter implements IImageWriter {
         }
     }
 
+    private boolean isUniqueAlias(String alias) {
+        return imageRepo.findByAlias(alias) == null;
+    }
 }

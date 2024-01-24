@@ -29,24 +29,17 @@
             <div class="card">
                 <div class="card-body row">
                     <div class="col-md-3 col-sm-auto">
-                        <button onclick="handleCategorySaveButton(event, '#form', false, false)"
+                        <button onclick="handleImageDetailsSaveButton(event, '#form', false, false)"
                                 id="saveBtn"
                                 class="btn btn-block bg-gradient-success">
                             <i class="ri-save-line"></i> Lưu
                         </button>
                     </div>
                     <div class="col-auto">
-                        <button onclick="handleCategorySaveButton(event, '#form', true, false)"
+                        <button onclick="handleImageDetailsSaveButton(event, '#form', true, false)"
                                 id="saveAndCloseBtn"
                                 class="btn btn-block btn-default">
                             <i class="ri-check-double-line text-success"></i> Lưu & Đóng
-                        </button>
-                    </div>
-                    <div class="col-auto">
-                        <button onclick="handleCategorySaveButton(event, '#form', false, true)"
-                                id="saveAndNewBtn"
-                                class="btn btn-block btn-default">
-                            <i class="ri-file-add-line text-success"></i> Lưu & Mới
                         </button>
                     </div>
                     <div class="col-auto">
@@ -120,6 +113,6 @@
         </form:form>
     </section>
 </div>
-<script src="<c:url value="/static/custom/js/category/main.js"/>"></script>
+<script src="<c:url value="/static/custom/js/storage/main.js"/>"></script>
 </body>
 </html>

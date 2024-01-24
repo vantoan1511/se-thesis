@@ -292,21 +292,6 @@ const handleUploadButtonClick = async (e) => {
     }
 }
 
-const handleImageTrashButtonClick = (event, elements) => {
-    event.preventDefault();
-    if (elements.length === 0) {
-        showErrorToast('Không có mục nào được chọn', 1500)
-        return
-    }
-    let ids = getElementsID(elements)
-    handleDeleteRequest('/api/v1/media', ids,
-        () => {
-            showSuccessAlert('Đã chuyển ' + ids.length + ' vào thùng rác', () => {
-                location.reload();
-            })
-        }, (xhr) => errorCallback(xhr))
-}
-
 /**
  * Web single article
  */
