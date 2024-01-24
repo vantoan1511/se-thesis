@@ -39,26 +39,10 @@ public class ApplicationExceptionHandler {
         return new ModelAndView(viewName);
     }
 
-    @ExceptionHandler(ArticleNotFoundException.class)
+    @ExceptionHandler({StateCodeNotFoundException.class, ArticleNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Object handleArticleNotFoundException(ArticleNotFoundException ex,
-                                                 HttpServletRequest request) {
-        if (isAPIRequest(request)) {
-            return ErrorResponse.builder()
-                    .timestamp(new Date())
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .error(HttpStatus.NOT_FOUND.name())
-                    .message(ex.getMessage())
-                    .build();
-        }
-        String viewName = isAdminRequest(request) ? "admin/404" : "web/404";
-        return new ModelAndView(viewName);
-    }
-
-    @ExceptionHandler(StateCodeNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Object handleStateCodeNotFoundException(StateCodeNotFoundException ex,
-                                                   HttpServletRequest request) {
+    public Object handleNotFoundException(RuntimeException ex,
+                                          HttpServletRequest request) {
         if (isAPIRequest(request)) {
             return ErrorResponse.builder()
                     .timestamp(new Date())
