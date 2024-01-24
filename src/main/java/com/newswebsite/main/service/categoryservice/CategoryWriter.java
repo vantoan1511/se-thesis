@@ -30,6 +30,7 @@ public class CategoryWriter implements ICategoryWriter {
         Category oldCategory = categoryDTO.getId() != null ? categoryRepo.findOne(categoryDTO.getId()) : new Category();
         Category parent = categoryDTO.getParentAlias().isBlank() ? null : categoryRepo.findByAlias(categoryDTO.getParentAlias());
 
+        category.setPublishedAt(new Date());
         if (oldCategory != null) {
             category.setCreatedAt(oldCategory.getCreatedAt());
             category.setCreatedBy(oldCategory.getCreatedBy());
@@ -37,15 +38,13 @@ public class CategoryWriter implements ICategoryWriter {
         }
 
         String newAlias = StringUtils.hasText(category.getAlias()) ? category.getAlias() : category.getTitle();
-        String oldAlias = oldCategory != null ? oldCategory.getAlias() : null;
+        newAlias = SlugGenerator.slugify.slugify(newAlias);
+        String oldAlias = oldCategory.getAlias();
         if (!newAlias.equals(oldAlias) && !isUniqueAlias(newAlias)) {
             newAlias = SlugGenerator.generateUniqueSlug(newAlias);
-        } else {
-            newAlias = SlugGenerator.slugify.slugify(newAlias);
         }
 
         category.setAlias(newAlias);
-        category.setPublishedAt(new Date());
         category.setParent(parent);
 
         category = categoryRepo.save(category);

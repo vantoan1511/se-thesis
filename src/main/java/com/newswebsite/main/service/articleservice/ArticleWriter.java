@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -171,17 +172,14 @@ public class ArticleWriter implements IArticleWriter {
             article.setTraffic(oldArticle.getTraffic());
             article.setState(oldArticle.getState());
         }
-        String newAlias = SlugGenerator.slugify.slugify(articleDTO.getAlias());
-        String oldAlias = oldArticle.getAlias();
 
-        if (!newAlias.equals(oldAlias)) {
-            if (newAlias.isBlank()) {
-                newAlias = SlugGenerator.generateUniqueSlug(articleDTO.getTitle());
-            }
-            if (!isUniqueAlias(newAlias)) {
-                newAlias = SlugGenerator.generateUniqueSlug(newAlias);
-            }
+        String newAlias = StringUtils.hasText(article.getAlias()) ? article.getAlias() : article.getTitle();
+        newAlias = SlugGenerator.slugify.slugify(newAlias);
+        String oldAlias = oldArticle.getAlias();
+        if (!newAlias.equals(oldAlias) && !isUniqueAlias(newAlias)) {
+            newAlias = SlugGenerator.generateUniqueSlug(newAlias);
         }
+
         article.setAlias(newAlias);
         return mapper.map(articleRepo.save(article), ArticleDTO.class);
     }
