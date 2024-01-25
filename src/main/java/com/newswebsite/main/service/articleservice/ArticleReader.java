@@ -43,11 +43,17 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public ArticleDTO findByAliasAndStateCode(String alias, String stateCode) {
-        Article article = articleRepo.findByAliasAndStateCode(alias, stateCode);
+    public ArticleDTO getPublishedArticle(String alias) {
+        Article article = articleRepo.findByAliasAndStateCode(alias, ArticleState.PUBLISHED.name());
         if (article == null)
             throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null) + alias);
         return mapper.map(article, ArticleDTO.class);
+    }
+
+    @Override
+    public Page<ArticleDTO> getLatestArticles(Pageable pageable) {
+        return articleRepo.findAllByStateCode(ArticleState.PUBLISHED.name(), pageable)
+                .map(item -> mapper.map(item, ArticleDTO.class));
     }
 
     @Override
@@ -69,7 +75,7 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public Page<ArticleDTO> getPublishedArticles(Pageable pageable) {
+    public Page<ArticleDTO> getPublishedArticle(Pageable pageable) {
         return articleRepo.findAllByStateCode(ArticleState.PUBLISHED.name(), pageable)
                 .map(item -> mapper.map(item, ArticleDTO.class));
     }
