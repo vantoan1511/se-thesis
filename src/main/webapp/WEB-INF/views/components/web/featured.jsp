@@ -3,7 +3,7 @@
 <%@ include file="../../../../common/taglib.jsp" %>
 
 <div class="owl-carousel owl-theme slide" id="featured">
-    <c:forEach items="${featured}" var="article">
+    <c:forEach items="${featured.content}" var="article">
         <div class="item">
             <article class="featured">
                 <div class="overlay"></div>
@@ -12,7 +12,7 @@
                 </figure>
                 <div class="details">
                     <div class="category">
-                        <a href="/categories/${article.categoryCode}">${article.categoryName}</a>
+                        <a href="/categories/${article.categoryAlias}">${article.categoryTitle}</a>
                     </div>
                     <h1>
                         <a href="/${article.alias}">
