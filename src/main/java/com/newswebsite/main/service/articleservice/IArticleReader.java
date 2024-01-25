@@ -9,7 +9,9 @@ public interface IArticleReader {
 
     ArticleDTO findByAlias(String alias);
 
-    ArticleDTO findByAliasAndStateCode(String alias, String stateCode);
+    ArticleDTO getPublishedArticle(String alias);
+
+    Page<ArticleDTO> getLatestArticles(Pageable pageable);
 
     Page<ArticleDTO> findAll(Pageable pageable);
 
@@ -17,7 +19,7 @@ public interface IArticleReader {
 
     Page<ArticleDTO> getPendingArticles(Pageable pageable);
 
-    Page<ArticleDTO> getPublishedArticles(Pageable pageable);
+    Page<ArticleDTO> getPublishedArticle(Pageable pageable);
 
     Page<ArticleDTO> getTrashArticles(Pageable pageable);
 
