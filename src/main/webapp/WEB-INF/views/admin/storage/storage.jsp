@@ -1,21 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
+
+<c:set var="pageTitle" value="Kho lưu trữ"/>
+<c:set var="breadcrumbs" value="${['Trang chủ', pageTitle]}"/>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Kho lưu trữ</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <div class="content-wrapper">
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <h1>Kho lưu trữ</h1>
-            </div>
-        </div>
-    </section>
+    <%@ include file="../../components/admin/contentHeader.jsp" %>
 
     <section class="content">
         <!-- Functionality bar -->

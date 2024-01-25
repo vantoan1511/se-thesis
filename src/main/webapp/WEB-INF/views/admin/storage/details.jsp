@@ -1,24 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
+
+<c:set var="pageTitle" value="${file.title}"/>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý tài nguyên</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <h1>Quản lý tài nguyên</h1>
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-    </section>
+    <%@ include file="../../components/admin/contentHeader.jsp" %>
 
     <!-- Main content -->
     <section class="content">

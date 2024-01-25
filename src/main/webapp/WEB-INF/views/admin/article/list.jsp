@@ -1,29 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
+
+<c:set var="pageTitle" value="Danh sách bài viết"/>
+<c:set var="breadcrumbs" value="${['Trang chủ', 'Danh sách bài viết']}"/>
+
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
-    <title>Danh sách bài viết</title>
+    <title>${pageTitle}</title>
 </head>
-
 <body>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Danh sách bài viết</h1>
-                </div>
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-    </section>
-
+    <%@ include file="../../components/admin/contentHeader.jsp" %>
     <!-- Main content -->
     <section class="content">
         <sec:authorize access="hasRole('ADMIN')">

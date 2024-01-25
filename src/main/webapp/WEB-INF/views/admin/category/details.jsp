@@ -1,24 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
+
+<c:set var="pageTitle" value="${category.title}"/>
+<c:if test="${empty category.title}">
+    <c:set var="pageTitle" value="Thêm mới chuyên mục"/>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>${category.title}</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <h1>Chuyên mục: ${category.title}</h1>
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-    </section>
+    <%@ include file="../../components/admin/contentHeader.jsp" %>
 
     <!-- Main content -->
     <section class="content">

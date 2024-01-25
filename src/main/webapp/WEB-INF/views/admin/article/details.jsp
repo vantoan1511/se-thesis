@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
+
+<c:set var="pageTitle" value="${article.title}"/>
+<c:if test="${empty article.title}">
+    <c:set var="pageTitle" value="Thêm mới bài viết"/>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>${article.title}</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <!-- Content Wrapper. Contains page content -->
@@ -19,14 +25,7 @@
         <iframe class="preview-frame" src=""></iframe>
     </div>
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <h1>Bài viết: ${article.title}</h1>
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-    </section>
+    <%@ include file="../../components/admin/contentHeader.jsp" %>
 
     <!-- Main content -->
     <section class="content">
