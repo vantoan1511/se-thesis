@@ -18,6 +18,7 @@ import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class ImageWriter implements IImageWriter {
             String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
             String fileName = SlugGenerator.generateUniqueSlug("uploaded-image").concat(fileExtension);
 
-            String directory = servletContext.getRealPath("/") + "resources\\images\\" + fileName;
+            String directory = servletContext.getRealPath("/") + "resources" + File.separator + "images" + File.separator + fileName;
 
             File destDir = new File(directory);
             if (!destDir.exists() && destDir.mkdirs()) {
@@ -53,7 +54,7 @@ public class ImageWriter implements IImageWriter {
     @Override
     public ImageDTO save(ImageDTO imageDTO) {
         Image image = mapper.map(imageDTO, Image.class);
-        image.setPublishedAt(new Date());
+        image.setPublishedAt(Date.from(Instant.now()));
         Image oldImage = new Image();
         if (imageDTO.getId() != null) {
             oldImage = imageRepo.findOne(imageDTO.getId());
