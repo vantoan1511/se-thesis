@@ -49,7 +49,7 @@ public class ArticleController {
         if (authorities.contains(Role.ADMIN.name())) {
             switch (tab) {
                 case "all" -> contents = articleReader.getNotTrashArticles(pageable);
-                case "published" -> contents = articleReader.getPublishedArticles(pageable);
+                case "published" -> contents = articleReader.getPublishedArticle(pageable);
                 case "pending" -> contents = articleReader.getPendingArticles(pageable);
                 case "trash" -> contents = articleReader.getTrashArticles(pageable);
                 case "featured" -> contents = articleReader.getFeaturedArticles(pageable);
