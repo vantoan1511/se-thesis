@@ -23,7 +23,7 @@
                         <h1>${article.title}</h1>
                         <ul class="details">
                             <li>Đã đăng lúc <fmt:formatDate value="${article.publishedAt}"
-                                                            pattern="HH:mm dd/MM/yyyy"/>
+                                                            pattern="HH:mm dd MMM, yyyy"/>
                             </li>
                             <li><a href="/categories/${article.categoryAlias}">${article.categoryTitle}</a></li>
                             <li>Bởi <a href="#">${article.createdBy}</a></li>
