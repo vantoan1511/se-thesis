@@ -20,7 +20,7 @@ import java.util.List;
 public class ArticleController {
 
     @Autowired
-    private IArticleReader articleRetrievalService;
+    private IArticleReader articleReader;
 
     @GetMapping
     public ModelAndView getDetails(@PathVariable("alias") String alias,
@@ -29,8 +29,8 @@ public class ArticleController {
         List<String> roles = SecurityUtil.getAuthorities();
 
         ArticleDTO articleDTO = (previewMode && (roles.contains(Role.WRITER.name()) || roles.contains(Role.ADMIN.name()))) ?
-                articleRetrievalService.findByAlias(alias) :
-                articleRetrievalService.findByAliasAndStateCode(alias, ArticleState.PUBLISHED.name());
+                articleReader.findByAlias(alias) :
+                articleReader.getPublishedArticle(alias);
 
         ModelAndView view = new ModelAndView(viewName);
         view.addObject("article", articleDTO);
