@@ -3,7 +3,7 @@
 <%@ include file="../../../../common/taglib.jsp" %>
 
 <div class="row">
-    <c:forEach items="${latest}" var="article">
+    <c:forEach items="${latest.content}" var="article">
         <article class="article col-md-6">
             <div class="inner">
                 <figure>
@@ -15,7 +15,7 @@
                     <div class="detail">
                         <div class="time"><fmt:formatDate value="${article.publishedAt}"/></div>
                         <div class="category">
-                            <a href="/categories/${article.categoryCode}">${article.categoryName}</a>
+                            <a href="/categories/${article.categoryAlias}">${article.categoryTitle}</a>
                         </div>
                     </div>
                     <h2>
