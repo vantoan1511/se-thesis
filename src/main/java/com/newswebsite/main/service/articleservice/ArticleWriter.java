@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -87,6 +89,7 @@ public class ArticleWriter implements IArticleWriter {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
         stateService.publish(article);
+        article.setPublishedAt(Date.from(Instant.now()));
         articleRepo.save(article);
     }
 
@@ -169,6 +172,7 @@ public class ArticleWriter implements IArticleWriter {
                 throw new InvalidArticleOperationException("Bài viết hiện không thể chỉnh sửa");
             article.setCreatedAt(oldArticle.getCreatedAt());
             article.setCreatedBy(oldArticle.getCreatedBy());
+            article.setPublishedAt(oldArticle.getPublishedAt());
             article.setTraffic(oldArticle.getTraffic());
             article.setState(oldArticle.getState());
         }
