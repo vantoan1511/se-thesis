@@ -55,4 +55,4 @@
     </div>
 </div>
 <div id="id" data-article-id="${article.id}" class="hidden"></div>
-<div id="logged-user" data-username="${pageContext.request.userPrincipal.name}" class="hidden"></div>
+<div id="logged-user" data-username="${user.username}" class="hidden"></div>
