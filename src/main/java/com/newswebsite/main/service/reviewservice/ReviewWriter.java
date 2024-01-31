@@ -24,19 +24,20 @@ public class ReviewWriter implements IReviewWriter {
     private final ArticleRepo articleRepo;
     private final UserRepo userRepo;
 
-    private final CollectionMapper mapper = new CollectionMapper();
+    private final CollectionMapper mapper;
 
     @Autowired
-    public ReviewWriter(ReviewRepo reviewRepo, ArticleRepo articleRepo, UserRepo userRepo) {
+    public ReviewWriter(ReviewRepo reviewRepo, ArticleRepo articleRepo, UserRepo userRepo, CollectionMapper mapper) {
         this.reviewRepo = reviewRepo;
         this.articleRepo = articleRepo;
         this.userRepo = userRepo;
+        this.mapper = mapper;
     }
 
     @Override
     @Transactional
     public ReviewDTO save(ReviewDTO reviewDTO) {
-        Review review = mapper.map(reviewDTO, Review.class);
+        Review review = new Review();
         Article article = articleRepo.findOne(reviewDTO.getArticleId());
         if (article == null) throw new ArticleNotFoundException("Bài viết không tồn tại");
         User user = userRepo.findOne(reviewDTO.getUserId());
@@ -46,8 +47,11 @@ public class ReviewWriter implements IReviewWriter {
             if (parent == null) throw new ReviewNotFoundException("Bình luận không tồn tại");
             review.setParent(parent);
         }
+
+        review.setText(reviewDTO.getText());
         review.setUser(user);
         review.setArticle(article);
+
         review = reviewRepo.save(review);
         return mapper.map(review, ReviewDTO.class);
     }

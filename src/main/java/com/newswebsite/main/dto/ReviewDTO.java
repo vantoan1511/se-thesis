@@ -22,4 +22,5 @@ public class ReviewDTO extends BaseDTO {
     @NotNull(message = "Mục này là bắt buộc")
     private Long articleId;
     private Long parentId;
+    private String parentText;
 }
