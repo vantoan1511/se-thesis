@@ -11,6 +11,6 @@
         <class>com.newswebsite.main.entity.Category</class>
         <class>com.newswebsite.main.entity.State</class>
         <class>com.newswebsite.main.entity.Image</class>
-
+        <class>com.newswebsite.main.entity.Review</class>
     </persistence-unit>
 </persistence>

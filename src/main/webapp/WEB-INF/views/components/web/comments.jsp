@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ include file="../../../../common/taglib.jsp" %>
+<%@ include file="/common/taglib.jsp" %>
 
 <div id="comments-section"
      class="comments">
@@ -33,9 +33,10 @@
                class="btn btn-danger">Hủy
             </a>
         </div>
+        <c:set var="user" value="${pageContext.request.userPrincipal.principal}"/>
         <input type="hidden" name="id" value="">
-        <input type="hidden" name="articleSlug" value="${article.alias}">
-        <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}">
+        <input type="hidden" name="articleId" value="${article.id}">
+        <input type="hidden" name="userId" value="${user.id}">
         <input type="hidden" name="parentId" value="">
     </form>
     <h2 class="title">${comments.getTotalElements()} Bình luận

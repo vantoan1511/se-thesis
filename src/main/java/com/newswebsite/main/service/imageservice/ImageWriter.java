@@ -2,8 +2,6 @@ package com.newswebsite.main.service.imageservice;
 
 import com.newswebsite.main.constant.Application;
 import com.newswebsite.main.dto.ImageDTO;
-import com.newswebsite.main.dto.request.ImageRequest;
-import com.newswebsite.main.dto.response.ImageResponse;
 import com.newswebsite.main.entity.Image;
 import com.newswebsite.main.exception.ImageNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
@@ -25,13 +23,17 @@ import java.util.List;
 @Service
 public class ImageWriter implements IImageWriter {
 
-    @Autowired
-    private ImageRepo imageRepo;
+    private final ImageRepo imageRepo;
 
-    @Autowired
-    private ServletContext servletContext;
+    private final ServletContext servletContext;
 
     private final CollectionMapper mapper = new CollectionMapper();
+
+    @Autowired
+    public ImageWriter(ImageRepo imageRepo, ServletContext servletContext) {
+        this.imageRepo = imageRepo;
+        this.servletContext = servletContext;
+    }
 
     @Override
     public ImageDTO handleUpload(CommonsMultipartFile file) throws IOException {

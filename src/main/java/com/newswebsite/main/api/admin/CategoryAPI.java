@@ -1,4 +1,4 @@
-package com.newswebsite.main.api;
+package com.newswebsite.main.api.admin;
 
 import com.newswebsite.main.dto.CategoryDTO;
 import com.newswebsite.main.http.SuccessResponse;

@@ -1,8 +1,6 @@
-package com.newswebsite.main.api;
+package com.newswebsite.main.api.admin;
 
 import com.newswebsite.main.dto.ImageDTO;
-import com.newswebsite.main.dto.request.ImageRequest;
-import com.newswebsite.main.dto.response.ImageResponse;
 import com.newswebsite.main.http.ErrorResponse;
 import com.newswebsite.main.http.SuccessResponse;
 import com.newswebsite.main.service.imageservice.IImageWriter;
@@ -12,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 

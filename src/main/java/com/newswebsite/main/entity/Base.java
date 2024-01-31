@@ -14,16 +14,20 @@ import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Content extends Base {
-
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "alias", unique = true, nullable = false)
-    private String alias;
-    @Column(name = "description")
-    private String description;
-    @Column(name = "published_at")
-    private Date publishedAt;
+public class Base {
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+    @LastModifiedBy
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
+    @CreatedDate
+    @Column(name = "created_at")
+    private Date createdAt;
+    @LastModifiedDate
+    @Column(name = "last_modified_at")
+    private Date lastModifiedAt;
 }

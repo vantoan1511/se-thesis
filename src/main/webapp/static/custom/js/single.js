@@ -1,4 +1,4 @@
-const apiUrl = '/api/v1/articles/';
+const apiUrl = '/public/api/v1/articles/';
 const articleId = $('#id').data('article-id');
 const limit = 2;
 const loggedInUsername = $('#logged-user').data('username');
@@ -38,7 +38,7 @@ const createReviews = (reviews) => {
         const $img = $('<img>').attr('src', '/static/web/images/img01.jpg');
         const $details = $('<div>').addClass('details');
         const $username = $('<h5>').addClass('name').text(`${review.userFirstName} ${review.userLastName}`);
-        const $time = $('<div>').addClass('time').text(new Date(review.createdDate).toLocaleDateString('vi-VN', defaultDateFormatOptions));
+        const $time = $('<div>').addClass('time').text(new Date(review.createdAt).toLocaleDateString('vi-VN', defaultDateFormatOptions));
         const $description = $('<div>').addClass('description').html(review.text);
         const $footer = $('<footer>');
         const $reply = $('<a>').addClass('reply-button').attr('href', '#leave-review')
@@ -52,7 +52,7 @@ const createReviews = (reviews) => {
             .html(`Xóa <i class="ion-android-delete"></i>`)
 
         let $parentText = $('<div>')
-        if (review.parentId !== 0) {
+        if (review.parentId !== null) {
             $parentText.html(`<blockquote>${review.parentText}</blockquote>`);
         }
 
@@ -118,18 +118,14 @@ const handleReviewSubmitButton = (event, formSelector) => {
             showSuccessAlert('Đã đăng bình luận', () => {
                 location.reload()
             })
-        }, (xhr, status, error) => {
-            console.log(getResponseTextAsJSON(xhr).message)
-            showBottomErrorToast('Có lỗi xảy ra', 2000)
+        }, (xhr) => {
+            showBottomErrorToast(getResponseTextAsJSON(xhr).message, 2000)
         })
     } else {
         handlePutRequest(url, data, () => {
             showSuccessAlert('Đã sửa bình luận', () => {
                 location.reload()
             })
-        }, (xhr) => {
-            console.log(getResponseTextAsJSON(xhr).message)
-            showBottomErrorToast('Có lỗi xảy ra', 2000)
-        })
+        }, (xhr) => errorCallback(xhr))
     }
 }

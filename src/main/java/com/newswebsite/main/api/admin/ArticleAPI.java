@@ -1,4 +1,4 @@
-package com.newswebsite.main.api;
+package com.newswebsite.main.api.admin;
 
 import com.newswebsite.main.dto.ArticleDTO;
 import com.newswebsite.main.http.SuccessResponse;

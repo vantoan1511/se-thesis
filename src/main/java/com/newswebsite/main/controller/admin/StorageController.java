@@ -1,6 +1,6 @@
 package com.newswebsite.main.controller.admin;
 
-import com.newswebsite.main.dto.response.ImageResponse;
+import com.newswebsite.main.dto.ImageDTO;
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.imageservice.IImageReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/admin/my-storage")
 public class StorageController {
 
+    private final IImageReader fileReader;
+
     @Autowired
-    private IImageReader fileReader;
+    public StorageController(IImageReader fileReader) {
+        this.fileReader = fileReader;
+    }
 
     @GetMapping
     public ModelAndView getList() {
@@ -31,7 +35,7 @@ public class StorageController {
     @GetMapping({"/new", "/{alias}"})
     public ModelAndView upload(@PathVariable(value = "alias", required = false) String alias) {
         String viewName = "admin/storage/details";
-        ImageResponse fileRequest = alias != null ? fileReader.getFile(alias) : new ImageResponse();
+        ImageDTO fileRequest = alias != null ? fileReader.getFile(alias) : new ImageDTO();
 
         ModelAndView view = new ModelAndView(viewName);
         view.addObject("file", fileRequest);

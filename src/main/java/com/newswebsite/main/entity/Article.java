@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "article")
@@ -30,4 +32,8 @@ public class Article extends Content {
     @ManyToOne
     @JoinColumn(name = "state_id", nullable = false)
     private State state;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
+
 }

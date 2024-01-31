@@ -95,7 +95,7 @@
                             </td>
                         </tr>
                     </c:forEach>
-                    <c:if test="${categories.size() lt 1}">
+                    <c:if test="${categories.size() < 1}">
                         <tr>
                             <td colspan="8" class="text-center">Trống</td>
                         </tr>
