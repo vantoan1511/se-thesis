@@ -37,7 +37,7 @@ const createReviews = (reviews) => {
         const $figure = $('<figure>');
         const $img = $('<img>').attr('src', '/static/web/images/img01.jpg');
         const $details = $('<div>').addClass('details');
-        const $username = $('<h5>').addClass('name').text(`${review.userFirstName} ${review.userLastName}`);
+        const $username = $('<h5>').addClass('name').text(`${review.userFirstName} ${review.userLastName}#${review.createdBy}`);
         const $time = $('<div>').addClass('time').text(new Date(review.createdAt).toLocaleDateString('vi-VN', defaultDateFormatOptions));
         const $description = $('<div>').addClass('description').html(review.text);
         const $footer = $('<footer>');
@@ -69,17 +69,22 @@ const createReviews = (reviews) => {
 }
 
 const handleReplyButton = (self, isReply = true) => {
-    if (isReply) {
-        let id = $(self).data('item-id');
-        let replyText = $('#' + id + ' .description').text()
-        console.log('Reply to >> ', replyText)
-        $('#reply-text').text(replyText)
-        $('input[name=parentId]').attr('value', id);
-        $('#reply-to-text').removeClass('hidden')
+    if (loggedInUsername === '') {
+        let nextUrl = location.href;
+        location.replace(location.origin + '/login?nextUrl=' + nextUrl + '#comments-section');
     } else {
-        $('#reply-text').text(null)
-        $('input[name=parentId]').attr('value', '');
-        $('#reply-to-text').addClass('hidden')
+        if (isReply) {
+            let id = $(self).data('item-id');
+            let replyText = $('#' + id + ' .description').text()
+            console.log('Reply to >> ', replyText)
+            $('#reply-text').text(replyText)
+            $('input[name=parentId]').attr('value', id);
+            $('#reply-to-text').removeClass('hidden')
+        } else {
+            $('#reply-text').text(null)
+            $('input[name=parentId]').attr('value', '');
+            $('#reply-to-text').addClass('hidden')
+        }
     }
 }
 
@@ -91,10 +96,12 @@ const handleDeleteReviewButton = (self) => {
     showWarningAlert('Bình luận sẽ bị xóa', (result) => {
         if (result.isConfirmed) {
             handleDeleteRequest('/api/v1/reviews', data, () => {
-                showSuccessAlert('Đã xóa', () => {
+                showSuccessAlert('Đã xóa thành công', () => {
                     location.reload()
                 })
-            }, (xhr) => errorCallback(xhr))
+            }, (xhr) => {
+                showBottomErrorToast(getResponseTextAsJSON(xhr).message, 2000)
+            })
         }
     })
 }
@@ -110,6 +117,15 @@ const handleUpdateReviewButton = (self) => {
 const handleReviewSubmitButton = (event, formSelector) => {
     event.preventDefault();
     let data = getFormData(formSelector);
+    let reviewText = data["text"];
+    if (reviewText.trim().length <= 0) {
+        showBottomErrorToast("Nội dung không được rỗng", 2000);
+        return;
+    }
+    if (reviewText.trim().length > 1500) {
+        showBottomErrorToast("Nội dung không được dài hơn 1500 ký tự", 2000);
+        return;
+    }
     let reviewId = data["id"];
     console.log('Review >> ', data)
     let url = '/api/v1/reviews';
@@ -126,6 +142,8 @@ const handleReviewSubmitButton = (event, formSelector) => {
             showSuccessAlert('Đã sửa bình luận', () => {
                 location.reload()
             })
-        }, (xhr) => errorCallback(xhr))
+        }, (xhr) => {
+            showBottomErrorToast(getResponseTextAsJSON(xhr).message, 2000)
+        })
     }
 }
