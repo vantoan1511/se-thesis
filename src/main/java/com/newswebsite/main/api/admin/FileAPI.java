@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -28,12 +29,7 @@ public class FileAPI {
             imageDTO.setTitle(title);
             return ResponseEntity.status(HttpStatus.CREATED).body(imageWriter.save(imageDTO));
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    ErrorResponse.builder()
-                            .timestamp(new Date())
-                            .statusCode(HttpStatus.BAD_REQUEST.value())
-                            .message(ex.getMessage())
-                            .build());
+            return new ResponseEntity<>(new ErrorResponse(new Date(), HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -46,18 +42,9 @@ public class FileAPI {
     public ResponseEntity<?> delete(@RequestBody List<Long> ids) {
         try {
             imageWriter.deleteMultiple(ids);
-            return ResponseEntity.ok(SuccessResponse.builder()
-                    .timestamp(new Date())
-                    .statusCode(HttpStatus.OK.value())
-                    .message("Đã xóa thành công " + ids)
-                    .build());
+            return ResponseEntity.ok(new SuccessResponse(new Date(), HttpStatus.OK, "Đã xóa thành công", ids));
         } catch (RuntimeException ex) {
-            return ResponseEntity.badRequest().body(ErrorResponse.builder()
-                    .timestamp(new Date())
-                    .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .error(HttpStatus.BAD_REQUEST.name())
-                    .message(ex.getMessage())
-                    .build());
+            return ResponseEntity.badRequest().body(new ErrorResponse(new Date(), HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), ex.getMessage()));
         }
     }
 }

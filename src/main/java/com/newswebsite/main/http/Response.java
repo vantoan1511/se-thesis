@@ -1,14 +1,16 @@
 package com.newswebsite.main.http;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
-@Getter
-@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Response {
     public Date timestamp;
-    public  int statusCode;
+    public HttpStatus httpStatus;
     public String message;
 }

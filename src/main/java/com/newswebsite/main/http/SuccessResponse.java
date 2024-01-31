@@ -1,10 +1,17 @@
 package com.newswebsite.main.http;
 
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import org.springframework.http.HttpStatus;
+
+import java.util.Date;
 
 @Getter
-@SuperBuilder
 public class SuccessResponse extends Response {
+
+    public SuccessResponse(Date timestamp, HttpStatus httpStatus, String message, Object content) {
+        super(timestamp, httpStatus, message);
+        this.content = content;
+    }
+
     private Object content;
 }

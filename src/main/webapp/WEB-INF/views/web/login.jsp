@@ -24,7 +24,8 @@
             <form action="/perform-login" method="post">
                 <input type="hidden" name="nextUrl" value="${param.nextUrl}">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập/Email"/>
+                    <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập/Email"
+                           autofocus/>
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="ri-user-line"></span></div>
                     </div>

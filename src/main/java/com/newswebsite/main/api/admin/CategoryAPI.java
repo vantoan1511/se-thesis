@@ -5,6 +5,7 @@ import com.newswebsite.main.http.SuccessResponse;
 import com.newswebsite.main.service.categoryservice.ICategoryWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,11 +32,6 @@ public class CategoryAPI {
     @DeleteMapping
     public Object delete(@RequestBody List<Long> ids) {
         categoryWriter.deleteMultiple(ids);
-        return SuccessResponse.builder()
-                .timestamp(new Date())
-                .statusCode(HttpStatus.NO_CONTENT.value())
-                .message("Đã xóa thành công")
-                .content(ids)
-                .build();
+        return ResponseEntity.ok(new SuccessResponse(new Date(), HttpStatus.OK, "Đã xóa thành công", ids));
     }
 }

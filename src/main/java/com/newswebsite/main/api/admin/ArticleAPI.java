@@ -90,12 +90,7 @@ public class ArticleAPI {
             }
             default -> throw new IllegalArgumentException("Thao tác không hợp lệ: " + action);
         }
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .timestamp(new Date())
-                .statusCode(HttpStatus.OK.value())
-                .message(message)
-                .content(id)
-                .build());
+        return ResponseEntity.ok(new SuccessResponse(new Date(), HttpStatus.OK, message, null));
     }
 
     @PutMapping("/{action}")
@@ -121,22 +116,12 @@ public class ArticleAPI {
             }
             default -> throw new IllegalArgumentException("Thao tác không hợp lệ: " + action);
         }
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .timestamp(new Date())
-                .statusCode(HttpStatus.OK.value())
-                .message(message)
-                .content(ids)
-                .build());
+        return ResponseEntity.ok(new SuccessResponse(new Date(), HttpStatus.OK, message, ids));
     }
 
     @DeleteMapping
     public Object deleteArticles(@RequestBody List<Long> ids) {
         articleWriter.deleteArticles(ids);
-        return ResponseEntity.ok(SuccessResponse.builder()
-                .timestamp(new Date())
-                .statusCode(HttpStatus.OK.value())
-                .message("Đã xóa thành công ")
-                .content(ids)
-                .build());
+        return ResponseEntity.ok(new SuccessResponse(new Date(), HttpStatus.OK, "Đã xóa thành công", ids));
     }
 }
