@@ -34,4 +34,7 @@
         <!-- other properties... -->
         <property name="maxInMemorySize" value="1048576"/>
     </bean>
+
+    <bean id="mapper" class="com.newswebsite.main.mapper.CollectionMapper">
+    </bean>
 </beans>
