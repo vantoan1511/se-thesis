@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +18,8 @@ public class ReviewDTO extends BaseDTO {
     private String text;
     @NotNull(message = "Mục này là bắt buộc")
     private Long userId;
+    private String userFirstName;
+    private String userLastName;
     @NotNull(message = "Mục này là bắt buộc")
     private Long articleId;
     private Long parentId;

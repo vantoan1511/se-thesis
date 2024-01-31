@@ -10,11 +10,13 @@ import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.ReviewRepo;
 import com.newswebsite.main.repository.UserRepo;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ReviewWriter implements IReviewWriter {
@@ -48,11 +50,38 @@ public class ReviewWriter implements IReviewWriter {
             review.setParent(parent);
         }
 
-        review.setText(reviewDTO.getText());
+        review.setText(StringEscapeUtils.escapeHtml4(reviewDTO.getText()));
         review.setUser(user);
         review.setArticle(article);
 
         review = reviewRepo.save(review);
         return mapper.map(review, ReviewDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public ReviewDTO update(ReviewDTO reviewDTO) {
+        Review review = reviewRepo.findOne(reviewDTO.getId());
+
+        if (review == null) throw new ReviewNotFoundException("Bình luận không còn tồn tại");
+
+        review.setText(StringEscapeUtils.escapeHtml4(reviewDTO.getText()));
+
+        return mapper.map(reviewRepo.save(review), ReviewDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public void delete(long id) {
+        if (!reviewRepo.exists(id)) throw new ReviewNotFoundException("Bình luận không còn tồn tại");
+        reviewRepo.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteMultiple(List<Long> ids) {
+        for (long id : ids) {
+            delete(id);
+        }
     }
 }
