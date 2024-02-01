@@ -39,7 +39,7 @@
         <input type="hidden" name="userId" value="${user.id}">
         <input type="hidden" name="parentId" value="">
     </form>
-    <h2 class="title">${comments.getTotalElements()} Bình luận
+    <h2 class="title">Bình luận
         <sec:authorize access="isAnonymous()">
             <a onclick="handleLoginButton(event, this)"
                href="#">Đăng nhập để bình luận</a>

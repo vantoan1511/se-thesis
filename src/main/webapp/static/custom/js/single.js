@@ -6,13 +6,13 @@ let page = 1;
 let pageRequest = {};
 let targetUrl;
 
-$(document).ready(() => {
-    loadReviews()
-})
+$(document).ready(async () => {
+    await loadReviews();
+});
 
-const loadReviews = () => {
+const loadReviews = async () => {
     targetUrl = `${apiUrl}${articleId}/reviews?page=${page}&limit=${limit}`;
-    getReviews(targetUrl)
+    await getReviews(targetUrl);
     const $loadMore = $('#load-more-reviews-button');
     if (!pageRequest.last) {
         page += 1;
@@ -21,12 +21,11 @@ const loadReviews = () => {
     }
 }
 
-const getReviews = (target) => {
-    $.get(target, (data) => {
-        pageRequest = data;
-        console.log('GET >>', pageRequest)
-        createReviews(data.content)
-    })
+const getReviews = async (target) => {
+    const data = await $.get(target);
+    pageRequest = data;
+    console.log("GET Reviews >> ", pageRequest);
+    createReviews(data.content);
 }
 
 const createReviews = (reviews) => {
