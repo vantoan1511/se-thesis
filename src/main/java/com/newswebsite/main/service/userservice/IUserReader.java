@@ -2,7 +2,7 @@ package com.newswebsite.main.service.userservice;
 
 import com.newswebsite.main.dto.UserDTO;
 
-public interface IUserRetrievalService {
+public interface IUserReader {
     boolean existsUsername(String username);
 
     boolean existsEmail(String email);
@@ -10,4 +10,6 @@ public interface IUserRetrievalService {
     boolean existsToken(String token);
 
     UserDTO findByToken(String token);
+
+    UserDTO getUser(String username);
 }

@@ -1,10 +1,13 @@
 package com.newswebsite.main.service.userservice;
 
+import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.entity.User;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.exception.EmailNotFoundException;
 import com.newswebsite.main.exception.InvalidUserToken;
+import com.newswebsite.main.exception.UserNotFoundException;
+import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.RoleRepo;
 import com.newswebsite.main.repository.UserRepo;
 import com.newswebsite.main.service.emailservice.IEmailService;
@@ -12,6 +15,7 @@ import com.newswebsite.main.utils.EmailContentUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,21 +25,36 @@ import java.util.Date;
 import java.util.UUID;
 
 @Service
-public class UserService implements IUserModificationService, IUserRetrievalService {
+public class UserService implements IUserWriter, IUserReader {
+
+    private final UserRepo userRepo;
+
+    private final RoleRepo roleRepo;
+
+    private final IEmailService emailService;
+
+    private final MessageSource msg;
+
+    private final CollectionMapper mapper;
 
     @Autowired
-    private UserRepo userRepo;
+    public UserService(UserRepo userRepo, RoleRepo roleRepo, IEmailService emailService, MessageSource msg, CollectionMapper mapper) {
+        this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
+        this.emailService = emailService;
+        this.msg = msg;
+        this.mapper = mapper;
+    }
 
-    @Autowired
-    private RoleRepo roleRepo;
-
-    @Autowired
-    private IEmailService emailService;
-
-    @Autowired
-    private MessageSource msg;
-
-    private final ModelMapper mapper = new ModelMapper();
+    @Override
+    public void updateProfile(String username, ProfileRequest profile) {
+        User user = userRepo.findByUsername(username);
+        if (user == null || !user.isEnabled()) throw new UserNotFoundException("Người dùng không tồn tại");
+        user.setFirstName(profile.getFirstName());
+        user.setLastName(profile.getLastName());
+        user.setEmail(profile.getEmail());
+        userRepo.save(user);
+    }
 
     @Override
     public void register(UserDTO newUserDTO) {
@@ -92,5 +111,12 @@ public class UserService implements IUserModificationService, IUserRetrievalServ
         if (user == null) throw new InvalidUserToken(msg.getMessage("user.token.invalid", null, null));
         user.setPassword(null);
         return mapper.map(user, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO getUser(String username) {
+        UserDTO userDTO = mapper.map(userRepo.findByUsername(username), UserDTO.class);
+        userDTO.setPassword(null);
+        return userDTO;
     }
 }
