@@ -1,6 +1,6 @@
 package com.newswebsite.main.controller.web;
 
-import com.newswebsite.main.service.userservice.IUserModificationService;
+import com.newswebsite.main.service.userservice.IUserWriter;
 import com.newswebsite.main.utils.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -19,7 +19,7 @@ import java.util.Locale;
 public class ForgotController {
 
     @Autowired
-    private IUserModificationService userModificationService;
+    private IUserWriter userModificationService;
 
     @Autowired
     private MessageSource msg;

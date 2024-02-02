@@ -1,7 +1,7 @@
 package com.newswebsite.main.controller.web;
 
-import com.newswebsite.main.service.userservice.IUserModificationService;
-import com.newswebsite.main.service.userservice.IUserRetrievalService;
+import com.newswebsite.main.service.userservice.IUserWriter;
+import com.newswebsite.main.service.userservice.IUserReader;
 import com.newswebsite.main.utils.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ResetController {
 
     @Autowired
-    private IUserRetrievalService userRetrievalService;
+    private IUserReader userRetrievalService;
 
     @Autowired
-    private IUserModificationService userModificationService;
+    private IUserWriter userModificationService;
 
     @GetMapping
     public ModelAndView showReset(@RequestParam(value = "token", required = false) String token,

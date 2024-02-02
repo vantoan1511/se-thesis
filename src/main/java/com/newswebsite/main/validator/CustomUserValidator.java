@@ -1,7 +1,7 @@
 package com.newswebsite.main.validator;
 
 import com.newswebsite.main.dto.UserDTO;
-import com.newswebsite.main.service.userservice.IUserRetrievalService;
+import com.newswebsite.main.service.userservice.IUserReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -10,7 +10,7 @@ import org.springframework.validation.Validator;
 @Component
 public class CustomUserValidator implements Validator {
     @Autowired
-    private IUserRetrievalService userRetrievalService;
+    private IUserReader userRetrievalService;
 
     @Override
     public boolean supports(Class<?> aClass) {
