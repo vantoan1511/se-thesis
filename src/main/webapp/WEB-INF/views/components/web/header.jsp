@@ -1,7 +1,9 @@
 <%@ page import="com.newswebsite.main.security.SecurityUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ include file="../../../../common/taglib.jsp" %>
+<%@ include file="/common/taglib.jsp" %>
+
+<c:set var="username" value="<%=SecurityUtil.username()%>"/>
 
 <header class="primary">
     <div class="firstbar">
@@ -42,9 +44,9 @@
                         </sec:authorize>
                         <sec:authorize access="isAuthenticated()">
                             <li>
-                                <a href="#"><i class="ion-folder"></i>
+                                <a href="<c:url value="/my-profile"/>"><i class="ion-android-person"></i>
                                     <div>
-                                        Xin chào, <%=SecurityUtil.username()%>
+                                        <c:out value="${username}"/>
                                     </div>
                                 </a>
                             </li>
