@@ -8,6 +8,7 @@
     <http auto-config="false" use-expressions="true" disable-url-rewriting="true">
 
         <intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN', 'WRITER')"/>
+        <intercept-url pattern="/my-profile" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="permitAll()"/>
 
 
