@@ -1,7 +1,7 @@
 package com.newswebsite.main.controller.web;
 
 import com.newswebsite.main.dto.UserDTO;
-import com.newswebsite.main.service.userservice.IUserModificationService;
+import com.newswebsite.main.service.userservice.IUserWriter;
 import com.newswebsite.main.utils.FlashMessage;
 import com.newswebsite.main.validator.CustomUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class RegisterController {
 
     @Autowired
-    private IUserModificationService userModificationService;
+    private IUserWriter userModificationService;
 
     @Autowired
     private CustomUserValidator userValidator;
