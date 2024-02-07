@@ -43,7 +43,7 @@ public class ResetController {
         String viewName = "web/recover";
         //check password length before
         try {
-            userModificationService.changePassword(token, password);
+            userModificationService.setNewPassword(token, password);
             attributes.addFlashAttribute("message",
                     FlashMessage.success("Đổi mật khẩu thành công. Đăng nhập để tiếp tục"));
             viewName = "redirect:/login";

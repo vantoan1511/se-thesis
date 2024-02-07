@@ -22,14 +22,14 @@
                      alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">
-                    <c:catch var="error">
+                <c:catch var="error">
+                    <a href="/admin/profile" class="d-block">
                         <%=SecurityUtil.fullname()%>
-                    </c:catch>
-                    <c:if test="${not empty error}">
-                        UNKNOWN_USER
-                    </c:if>
-                </a>
+                    </a>
+                </c:catch>
+                <c:if test="${not empty error}">
+                    UNKNOWN_USER
+                </c:if>
             </div>
         </div>
 

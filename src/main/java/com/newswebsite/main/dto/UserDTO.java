@@ -39,6 +39,10 @@ public class UserDTO implements UserDetails, CredentialsContainer {
     private boolean enabled;
     private List<GrantedAuthority> authorities;
 
+    public String fullName() {
+        return firstName.concat(" ").concat(lastName);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

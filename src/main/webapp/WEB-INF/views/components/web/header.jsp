@@ -44,7 +44,7 @@
                         </sec:authorize>
                         <sec:authorize access="isAuthenticated()">
                             <li>
-                                <a href="<c:url value="/my-profile"/>"><i class="ion-android-person"></i>
+                                <a href="<c:url value="/profiles/${username}"/>"><i class="ion-android-person"></i>
                                     <div>
                                         <c:out value="${username}"/>
                                     </div>

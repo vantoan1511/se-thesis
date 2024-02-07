@@ -28,10 +28,10 @@
     <link rel="stylesheet" href="<c:url value="/static/admin/dist/css/adminlte.min.css"/>">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css" rel="stylesheet">
     <%--Select2--%>
-    <link rel="stylesheet" href="/static/admin/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<c:url value="/static/admin/plugins/select2/css/select2.min.css"/>">
     <%--Custom style--%>
-    <link rel="stylesheet" href="/static/custom/css/styles.css">
-    <link rel="stylesheet" href="/static/niceselect/css/nice-select2.css">
+    <link rel="stylesheet" href="<c:url value="/static/custom/css/styles.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static/niceselect/css/nice-select2.css"/>">
     <link rel="stylesheet"
           href="<c:url value="/static/admin/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css"/>">
     <!-- Jquery -->
@@ -66,6 +66,9 @@
 <!-- AdminLTE App -->
 <script src="<c:url value="/static/admin/dist/js/adminlte.js"/>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
+<!-- Validation -->
+<script src="<c:url value="/static/admin/plugins/jquery-validation/jquery.validate.min.js"/>"></script>
+<script src="<c:url value="/static/admin/plugins/jquery-validation/additional-methods.min.js"/>"></script>
 <!-- Custom -->
 <script src="<c:url value="/static/admin/plugins/bootstrap-switch/js/bootstrap-switch.min.js"/>"></script>
 <script src="<c:url value="/static/custom/js/utils.js"/>"></script>

@@ -12,7 +12,6 @@ import com.newswebsite.main.repository.RoleRepo;
 import com.newswebsite.main.repository.UserRepo;
 import com.newswebsite.main.service.emailservice.IEmailService;
 import com.newswebsite.main.utils.EmailContentUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,24 +24,24 @@ import java.util.Date;
 import java.util.UUID;
 
 @Service
-public class UserService implements IUserWriter, IUserReader {
+public class UserWriter implements IUserWriter {
 
     private final UserRepo userRepo;
 
     private final RoleRepo roleRepo;
 
-    private final IEmailService emailService;
-
     private final MessageSource msg;
+
+    private final IEmailService emailService;
 
     private final CollectionMapper mapper;
 
     @Autowired
-    public UserService(UserRepo userRepo, RoleRepo roleRepo, IEmailService emailService, MessageSource msg, CollectionMapper mapper) {
+    public UserWriter(UserRepo userRepo, RoleRepo roleRepo, MessageSource msg, IEmailService emailService, CollectionMapper mapper) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
-        this.emailService = emailService;
         this.msg = msg;
+        this.emailService = emailService;
         this.mapper = mapper;
     }
 
@@ -81,7 +80,7 @@ public class UserService implements IUserWriter, IUserReader {
     }
 
     @Override
-    public void changePassword(String token, String newPassword) {
+    public void setNewPassword(String token, String newPassword) {
         User user = userRepo.findByToken(token);
         if (user == null) throw new InvalidUserToken(msg.getMessage("user.token.invalid", null, null));
         PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -91,32 +90,11 @@ public class UserService implements IUserWriter, IUserReader {
     }
 
     @Override
-    public boolean existsUsername(String username) {
-        return userRepo.findByUsername(username) != null;
-    }
-
-    @Override
-    public boolean existsEmail(String email) {
-        return userRepo.findByEmail(email) != null;
-    }
-
-    @Override
-    public boolean existsToken(String token) {
-        return userRepo.findByToken(token) != null;
-    }
-
-    @Override
-    public UserDTO findByToken(String token) {
-        User user = userRepo.findByToken(token);
-        if (user == null) throw new InvalidUserToken(msg.getMessage("user.token.invalid", null, null));
-        user.setPassword(null);
-        return mapper.map(user, UserDTO.class);
-    }
-
-    @Override
-    public UserDTO getUser(String username) {
-        UserDTO userDTO = mapper.map(userRepo.findByUsername(username), UserDTO.class);
-        userDTO.setPassword(null);
-        return userDTO;
+    public void changePassword(String username, String newPassword) {
+        User user = userRepo.findByUsername(username);
+        if (user == null) throw new UsernameNotFoundException("Không tìm thấy người dùng " + username);
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(newPassword));
+        userRepo.save(user);
     }
 }

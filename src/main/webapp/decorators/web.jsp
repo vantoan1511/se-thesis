@@ -52,6 +52,10 @@
 <script src="<c:url value="/static/web/scripts/easescroll/jquery.easeScroll.js"/>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
 <script src="<c:url value="/static/web/scripts/toast/jquery.toast.min.js"/>"></script>
+<!-- Validation -->
+<script src="<c:url value="/static/admin/plugins/jquery-validation/jquery.validate.min.js"/>"></script>
+<script src="<c:url value="/static/admin/plugins/jquery-validation/additional-methods.min.js"/>"></script>
+
 <script src="<c:url value="/static/web/js/demo.js"/>"></script>
 <script src="<c:url value="/static/web/js/e-magz.js"/>"></script>
 <script src="../static/custom/js/utils.js"></script>

@@ -10,5 +10,7 @@ public interface IUserWriter {
 
     void resetPassword(String email);
 
-    void changePassword(String token, String newPassword);
+    void setNewPassword(String token, String newPassword);
+
+    void changePassword(String username, String newPassword);
 }
