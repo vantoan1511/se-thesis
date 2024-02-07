@@ -86,20 +86,20 @@
                                                                     cssErrorClass="error"/>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-sm-3">
-                                                        <h6 class="mb-0">Mật khẩu</h6>
-                                                    </div>
-                                                    <div class="col-sm-9 form-group floating text-secondary">
-                                                        <p>
-                                                            <i>Đã ẩn </i>
-                                                            <a href="<c:url value="/change-password"/>">
-                                                                <i class="ion-edit"></i> Đổi mật khẩu
-                                                            </a>
-                                                        </p>
-                                                    </div>
-                                                </div>
                                                 <c:if test="${loggedUsername eq profile.username}">
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0">Mật khẩu</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 form-group floating text-secondary">
+                                                            <p>
+                                                                <i>Đã ẩn </i>
+                                                                <a href="<c:url value="/change-password"/>">
+                                                                    <i class="ion-edit"></i> Đổi mật khẩu
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                     <div class="row">
                                                         <div class="col-sm-3"></div>
                                                         <div class="col-sm-9 text-secondary">

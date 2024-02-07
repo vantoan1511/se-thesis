@@ -1,20 +1,20 @@
 package com.newswebsite.main.controller.admin;
 
+import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.roleservice.IRoleReader;
 import com.newswebsite.main.service.userservice.IUserReader;
 import com.newswebsite.main.service.userservice.IUserWriter;
+import com.newswebsite.main.utils.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/users")
@@ -52,19 +52,28 @@ public class UserController {
 
     @GetMapping("/{username}")
     public ModelAndView getUser(@PathVariable("username") String username) {
-        String loggedUsername = SecurityUtil.username();
-        UserDTO userDTO;
-        if (!loggedUsername.equals(username)) {
-            userDTO = userReader.getUser(username);
-            userDTO.eraseCredentials();
-        } else {
-            userDTO = userReader.getUser(loggedUsername);
-            userDTO.eraseCredentials();
-        }
+        UserDTO userDTO = userReader.getUser(username);
         String viewName = "admin/users/userDetails";
         ModelAndView view = new ModelAndView(viewName);
-        view.addObject("userDetails", userDTO);
-        view.addObject("roles", roleReader.getAllRoles());
+        view.addObject("profile", userDTO);
         return view;
+    }
+
+    @PostMapping("/{username}")
+    public String updateProfile(@PathVariable("username") String username,
+                                @ModelAttribute UserDTO userDTO,
+                                RedirectAttributes attributes) {
+        String loggedUsername = SecurityUtil.username();
+        if (loggedUsername.equals(username)) {
+            try {
+                userWriter.updateProfile(loggedUsername, new ProfileRequest(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail()));
+                attributes.addFlashAttribute("message", FlashMessage.success("Cập nhật thành công"));
+            } catch (RuntimeException ex) {
+                attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
+            }
+        } else {
+            attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
+        }
+        return "redirect:/admin/users/".concat(username);
     }
 }

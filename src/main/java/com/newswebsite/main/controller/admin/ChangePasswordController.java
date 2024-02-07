@@ -1,4 +1,4 @@
-package com.newswebsite.main.controller.web;
+package com.newswebsite.main.controller.admin;
 
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.userservice.IUserReader;
@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller(value = "WebChangePasswordController")
-@RequestMapping("/change-password")
+@Controller(value = "AdminChangePasswordController")
+@RequestMapping("/admin/change-password")
 public class ChangePasswordController {
 
     private final IUserReader userReader;
@@ -29,7 +28,7 @@ public class ChangePasswordController {
 
     @GetMapping
     public String getPage() {
-        return "web/changepw";
+        return "admin/changepw";
     }
 
     @PostMapping
@@ -37,17 +36,17 @@ public class ChangePasswordController {
                           @RequestParam("newPassword") String newPassword,
                           @RequestParam("confirmPassword") String confirmPassword,
                           RedirectAttributes attributes) {
-        String username = SecurityUtil.username();
+        String loggedUsername = SecurityUtil.username();
         if (!newPassword.equals(confirmPassword)) {
             attributes.addFlashAttribute("message", FlashMessage.danger("Nhập lại mật khẩu không khớp"));
-            return "redirect:/change-password";
-        } else if (!userReader.matches(username, currentPassword)) {
+            return "redirect:/admin/change-password";
+        } else if (!userReader.matches(loggedUsername, currentPassword)) {
             attributes.addFlashAttribute("message", FlashMessage.danger("Mật khẩu cũ không chính xác"));
-            return "redirect:/change-password";
+            return "redirect:/admin/change-password";
         } else {
-            userWriter.changePassword(username, newPassword);
+            userWriter.changePassword(loggedUsername, newPassword);
             attributes.addFlashAttribute("message", FlashMessage.success("Đổi mật khẩu thành công!"));
         }
-        return "redirect:/profiles/".concat(username);
+        return "redirect:/admin/users/".concat(loggedUsername);
     }
 }

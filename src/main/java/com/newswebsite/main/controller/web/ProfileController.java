@@ -7,7 +7,6 @@ import com.newswebsite.main.service.userservice.IUserWriter;
 import com.newswebsite.main.utils.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,23 +36,20 @@ public class ProfileController {
     }
 
     @PostMapping
-    public ModelAndView updateProfile(@PathVariable("username") String username,
-                                      @Valid @ModelAttribute ProfileRequest profileRequest,
-                                      BindingResult bindingResult,
-                                      RedirectAttributes attributes) {
+    public String updateProfile(@PathVariable("username") String username,
+                                @Valid @ModelAttribute ProfileRequest profileRequest,
+                                RedirectAttributes attributes) {
         String loggedUsername = SecurityUtil.username();
         if (loggedUsername.equals(username)) {
-            if (bindingResult.hasErrors()) {
-                attributes.addFlashAttribute("message", FlashMessage.danger(bindingResult.getFieldError().getDefaultMessage()));
-            } else {
+            try {
                 userWriter.updateProfile(loggedUsername, profileRequest);
                 attributes.addFlashAttribute("message", FlashMessage.success("Cập nhật thành công"));
+            } catch (RuntimeException ex) {
+                attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
             }
         } else {
             attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
         }
-        String viewName = "redirect:/profiles/".concat(username);
-        ModelAndView view = new ModelAndView(viewName);
-        return view;
+        return "redirect:/profiles/".concat(username);
     }
 }

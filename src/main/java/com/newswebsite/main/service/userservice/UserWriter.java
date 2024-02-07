@@ -4,6 +4,7 @@ import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.entity.User;
 import com.newswebsite.main.enums.Role;
+import com.newswebsite.main.exception.EmailExistedException;
 import com.newswebsite.main.exception.EmailNotFoundException;
 import com.newswebsite.main.exception.InvalidUserToken;
 import com.newswebsite.main.exception.UserNotFoundException;
@@ -49,9 +50,13 @@ public class UserWriter implements IUserWriter {
     public void updateProfile(String username, ProfileRequest profile) {
         User user = userRepo.findByUsername(username);
         if (user == null || !user.isEnabled()) throw new UserNotFoundException("Người dùng không tồn tại");
+        //update email
+        User anotherUser = userRepo.findByEmail(profile.getEmail());
+        if (anotherUser != null && !anotherUser.getUsername().equals(username))
+            throw new EmailExistedException("Địa chỉ email đã liên kết với một tài khoản khác");
+        user.setEmail(profile.getEmail());
         user.setFirstName(profile.getFirstName());
         user.setLastName(profile.getLastName());
-        user.setEmail(profile.getEmail());
         userRepo.save(user);
     }
 

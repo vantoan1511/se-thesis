@@ -2,9 +2,10 @@
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
 
-<c:set var="pageTitle" value="Hồ sơ ${userDetails.fullName()}"/>
+<c:set var="loggedUsername" value="${pageContext. request.userPrincipal.name}"/>
+<c:set var="pageTitle" value="Hồ sơ ${profile.fullName()}"/>
 <c:set var="breadcrumbs" value="${['Trang chủ', pageTitle]}"/>
-<c:set var="userDetails" value="${userDetails}"/>
+<c:set var="userDetails" value="${profile}"/>
 
 <!doctype html>
 <html lang="vi">
@@ -87,8 +88,9 @@
                         <!-- /.card-header -->
                         <div class="card-body">
 
+                            <%--@elvariable id="profile" type=""--%>
                             <form:form id="user-details-form"
-                                       modelAttribute="userDetails"
+                                       modelAttribute="profile"
                                        method="post"
                                        cssClass="form-horizontal"
                                        acceptCharset="UTF-8"
@@ -122,69 +124,31 @@
                                                     placeholder="Email"/>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="offset-sm-2 col-sm-10">
-                                        <button type="submit"
-                                                class="btn btn-default bg-gradient-success">
-                                            Lưu <i class="ri-send-plane-fill"></i>
-                                        </button>
+                                <c:if test="${loggedUsername eq userDetails.username}">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2">Mật khẩu hiện tại</label>
+                                        <div class="col-sm-10">
+                                            <i>Đã ẩn</i>
+                                            <a href="<c:url value="/admin/change-password"/>">
+                                                <i class="ri-edit-box-line">Chỉnh sửa</i>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="form-group row">
+                                        <div class="offset-sm-2 col-sm-10">
+                                            <button type="submit"
+                                                    class="btn btn-default bg-gradient-success">
+                                                Lưu <i class="ri-send-plane-fill"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </c:if>
                             </form:form>
                             <!-- /.tab-pane -->
                         </div>
                         <!-- /.tab-content -->
                     </div>
                     <!-- /.card-body -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Tài khoản</h3>
-                        </div>
-                        <div class="card-body">
-                            <form id="user-account-form"
-                                  method="post">
-                                <input type="hidden" name="action" value="changePassword">
-                                <div class="form-group row">
-                                    <label for="password"
-                                           class="col-md-2 col-form-label">Mật khẩu hiện tại</label>
-                                    <div class="col-sm-10">
-                                        <input type="password"
-                                               id="password"
-                                               name="password"
-                                               class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="newPW"
-                                           class="col-md-2 col-form-label">Mật khẩu mới</label>
-                                    <div class="col-sm-10">
-                                        <input type="password"
-                                               id="newPW"
-                                               name="newPW"
-                                               class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="rePW"
-                                           class="col-md-2 col-form-label">Nhập lại mật khẩu mới</label>
-                                    <div class="col-sm-10">
-                                        <input type="password"
-                                               id="rePW"
-                                               name="rePW"
-                                               class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="offset-sm-2 col-sm-10">
-                                        <button type="submit"
-                                                class="btn btn-default bg-gradient-success">
-                                            Lưu <i class="ri-send-plane-fill"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -3,6 +3,8 @@
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
 
+<c:set var="loggedUsername" value="<%=SecurityUtil.username()%>"/>
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<c:url value="/admin/home"/>" class="brand-link">
@@ -23,7 +25,7 @@
             </div>
             <div class="info">
                 <c:catch var="error">
-                    <a href="/admin/profile" class="d-block">
+                    <a href="/admin/users/${loggedUsername}" class="d-block">
                         <%=SecurityUtil.fullname()%>
                     </a>
                 </c:catch>
