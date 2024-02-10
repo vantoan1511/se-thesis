@@ -9,8 +9,13 @@ import org.springframework.validation.Validator;
 
 @Component
 public class CustomUserValidator implements Validator {
+
+    private final IUserReader userRetrievalService;
+
     @Autowired
-    private IUserReader userRetrievalService;
+    public CustomUserValidator(IUserReader userRetrievalService) {
+        this.userRetrievalService = userRetrievalService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {
