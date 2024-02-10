@@ -16,68 +16,51 @@
 
     <div class="card card-outline card-success">
         <div class="card-body register-card-body">
+            <%--@elvariable id="user" type=""--%>
+            <form:form id="register-user-form"
+                       modelAttribute="user"
+                       method="post"
+                       accept-charset="UTF-8">
 
-            <form:form action="/register" modelAttribute="user" method="post" accept-charset="UTF-8">
-                <form:errors path="firstName" cssClass="error"/>
-                <form:errors path="lastName" cssClass="error"/>
-                <div class="input-group mb-3">
+                <c:if test="${not empty message}">
+                    <%@ include file="../components/admin/alert.jsp" %>
+                </c:if>
+
+                <div class="form-group">
                     <form:input path="firstName"
-                                maxlength="12"
                                 cssClass="form-control"
                                 placeholder="Họ"/>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="ri-user-line"></span>
-                        </div>
-                    </div>
+                </div>
+                <div class="form-group">
                     <form:input path="lastName"
                                 cssClass="form-control"
                                 placeholder="Tên"/>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="ri-user-line"></span>
-                        </div>
-                    </div>
                 </div>
-                <form:errors path="email" cssClass="error"/>
-                <div class="input-group mb-3">
-                    <form:input path="email" cssClass="form-control" cssErrorClass="form-control is-invalid"
+                <div class="form-group">
+                    <form:input path="email"
+                                cssClass="form-control"
+                                cssErrorClass="form-control"
                                 placeholder="Email"/>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="ri-mail-line"></span>
-                        </div>
-                    </div>
                 </div>
-                <form:errors path="username" cssClass="error"/>
-                <div class="input-group mb-3">
+                <div class="form-group">
                     <form:input path="username"
                                 cssClass="form-control"
-                                cssErrorClass="form-control is-invalid"
-                                placeholder="Username"/>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="ri-user-add-line"></span>
-                        </div>
-                    </div>
+                                cssErrorClass="form-control"
+                                placeholder="Tên đăng nhập"/>
                 </div>
-                <form:errors path="password" cssClass="error"/>
-                <div class="input-group mb-3">
+                <div class="form-group">
                     <form:password path="password"
                                    cssClass="form-control"
-                                   cssErrorClass="form-control is-invalid"
-                                   placeholder="Password"/>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="ri-lock-password-line"></span>
-                        </div>
-                    </div>
+                                   placeholder="Mật khẩu"/>
                 </div>
                 <div class="row">
                     <div class="col">
                         <div class="icheck-success">
-                            <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                            <label for="agreeTerms">
+                            <input type="checkbox"
+                                   id="agree-term"
+                                   name="terms"
+                                   value="agree">
+                            <label for="agree-term">
                                 Tôi đã đọc và đồng ý với <a href="#">các điều khoản</a>
                             </label>
                         </div>
@@ -105,5 +88,55 @@
         <!-- /.form-box -->
     </div><!-- /.card -->
 </div>
+<script>
+    $(function () {
+        $('#register-user-form').validate({
+            rules: {
+                firstName: {
+                    required: true
+                },
+                lastName: {
+                    required: true
+                },
+                email: {
+                    email: true,
+                    required: true
+                },
+                username: {
+                    required: true
+                },
+                password: {
+                    required: true
+                },
+            },
+            messages: {
+                firstName: {
+                    required: "Vui lòng nhập họ"
+                },
+                lastName: {
+                    required: "Vui lòng nhập tên"
+                },
+                email: {
+                    required: "Vui lòng nhập địa chỉ email",
+                    email: "Vui lòng nhập một địa chỉ email hợp lệ"
+                },
+                username: {
+                    required: "Vui lòng nhập tên đăng nhập"
+                },
+                password: {
+                    required: "Vui lòng nhập mật khẩu"
+                },
+            },
+            errorElement: 'span',
+            errorClass: 'error invalid-feedback',
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid')
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        })
+    })
+</script>
 </body>
 </html>

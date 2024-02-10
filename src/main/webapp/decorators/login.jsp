@@ -20,15 +20,18 @@
     <link rel="stylesheet" href="<c:url value="/static/remixicon/remixicon.css"/>">
 
     <link rel="stylesheet" href="<c:url value="/static/custom/css/styles.css"/>">
+    <!-- jQuery -->
+    <script src="<c:url value="/static/admin/plugins/jquery/jquery.min.js"/>"></script>
 </head>
 <body class="hold-transition login-page">
 
 <dec:body/>
 
-<!-- jQuery -->
-<script src="<c:url value="/static/admin/plugins/jquery/jquery.min.js"/>"></script>
 <!-- Bootstrap 4 -->
 <script src="<c:url value="/static/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+<!-- Validation -->
+<script src="<c:url value="/static/admin/plugins/jquery-validation/jquery.validate.min.js"/>"></script>
+<script src="<c:url value="/static/admin/plugins/jquery-validation/additional-methods.min.js"/>"></script>
 <!-- AdminLTE App -->
 <script src="<c:url value="/static/admin/dist/js/adminlte.min.js"/>"></script>
 </body>
