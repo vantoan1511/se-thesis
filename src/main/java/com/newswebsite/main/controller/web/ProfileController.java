@@ -52,4 +52,25 @@ public class ProfileController {
         }
         return "redirect:/profiles/".concat(username);
     }
+
+    @GetMapping("/delete")
+    public String deleteProfile(@PathVariable("username") String username,
+                                RedirectAttributes attributes) {
+        String loggedUsername = SecurityUtil.username();
+        String viewName;
+        if (loggedUsername.equals(username)) {
+            try {
+                userWriter.delete(username);
+                viewName = "redirect:/logout";
+                attributes.addFlashAttribute("message", FlashMessage.success("Tài khoản của bạn đã xóa thành công"));
+            } catch (RuntimeException ex) {
+                viewName = "redirect:/profiles/".concat(username);
+                attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
+            }
+        } else {
+            attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
+            viewName = "redirect:/profiles/".concat(username);
+        }
+        return viewName;
+    }
 }
