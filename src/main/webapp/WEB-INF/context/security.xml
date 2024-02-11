@@ -20,7 +20,7 @@
                     authentication-success-handler-ref="customAuthSuccessHandler"
                     authentication-failure-url="/login?invalidCredentials=true"/>
 
-        <logout delete-cookies="JSESSIONID" logout-url="/logout" logout-success-url="/login"/>
+        <logout delete-cookies="JSESSIONID"/>
     </http>
     <authentication-manager>
         <authentication-provider
