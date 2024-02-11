@@ -13,4 +13,8 @@ public interface IUserWriter {
     void setNewPassword(String token, String newPassword);
 
     void changePassword(String username, String newPassword);
+
+    void delete(String username);
+
+    void delete(Long id);
 }

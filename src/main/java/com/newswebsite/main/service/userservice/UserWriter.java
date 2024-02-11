@@ -19,12 +19,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserWriter implements IUserWriter {
 
     private final UserRepo userRepo;
@@ -101,5 +103,19 @@ public class UserWriter implements IUserWriter {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(newPassword));
         userRepo.save(user);
+    }
+
+    @Override
+    public void delete(String username) {
+        User user = userRepo.findByUsername(username);
+        if (user == null) throw new UsernameNotFoundException("Không tìm thấy người dùng " + username);
+        userRepo.delete(user);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (!userRepo.exists(id))
+            throw new UserNotFoundException(String.format("Tài khoản người dùng với id %s không tồn tại", id));
+        userRepo.delete(id);
     }
 }
