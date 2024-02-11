@@ -43,6 +43,9 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="card">
+                                        <div class="card-header">
+                                            <h5>Thông tin chung</h5>
+                                        </div>
                                         <div class="card-body">
                                             <%--@elvariable id="profile" type=""--%>
                                             <form:form id="user-profile-form"
@@ -52,7 +55,7 @@
 
                                                 <c:if test="${not empty message}">
                                                     <div class="row">
-                                                        <%@ include file="../components/utils/alert.jsp" %>
+                                                        <%@ include file="../components/web/alert.jsp" %>
                                                     </div>
                                                 </c:if>
 
@@ -113,34 +116,28 @@
                                             </form:form>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="d-flex align-items-center mb-3">Recent</h5>
-                                                    <article class="article-mini">
-                                                        <div class="inner">
-                                                            <figure>
-                                                                <a href="single.html">
-                                                                    <img src="/static/web/images/news/img09.jpg"
-                                                                         alt="Sample Article">
-                                                                </a>
-                                                            </figure>
-                                                            <div class="padding">
-                                                                <h1><a href="single.html">Duis aute irure dolor in
-                                                                    reprehenderit in voluptate velit</a></h1>
-                                                                <div class="detail">
-                                                                    <div class="category"><a href="category.html">Lifestyle</a>
-                                                                    </div>
-                                                                    <div class="time">December 22, 2016</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
+                                    <c:if test="${loggedUsername eq profile.username}">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Thiết lập</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Xóa tài khoản</h6>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <button type="button"
+                                                                id="delete-my-account-btn"
+                                                                onclick="handleDeleteMyAccountButton(event)"
+                                                                class="btn btn-primary btn-rounded px-4">
+                                                            Xóa tài khoản
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -151,6 +148,15 @@
     </div>
 </section>
 <script>
+    function handleDeleteMyAccountButton(event) {
+        event.preventDefault();
+        showWarningAlert('Tài khoản của bạn sẽ bị xóa vĩnh viễn và không thể khôi phục', (result) => {
+            if (result.isConfirmed) {
+                location.replace(location.href + '/delete');
+            }
+        });
+    }
+
     $(function () {
         $('#user-profile-form').validate({
             rules: {
@@ -187,6 +193,7 @@
             }
         });
     });
+
 </script>
 </body>
 </html>
