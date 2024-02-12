@@ -100,15 +100,17 @@
                         <p>Tất cả chuyên mục</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <span class="nav-header"> QUẢN LÝ NGƯỜI DÙNG </span>
-                </li>
-                <li class="nav-item">
-                    <a href="<c:url value="/admin/users"/>" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>Tất cả người dùng</p>
-                    </a>
-                </li>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <span class="nav-header"> QUẢN LÝ NGƯỜI DÙNG </span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<c:url value="/admin/users"/>" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>Tất cả người dùng</p>
+                        </a>
+                    </li>
+                </sec:authorize>
                 <li class="nav-item">
                     <span class="nav-header"> QUẢN LÝ TÀI NGUYÊN </span>
                 </li>
