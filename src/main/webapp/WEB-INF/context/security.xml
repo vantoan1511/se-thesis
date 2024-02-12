@@ -7,7 +7,6 @@
          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <http auto-config="false" use-expressions="true" disable-url-rewriting="true">
 
-        <intercept-url pattern="/admin/users/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN', 'WRITER')"/>
         <intercept-url pattern="/change-password" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="permitAll()"/>
