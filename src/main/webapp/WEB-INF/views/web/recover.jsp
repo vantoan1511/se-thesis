@@ -21,22 +21,20 @@
                         ${message}
                 </div>
             </c:if>
-            <form action="/reset" method="post">
+            <form id="change-password-form" action="/reset" method="post">
                 <input type="hidden" name="token" value="${param.token}">
-                <div class="input-group mb-3">
-                    <input type="password"
+                <div class="form-group mb-3">
+                    <input id="password"
+                           type="password"
                            name="password"
                            class="form-control"
                            placeholder="Mật khẩu mới"/>
-                    <div class="input-group-append">
-                        <div class="input-group-text"><span class="ri-lock-password-line"></span></div>
-                    </div>
                 </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="re-password" placeholder="Nhập lại mật khẩu"/>
-                    <div class="input-group-append">
-                        <div class="input-group-text"><span class="ri-lock-password-line"></span></div>
-                    </div>
+                <div class="form-group mb-3">
+                    <input type="password"
+                           class="form-control"
+                           name="confirmedPassword"
+                           placeholder="Nhập lại mật khẩu"/>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -51,5 +49,37 @@
         <!-- /.login-card-body -->
     </div>
 </div>
+<script>
+    $(function () {
+        $('#change-password-form').validate({
+            rules: {
+                password: {
+                    required: true,
+                },
+                confirmedPassword: {
+                    required: true,
+                    equalTo: '#password'
+                }
+            },
+            messages: {
+                password: {
+                    required: "Vui lòng nhập mật khẩu mới",
+                },
+                confirmedPassword: {
+                    required: "Vui lòng xác nhận mật khẩu mới",
+                    equalTo: "Mật khẩu xác nhận không khớp"
+                }
+            },
+            errorElement: 'span',
+            errorClass: 'error invalid-feedback mt-2',
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        })
+    });
+</script>
 </body>
 </html>
