@@ -45,6 +45,17 @@
 
                             <p class="text-muted text-center">&#64;${userDetails.username}</p>
 
+                            <c:choose>
+                                <c:when test="${userDetails.enabled}">
+                                    <p class="text-center text-success"><b><i class="ri-circle-fill"></i> Đang hoạt động</b>
+                                    </p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="text-center text-danger"><b><i class="ri-circle-fill"></i> Bị vô hiệu</b>
+                                    </p>
+                                </c:otherwise>
+                            </c:choose>
+
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
                                     <b>Bài viết</b> <a class="float-right">1,322</a>
@@ -78,7 +89,7 @@
                 <div class="col-md-9">
 
                     <c:if test="${not empty message}">
-                        <%@ include file="../../components/utils/alert.jsp" %>
+                        <%@ include file="../../components/admin/alert.jsp" %>
                     </c:if>
 
                     <div class="card card-primary">
@@ -148,7 +159,33 @@
                         </div>
                         <!-- /.tab-content -->
                     </div>
-                    <!-- /.card-body -->
+
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <div class="card card-primary">
+                            <div class="card card-header">
+                                <h3 class="card-title">Tài khoản</h3>
+                            </div>
+                            <div class="card card-body">
+                                <label>Xóa tài khoản vĩnh viễn</label>
+                                <button id="delete-account-btn"
+                                        class="btn bg-gradient-danger col-md-3">Xóa tài khoản
+                                </button>
+                                <label>Vô hiệu tài khoản</label>
+                                <c:choose>
+                                    <c:when test="${userDetails.enabled}">
+                                        <button id="disable-account-btn"
+                                                class="btn bg-gradient-danger col-md-3">Vô hiệu tài khoản
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button id="enable-account-btn"
+                                                class="btn bg-gradient-success col-md-3">Kích hoạt tài khoản
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </sec:authorize>
                 </div>
             </div>
         </div>

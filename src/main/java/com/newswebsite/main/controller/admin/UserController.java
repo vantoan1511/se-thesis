@@ -2,6 +2,7 @@ package com.newswebsite.main.controller.admin;
 
 import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
+import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.roleservice.IRoleReader;
 import com.newswebsite.main.service.userservice.IUserReader;
@@ -71,6 +72,28 @@ public class UserController {
             } catch (RuntimeException ex) {
                 attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
             }
+        } else {
+            attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
+        }
+        return "redirect:/admin/users/".concat(username);
+    }
+
+    @GetMapping("/{username}/disable")
+    public String disableAccount(@PathVariable("username") String username,
+                                 RedirectAttributes attributes) {
+        if (SecurityUtil.getAuthorities().contains(Role.ADMIN.name())) {
+            userWriter.disable(username);
+        } else {
+            attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
+        }
+        return "redirect:/admin/users/".concat(username);
+    }
+
+    @GetMapping("/{username}/enable")
+    public String enableAccount(@PathVariable("username") String username,
+                                RedirectAttributes attributes) {
+        if (SecurityUtil.getAuthorities().contains(Role.ADMIN.name())) {
+            userWriter.enable(username);
         } else {
             attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
         }

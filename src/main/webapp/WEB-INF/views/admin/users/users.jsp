@@ -18,12 +18,6 @@
     <%@ include file="../../components/admin/contentHeader.jsp" %>
     <!-- Main content -->
     <section class="content">
-        <sec:authorize access="hasRole('ADMIN')">
-            <%@include file="../../components/admin/listFunctionalities.jsp" %>
-        </sec:authorize>
-        <sec:authorize access="hasRole('WRITER')">
-            <%@include file="../../components/author/listFunctionalities.jsp" %>
-        </sec:authorize>
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -74,6 +68,7 @@
                             </div>
                         </th>
                         <th>Id</th>
+                        <th>Trạng thái</th>
                         <th>Tên</th>
                         <th>Đã tham gia</th>
                         <th></th>
@@ -93,6 +88,18 @@
                                 </div>
                             </td>
                             <td>${user.id}</td>
+
+                            <td class="text-center">
+                                <c:choose>
+                                    <c:when test="${user.enabled}">
+                                        <b><i class="ri-circle-fill text-success"></i></b>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <b><i class="ri-circle-fill text-danger"></i></b>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+
                             <td class="post">
                                 <div class="user-block">
                                     <img class="img-circle img-bordered-sm"

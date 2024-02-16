@@ -1,4 +1,12 @@
 $(function () {
+    const $deleteAccountBtn = $('#delete-account-btn');
+    const $disableAccountBtn = $('#disable-account-btn');
+    const $enableAccountBtn = $('#enable-account-btn');
+
+    $deleteAccountBtn.click((e) => handleDeleteAccountButton(e));
+    $disableAccountBtn.click((e) => handleDisableAccountButton(e));
+    $enableAccountBtn.click((e) => handleEnableAccountButton(e));
+
     $('#user-details-form').validate({
         rules: {
             firstName: {
@@ -66,3 +74,30 @@ $(function () {
         }
     });
 })
+
+function handleDeleteAccountButton(e) {
+    e.preventDefault();
+    showWarningAlert('Tài khoản này sẽ bị xóa vĩnh viễn và không thể khôi phục', result => {
+        if (result.isConfirmed) {
+            location.replace(location.href + '/delete');
+        }
+    })
+}
+
+function handleDisableAccountButton(e) {
+    e.preventDefault();
+    showWarningAlert('Vô hiệu hóa tài khoản?', result => {
+        if (result.isConfirmed) {
+            location.replace(location.href + '/disable');
+        }
+    })
+}
+
+function handleEnableAccountButton(e) {
+    e.preventDefault();
+    showWarningAlert('Kích hoạt tài khoản?', result => {
+        if (result.isConfirmed) {
+            location.replace(location.href + '/enable');
+        }
+    })
+}

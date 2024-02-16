@@ -4,6 +4,11 @@ import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
 
 public interface IUserWriter {
+
+    void disable(String username);
+
+    void enable(String username);
+
     void updateProfile(String username, ProfileRequest profile);
 
     void register(UserDTO newUserDTO);

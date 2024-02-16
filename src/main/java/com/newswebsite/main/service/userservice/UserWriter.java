@@ -49,6 +49,22 @@ public class UserWriter implements IUserWriter {
     }
 
     @Override
+    public void disable(String username) {
+        User user = userRepo.findByUsername(username);
+        if (user == null) throw new UserNotFoundException("Không tìm thấy người dùng");
+        user.setEnabled(false);
+        userRepo.save(user);
+    }
+
+    @Override
+    public void enable(String username) {
+        User user = userRepo.findByUsername(username);
+        if (user == null) throw new UserNotFoundException("Không tìm thấy người dùng");
+        user.setEnabled(true);
+        userRepo.save(user);
+    }
+
+    @Override
     public void updateProfile(String username, ProfileRequest profile) {
         User user = userRepo.findByUsername(username);
         if (user == null || !user.isEnabled()) throw new UserNotFoundException("Người dùng không tồn tại");
