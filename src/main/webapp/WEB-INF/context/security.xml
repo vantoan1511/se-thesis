@@ -20,6 +20,7 @@
                     authentication-success-handler-ref="customAuthSuccessHandler"
                     authentication-failure-url="/login?invalidCredentials=true"/>
 
+        <remember-me key="uniqueAndPrivateKey" remember-me-parameter="remember-me"/>
         <logout delete-cookies="JSESSIONID"/>
     </http>
     <authentication-manager>

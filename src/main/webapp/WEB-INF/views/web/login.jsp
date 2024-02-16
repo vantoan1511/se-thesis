@@ -41,8 +41,8 @@
                 <div class="row">
                     <div class="col">
                         <div class="icheck-primary">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">Ghi nhớ tôi</label>
+                            <input type="checkbox" id="remember-me" name="remember-me">
+                            <label for="remember-me">Ghi nhớ tôi</label>
                         </div>
                     </div>
                 </div>
