@@ -50,7 +50,7 @@ public class ArticleSearchController {
         }
         Pageable pageable = new PageRequest(page - 1, size, Sort.Direction.DESC, "publishedAt");
         model.addAttribute("articles", articleReader.search(q, categoryIds, startDate, pageable));
-        model.addAttribute("categories", categoryReader.getCategories());
+        model.addAttribute("categories", categoryReader.getAll());
         model.addAttribute("categoryIds", categoryIds);
         model.addAttribute("date_format", dateFormat);
         return "web/search";

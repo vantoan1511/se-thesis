@@ -16,15 +16,20 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class CategoryWriter implements ICategoryWriter {
 
-    @Autowired
-    private CategoryRepo categoryRepo;
+    private final CategoryRepo categoryRepo;
 
-    private final CollectionMapper mapper = new CollectionMapper();
+    private final CollectionMapper mapper;
+
+    @Autowired
+    public CategoryWriter(CategoryRepo categoryRepo, CollectionMapper mapper) {
+        this.categoryRepo = categoryRepo;
+        this.mapper = mapper;
+    }
 
     @Override
-    @Transactional
     public CategoryDTO save(CategoryDTO categoryDTO) {
         Category category = mapper.map(categoryDTO, Category.class);
         Category oldCategory = categoryDTO.getId() != null ? categoryRepo.findOne(categoryDTO.getId()) : new Category();
@@ -52,7 +57,6 @@ public class CategoryWriter implements ICategoryWriter {
     }
 
     @Override
-    @Transactional
     public void delete(long id) {
         if (!categoryRepo.exists(id)) {
             throw new CategoryCodeNotFoundException("Chuyên mục không tồn tại " + id);
@@ -61,7 +65,6 @@ public class CategoryWriter implements ICategoryWriter {
     }
 
     @Override
-    @Transactional
     public void deleteMultiple(List<Long> ids) {
         for (long id : ids) {
             delete(id);

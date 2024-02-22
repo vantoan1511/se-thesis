@@ -49,7 +49,7 @@ public class ArticleController {
         if (authorities.contains(Role.ADMIN.name())) {
             switch (tab) {
                 case "all" -> contents = articleReader.getNotTrashArticles(pageable);
-                case "published" -> contents = articleReader.getPublishedArticle(pageable);
+                case "published" -> contents = articleReader.getAllPublished(pageable);
                 case "pending" -> contents = articleReader.getPendingArticles(pageable);
                 case "trash" -> contents = articleReader.getTrashArticles(pageable);
                 case "featured" -> contents = articleReader.getFeaturedArticles(pageable);
@@ -57,14 +57,14 @@ public class ArticleController {
             }
         } else {
             switch (tab) {
-                case "all" -> contents = articleReader.findAllByAuthorAndStateCode(username, null, pageable);
+                case "all" -> contents = articleReader.getAllByAuthorAndStateCode(username, null, pageable);
                 case "published" ->
-                        contents = articleReader.findAllByAuthorAndStateCode(username, ArticleState.PUBLISHED.name(), pageable);
+                        contents = articleReader.getAllByAuthorAndStateCode(username, ArticleState.PUBLISHED.name(), pageable);
                 case "pending" ->
-                        contents = articleReader.findAllByAuthorAndStateCode(username, ArticleState.PENDING.name(), pageable);
+                        contents = articleReader.getAllByAuthorAndStateCode(username, ArticleState.PENDING.name(), pageable);
                 case "trash" ->
-                        contents = articleReader.findAllByAuthorAndStateCode(username, ArticleState.TRASH.name(), pageable);
-                case "featured" -> contents = articleReader.findAllByFeaturedAndAuthor(true, username, pageable);
+                        contents = articleReader.getAllByAuthorAndStateCode(username, ArticleState.TRASH.name(), pageable);
+                case "featured" -> contents = articleReader.getAllByFeaturedAndAuthor(true, username, pageable);
                 default -> viewName = "admin/404";
             }
         }
@@ -82,11 +82,11 @@ public class ArticleController {
         String viewName = previewMode ? "web/details" : "admin/article/details";
         List<String> roles = SecurityUtil.getAuthorities();
 
-        ArticleDTO articleDTO = id == null ? new ArticleDTO() : articleReader.findById(id);
+        ArticleDTO articleDTO = id == null ? new ArticleDTO() : articleReader.getById(id);
 
         ModelAndView mav = new ModelAndView(viewName);
         mav.addObject("article", articleDTO);
-        mav.addObject("categories", categoryReader.getCategoriesMap());
+        mav.addObject("categories", categoryReader.getAllAsMap());
         mav.addObject("states", stateReader.findAll());
         return mav;
     }

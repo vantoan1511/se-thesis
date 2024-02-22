@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface ICategoryReader {
-    CategoryDTO findByCode(String code);
+    CategoryDTO getCategory(String alias);
 
-    List<CategoryDTO> getCategories();
+    List<CategoryDTO> getAll();
 
-    Map<String, String> getCategoriesMap();
+    Map<String, String> getAllAsMap();
 }

@@ -16,8 +16,12 @@ import java.util.List;
 @RequestMapping("/api/v1/categories")
 public class CategoryAPI {
 
+    private final ICategoryWriter categoryWriter;
+
     @Autowired
-    private ICategoryWriter categoryWriter;
+    public CategoryAPI(ICategoryWriter categoryWriter) {
+        this.categoryWriter = categoryWriter;
+    }
 
     @PostMapping
     public CategoryDTO createNewCategory(@Valid @RequestBody CategoryDTO categoryDTO) {

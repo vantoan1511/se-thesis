@@ -1,7 +1,6 @@
 package com.newswebsite.main.controller.web;
 
 import com.newswebsite.main.dto.ArticleDTO;
-import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.articleservice.IArticleReader;
@@ -29,8 +28,8 @@ public class ArticleController {
         List<String> roles = SecurityUtil.getAuthorities();
 
         ArticleDTO articleDTO = (previewMode && (roles.contains(Role.WRITER.name()) || roles.contains(Role.ADMIN.name()))) ?
-                articleReader.findByAlias(alias) :
-                articleReader.getPublishedArticle(alias);
+                articleReader.getByAlias(alias) :
+                articleReader.getAllPublished(alias);
 
         ModelAndView view = new ModelAndView(viewName);
         view.addObject("article", articleDTO);

@@ -27,20 +27,20 @@ public class CategoryReader implements ICategoryReader {
     }
 
     @Override
-    public CategoryDTO findByCode(String code) {
-        Category category = categoryRepo.findByAlias(code);
+    public CategoryDTO getCategory(String alias) {
+        Category category = categoryRepo.findByAlias(alias);
         if (category == null)
-            throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + code);
+            throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + alias);
         return mapper.map(category, CategoryDTO.class);
     }
 
     @Override
-    public List<CategoryDTO> getCategories() {
+    public List<CategoryDTO> getAll() {
         return mapper.map(categoryRepo.findAll(), CategoryDTO.class);
     }
 
     @Override
-    public Map<String, String> getCategoriesMap() {
+    public Map<String, String> getAllAsMap() {
         return mapper.map(categoryRepo.findAll(), Category::getAlias, Category::getTitle);
     }
 }

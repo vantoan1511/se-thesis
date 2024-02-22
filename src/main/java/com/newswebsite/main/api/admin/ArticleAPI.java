@@ -36,7 +36,7 @@ public class ArticleAPI {
 
         Sort.Direction direction = order.equalsIgnoreCase("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = new PageRequest(page - 1, size, new Sort(direction, by));
-        return articleReader.findAll(pageable);
+        return articleReader.getAll(pageable);
     }
 
     @PostMapping

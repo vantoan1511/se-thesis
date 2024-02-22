@@ -36,7 +36,7 @@ public class CategoryController {
         Pageable pageable = new PageRequest(page - 1, limit, new Sort(direction, by));
 
         ModelAndView view = new ModelAndView(viewName);
-        view.addObject("categories", categoryReader.getCategories());
+        view.addObject("categories", categoryReader.getAll());
         view.addObject("sortBy", by);
         view.addObject("sortOrder", order);
         return view;
@@ -46,11 +46,11 @@ public class CategoryController {
     public ModelAndView createOrUpdate(@PathVariable(value = "categoryAlias", required = false) String categoryAlias) {
         String viewName = "admin/category/details";
 
-        CategoryDTO categoryDTO = categoryAlias != null ? categoryReader.findByCode(categoryAlias) : new CategoryDTO();
+        CategoryDTO categoryDTO = categoryAlias != null ? categoryReader.getCategory(categoryAlias) : new CategoryDTO();
 
         ModelAndView view = new ModelAndView(viewName);
         view.addObject("category", categoryDTO);
-        view.addObject("categories", categoryReader.getCategoriesMap());
+        view.addObject("categories", categoryReader.getAllAsMap());
         return view;
     }
 }
