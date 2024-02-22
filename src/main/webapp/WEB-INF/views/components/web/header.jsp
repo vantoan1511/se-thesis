@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
-                    <form action="/search/" method="get" class="search" autocomplete="off">
+                    <form action="<c:url value="/search"/>" method="get" class="search" autocomplete="off">
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="text" name="q" class="form-control" placeholder="Nhập từ khóa tìm kiếm...">

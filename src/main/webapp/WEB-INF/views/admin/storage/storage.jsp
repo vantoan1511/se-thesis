@@ -33,86 +33,92 @@
                 </div>
             </div>
         </div>
-
         <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Tải lên</h3>
+            </div>
             <div class="card-body">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>
-                            <div class="form-check icheck-material-red">
-                                <input onclick="handleSelectAllCheckboxClick(this, '.item-select')"
-                                       type="checkbox"
-                                       id="select-all">
-                                <label for="select-all"></label>
-                            </div>
-                        </th>
-                        <th>Id</th>
-                        <th>Tiêu đề</th>
-                        <th>Ngày tạo</th>
-                        <th>Chủ sở hữu</th>
-                        <th>Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="file" items="${files.content}">
-                        <tr>
-                            <td>
-                                <div class="form-check icheck-material-red">
-                                    <input onclick="handleSingleCheckboxClick('#select-all', '.item-select')"
-                                           class="item-select"
-                                           type="checkbox"
-                                           id="${file.id}"
-                                           value="${file.id}">
-                                    <label for="${file.id}"></label>
+                <div class="row text-center">
+                    <c:if test="${files.numberOfElements lt 1}">
+                        <i>Trống</i>
+                    </c:if>
+                    <c:forEach var="image" items="${files.content}">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card my-2">
+                                <div class="card-body">
+                                    <img style=";height: 250px; object-fit: cover"
+                                         class="img-fluid"
+                                         src="<c:url value="${image.url}"/>" alt="${image.alias}">
                                 </div>
-                            </td>
-                            <td>${file.id}</td>
-                            <td>
-                                <a title="Click để xem"
-                                   href="/admin/my-storage/${file.alias}">${file.title} <i class="ri-edit-box-line"></i>
-                                </a>
-                                <p style="font-size: 85%">
-                                    URL: <a onclick="handleCopyToClipboard(event, '${file.url}')"
-                                            title="Click để copy url"
-                                            href="#">${file.url} <i class="ri-clipboard-line"></i>
-                                </a>
-                                </p>
-                            </td>
-                            <td>
-                                <fmt:formatDate value="${file.createdAt}" pattern="HH:mm dd/MM/yyyy"/>
-                            </td>
-                            <td>
-                                <c:out value="${file.createdBy}"/>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button"
-                                            class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown"
-                                            aria-expanded="false"></button>
-                                    <div class="dropdown-menu dropdown-menu-right" role="menu" style>
-                                        <button onclick="handleImageInspect(event, `${file.url}`)"
-                                                class="dropdown-item btn btn-default btn-sm">
-                                            <i class="ri-search-line text-success"></i> Xem
-                                        </button>
-                                        <button onclick="handleImageDeleteButton(event, `${file.id}`)"
-                                                class="dropdown-item btn btn-default btn-sm">
-                                            <i class="ri-delete-bin-line text-danger"></i> Xóa
-                                        </button>
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        <a class="btn btn-sm bg-gradient-success" title="Click để xem chi tiết"
+                                           href="/admin/my-storage/${image.alias}">
+                                            <i class="ri-edit-box-line"></i> Chi tiết
+                                        </a>
+                                        <a onclick="handleCopyToClipboard(event, '${image.url}')"
+                                           title="Click để copy url"
+                                           class="btn btn-sm btn-default"
+                                           href="#"><i class="ri-clipboard-line"></i> Copy Url
+                                        </a>
+                                        <div class="btn-group">
+                                            <button type="button"
+                                                    class="btn btn-default dropdown-toggle dropdown-icon"
+                                                    data-toggle="dropdown"
+                                                    aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right"
+                                                 role="menu">
+                                                <button onclick="handleImageInspect(event, `${image.url}`)"
+                                                        class="dropdown-item btn btn-default btn-sm">
+                                                    <i class="ri-search-line text-success"></i> Xem trước
+                                                </button>
+                                                <button onclick="handleImageDeleteButton(event, `${image.id}`)"
+                                                        class="dropdown-item btn btn-default btn-sm">
+                                                    <i class="ri-delete-bin-line text-danger"></i> Xóa
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
                     </c:forEach>
-                    <c:if test="${files.numberOfElements lt 1}">
-                        <tr>
-                            <td class="text-center" colspan="8">(Trống)</td>
-                        </tr>
-                    </c:if>
-                    </tbody>
-                </table>
+                </div>
             </div>
-            <div class="card-footer"></div>
+            <div class="card-footer">
+                Hiển thị ${files.numberOfElements} mục trong tổng số ${files.totalElements} mục
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Hệ thống</h3>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3 col-sm-6">
+                        <img class="img-thumbnail img-fluid my-2"
+                             src="<c:url value="/static/public/images/avatar.png"/>" alt="default-avatar">
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <img class="img-thumbnail img-fluid my-2"
+                             src="<c:url value="/static/public/images/avatar2.png"/>" alt="default-avatar2">
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <img class="img-thumbnail img-fluid my-2"
+                             src="<c:url value="/static/public/images/avatar3.png"/>" alt="default-avatar3">
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <img class="img-thumbnail img-fluid my-2"
+                             src="<c:url value="/static/public/images/avatar4.png"/>" alt="default-avatar4">
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <img class="img-thumbnail img-fluid my-2"
+                             src="<c:url value="/static/public/images/avatar5.png"/>" alt="default-avatar5">
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>

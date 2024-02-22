@@ -13,6 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class ArticleReader implements IArticleReader {
     private final ArticleRepo articleRepo;
@@ -48,6 +51,12 @@ public class ArticleReader implements IArticleReader {
         if (article == null)
             throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null) + alias);
         return mapper.map(article, ArticleDTO.class);
+    }
+
+    @Override
+    public Page<ArticleDTO> search(String q, List<Long> categoryIds, Date startDate, Pageable pageable) {
+        return articleRepo.search(q, categoryIds, startDate, pageable)
+                .map(item -> mapper.map(item, ArticleDTO.class));
     }
 
     @Override

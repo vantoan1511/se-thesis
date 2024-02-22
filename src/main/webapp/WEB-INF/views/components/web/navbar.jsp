@@ -7,7 +7,7 @@
     <div class="container">
         <div class="brand">
             <a href="#">
-                <img src="/static/web/images/toansnewslogo.png" alt="Magz Logo">
+                <img src="<c:url value="/static/web/images/toansnewslogo.png"/>" alt="Magz Logo">
             </a>
         </div>
         <div class="mobile-toggle">

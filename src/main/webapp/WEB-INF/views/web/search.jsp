@@ -1,21 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ include file="../../../common/taglib.jsp" %>
+<%@ include file="/common/taglib.jsp" %>
+
+<c:set var="pageTitle" value="Tìm kiếm bài viết"/>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tìm kiếm bài viết</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <section class="search">
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <aside>
-                    <h2 class="aside-title">Tìm kiếm</h2>
-                    <div class="aside-body">
-                        <p>Nhập từ khóa tìm kiếm vào ô bên dưới. </p>
-                        <form action="/search/" method="get">
+                <form id="search-form" method="get">
+                    <aside>
+                        <h2 class="aside-title">Tìm kiếm</h2>
+                        <div class="aside-body">
+                            <p>Nhập từ khóa tìm kiếm vào ô bên dưới. </p>
                             <div class="form-group">
                                 <div class="input-group">
                                     <input type="text"
@@ -30,49 +33,62 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </aside>
-                <aside>
-                    <h2 class="aside-title">Lọc kết quả</h2>
-                    <div class="aside-body">
-                        <form class="checkbox-group">
-                            <div class="group-title">Ngày đăng tải</div>
-                            <div class="form-group">
-                                <label><input type="radio" name="date" checked> Bất kỳ</label>
+                        </div>
+                    </aside>
+                    <aside>
+                        <h2 class="aside-title">Filter</h2>
+                        <div class="aside-body">
+                            <div class="checkbox-group">
+                                <div class="group-title">Chuyên mục</div>
+                                <div class="form-group">
+                                    <label><input id="select-all"
+                                                  onclick="handleSelectAllCheckboxClick(this, '.check-box')"
+                                                  type="checkbox">Tất cả
+                                    </label>
+                                </div>
+                                <c:forEach var="category" items="${categories}">
+                                    <div class="form-group">
+                                        <label><input type="checkbox"
+                                                      onclick="handleSingleCheckboxClick('#select-all', '.check-box')"
+                                                      class="check-box"
+                                                      name="categoryId"
+                                                      <c:if test="${categoryIds.contains(category.id)}">checked</c:if>
+                                                      value="${category.id}">${category.title}
+                                        </label>
+                                    </div>
+                                </c:forEach>
+                                <div class="group-title">Ngày đăng tải</div>
+                                <div class="form-group">
+                                    <label><input type="radio" name="date_format" value="anytime" checked>Tất cả</label>
+                                </div>
+                                <div class="form-group">
+                                    <label><input type="radio" name="date_format" value="day">1 ngày qua</label>
+                                </div>
+                                <div class="form-group">
+                                    <label><input type="radio" name="date_format" value="week">1 Tuần qua</label>
+                                </div>
+                                <div class="form-group">
+                                    <label><input type="radio" name="date_format" value="month">1 Tháng qua</label>
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label><input type="radio" name="date"> Hôm nay</label>
-                            </div>
-                            <div class="form-group">
-                                <label><input type="radio" name="date"> Tuần vừa rồi</label>
-                            </div>
-                            <div class="form-group">
-                                <label><input type="radio" name="date"> Tháng vừa rồi</label>
-                            </div>
-                            <br>
-                            <div class="group-title">Chuyên mục</div>
-                            <div class="form-group">
-                                <label><input type="checkbox" name="category" checked> Tất cả</label>
-                            </div>
-                            <div class="form-group">
-                                <label><input type="checkbox" name="category"> Lifestyle</label>
-                            </div>
-                        </form>
-                    </div>
-                </aside>
+                        </div>
+                    </aside>
+                    <input type="hidden" name="page" value="1">
+                    <input type="hidden" name="size" value="${articles.size}">
+                </form>
             </div>
             <div class="col-md-9">
                 <div class="nav-tabs-group">
                     <ul class="nav-tabs-list">
                         <li class="active"><a href="#">Tất cả</a></li>
-                        <li><a href="#">Mới nhất</a></li>
-                        <li><a href="#">Cũ nhất</a></li>
-                        <li><a href="#">Phổ biến</a></li>
                     </ul>
                     <div class="nav-tabs-right">
-                        <select class="form-control">
+                        <select id="limit-select"
+                                class="form-control">
                             <option>Dòng</option>
+                            <option>2</option>
+                            <option>5</option>
                             <option>10</option>
                             <option>20</option>
                             <option>50</option>
@@ -81,33 +97,33 @@
                     </div>
                 </div>
                 <div class="search-result">
-                    Tìm thấy ${model.totalItems} kết quả cho từ khóa "${param.q}"
+                    Tìm thấy ${articles.totalElements} kết quả cho từ khóa "${param.q}"
                 </div>
                 <div class="row">
-                    <c:forEach items="${model.data}" var="article">
+                    <c:forEach items="${articles.content}" var="article">
                         <article class="col-md-12 article-list">
                             <div class="inner">
                                 <figure>
-                                    <a href="/${article.slug}">
+                                    <a href="/${article.alias}">
                                         <img src="${article.thumbnailUrl}">
                                     </a>
                                 </figure>
                                 <div class="details">
                                     <div class="detail">
                                         <div class="category">
-                                            <a href="/categories/${article.categoryCode}">${article.categoryName}</a>
+                                            <a href="/categories/${article.categoryAlias}">${article.categoryTitle}</a>
                                         </div>
                                         <time style="margin: 0 .5rem">
-                                            <fmt:formatDate value="${article.modifiedDate}"/>
+                                            <fmt:formatDate value="${article.publishedAt}"/>
                                         </time>
                                     </div>
-                                    <h1><a href="/${article.slug}">${article.title}</a></h1>
+                                    <h1><a href="/${article.alias}">${article.title}</a></h1>
                                     <p>${article.description}</p>
                                     <footer>
                                         <a href="#" class="love"><i class="ion-android-favorite-outline"></i>
                                             <div>${article.traffic}</div>
                                         </a>
-                                        <a class="btn btn-primary more" href="/${article.slug}">
+                                        <a class="btn btn-primary more" href="/${article.alias}">
                                             <div>Đọc tiếp</div>
                                             <div><i class="ion-ios-arrow-thin-right"></i></div>
                                         </a>
@@ -117,23 +133,56 @@
                         </article>
                     </c:forEach>
                     <div class="col-md-12 text-center">
-                        <ul class="pagination">
-                            <li class="prev"><a href="#"><i class="ion-ios-arrow-left"></i></a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">...</a></li>
-                            <li><a href="#">97</a></li>
-                            <li class="next"><a href="#"><i class="ion-ios-arrow-right"></i></a></li>
-                        </ul>
-                        <div class="pagination-help-text">
-                            Showing 8 results of 776 &mdash; Page 1
-                        </div>
+                        <ul class="pagination"></ul>
+                        <c:if test="${articles.totalPages > 0}">
+                            <div class="pagination-help-text">
+                                Trang ${articles.number+1}
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script>
+    $(function () {
+        let dateFormat = `${date_format}`;
+        let currentPage = ${articles.number+1};
+        let totalPages = ${articles.totalPages};
+        let $searchForm = $('#search-form');
+
+        $('input[name=date_format]').map((i, e) => {
+            if (e.value === dateFormat) {
+                e.checked = true;
+            }
+        });
+        if ($('.check-box').length === $('.check-box[checked]').length) {
+            $('#select-all').prop('checked', true);
+        }
+
+        $('#limit-select').change(function (e) {
+            $('input[name=size]').val($(this).val());
+            $searchForm.submit();
+        })
+        if (totalPages > 0) {
+            $('.pagination').twbsPagination({
+                startPage: currentPage,
+                totalPages: totalPages,
+                visiblePages: 7,
+                first: 'Đầu',
+                last: 'Cuối',
+                next: 'Tiếp',
+                prev: 'Lùi',
+                onPageClick: (event, page) => {
+                    if (currentPage !== page) {
+                        $('input[name=page]').val(page);
+                        $searchForm.submit();
+                    }
+                }
+            });
+        }
+    })
+</script>
 </body>
 </html>
