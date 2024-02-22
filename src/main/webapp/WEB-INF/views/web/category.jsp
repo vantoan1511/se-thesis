@@ -2,10 +2,11 @@
          pageEncoding="UTF-8" %>
 <%@ include file="../../../common/taglib.jsp" %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chuyên mục: ${category.name}</title>
+    <title>Chuyên mục: ${category.title}</title>
 </head>
 <body>
 <section class="category">
@@ -16,16 +17,16 @@
                     <div class="col-md-12">
                         <ol class="breadcrumb">
                             <li><a href="/home">Trang chủ</a></li>
-                            <c:if test="${category.parentCode != null}">
-                                <li><a href="/categories/${category.parentCode}">${category.parentName}</a></li>
+                            <c:if test="${category.parentAlias != null}">
+                                <li><a href="/categories/${category.parentAlias}">${category.title}</a></li>
                             </c:if>
-                            <li class="active">${category.name}</li>
+                            <li class="active">${category.title}</li>
                         </ol>
-                        <h1 class="page-title">Chuyên mục: ${category.name}</h1>
+                        <h1 class="page-title">Chuyên mục: ${category.title}</h1>
                         <c:if test="${category.subCategories != null}">
                             <p class="page-subtitle">
                                 <c:forEach var="item" items="${category.subCategories}">
-                                    <a href="/categories/${item.code}">${item.name}</a>
+                                    <a href="/categories/${item.alias}">${item.title}</a>
                                 </c:forEach>
                             </p>
                         </c:if>
@@ -33,7 +34,7 @@
                 </div>
                 <div class="line"></div>
                 <div class="row">
-                    <c:forEach items="${articles}" var="article">
+                    <c:forEach items="${articles.content}" var="article">
                         <article class="col-md-12 article-list">
                             <div class="inner">
                                 <figure>
@@ -44,9 +45,9 @@
                                 <div class="details">
                                     <div class="detail">
                                         <div class="category">
-                                            <a href="/categories/${article.categoryCode}">${article.categoryName}</a>
+                                            <a href="/categories/${article.categoryAlias}">${article.categoryTitle}</a>
                                         </div>
-                                        <div class="time"><fmt:formatDate value="${article.publishedDate}"
+                                        <div class="time"><fmt:formatDate value="${article.publishedAt}"
                                                                           pattern="HH:mm dd/MM/yyyy"/>
                                         </div>
                                     </div>
@@ -68,15 +69,15 @@
                     </c:forEach>
 
                     <div class="col-md-12 text-center">
-                        <ul class="pagination">
-                        </ul>
+                        <ul class="pagination"></ul>
                         <div class="pagination-help-text">
-                            Showing 8 results of 776 &mdash; Page 1
+                            <c:if test="${articles.totalElements > 0}">Trang ${articles.number+1}</c:if>
                         </div>
                     </div>
 
-                    <form action="/categories/${category.code}">
-                        <input id="page" type="hidden" name="page" value="page">
+                    <form id="page-request-form" method="get">
+                        <input type="hidden" name="page" value="1">
+                        <input type="hidden" name="size" value="${articles.size}">
                     </form>
                 </div>
             </div>
@@ -85,5 +86,29 @@
         </div>
     </div>
 </section>
+<script>
+    $(function () {
+        let totalPages = ${articles.totalPages};
+        let currentPage = ${articles.number+1};
+
+        if (totalPages > 0) {
+            $('.pagination').twbsPagination({
+                startPage: currentPage,
+                totalPages: totalPages,
+                visiblePages: 7,
+                first: 'Đầu',
+                last: 'Cuối',
+                next: 'Tiếp',
+                prev: 'Lùi',
+                onPageClick: (event, page) => {
+                    if (currentPage !== page) {
+                        $('input[name=page]').val(page);
+                        $('#page-request-form').submit();
+                    }
+                }
+            });
+        }
+    })
+</script>
 </body>
 </html>
