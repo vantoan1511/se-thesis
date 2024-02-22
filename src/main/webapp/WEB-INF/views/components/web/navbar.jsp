@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ include file="../../../../common/taglib.jsp" %>
+<%@ include file="/common/taglib.jsp" %>
 
 <!-- Start nav -->
 <nav class="menu">
@@ -30,36 +30,18 @@
                     </li>
                     <li class="for-tablet"><a href="/logout">Logout</a></li>
                 </sec:authorize>
-                <li><a href="/home">Trang chủ</a></li>
+                <li><a href="/home"><i class="ion-android-home"></i></a></li>
                 <li class="dropdown magz-dropdown magz-dropdown-megamenu">
-                    <a href="#">Tất cả <i class="ion-ios-arrow-right"></i></a>
+                    <a href="#"><i class="ion-android-menu"></i><i class="ion-ios-arrow-right"></i></a>
                     <div class="dropdown-menu megamenu">
                         <div class="megamenu-inner">
-                           <div class="row">
-                                <div class="col-md-3">
+                            <div id="list-categories" class="row">
+                                <%--<div class="col-md-3">
                                     <ul class="vertical-menu">
-                                        <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
+                                        <li><a href="<c:url value="/categories/the-thao"/>">Thể thao</a></li>
                                         <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
                                     </ul>
-                                </div>
-                               <div class="col-md-3">
-                                   <ul class="vertical-menu">
-                                       <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
-                                       <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
-                                   </ul>
-                               </div>
-                               <div class="col-md-3">
-                                   <ul class="vertical-menu">
-                                       <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
-                                       <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
-                                   </ul>
-                               </div>
-                               <div class="col-md-3">
-                                   <ul class="vertical-menu">
-                                       <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
-                                       <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
-                                   </ul>
-                               </div>
+                                </div>--%>
                             </div>
                         </div>
                     </div>
@@ -69,3 +51,24 @@
     </div>
 </nav>
 <!-- End nav -->
+<script>
+    $(function () {
+        let $listCategories = $('#list-categories');
+        $.get('/public/api/v1/categories').then((data) => {
+            data.forEach(category => {
+                console.log(category)
+                if (category.parentAlias == null) {
+                    let $div = $('<div>').addClass('col-md-3');
+                    let $ul = $('<ul>').addClass('vertical-menu')
+                        .append($('<li>').append($('<a>').attr('href', '/categories/' + category.alias).text(category.title)));
+                    category.subCategories.forEach(child => {
+                        let $li = $('<li>');
+                        let $a = $('<a>').attr('href', '/categories/' + child.alias).text(child.title);
+                        $ul.append($li.append($a))
+                    })
+                    $listCategories.append($div.append($ul))
+                }
+            })
+        })
+    })
+</script>
