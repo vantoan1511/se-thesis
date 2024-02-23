@@ -29,8 +29,42 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                </div>
+                <form id="page-request-form"
+                      method="get">
+                    <div class="row">
+                        <div class="col-md-auto">
+                            <select name="by"
+                                    id="sort-by"
+                                    class="col form-control custom-select">
+                                <option value="title">Tiêu đề</option>
+                                <option value="createdAt">Ngày tạo</option>
+                                <option value="lastModifiedAt">Lần sửa đổi cuối</option>
+                                <option value="createdBy">Tác giả</option>
+                            </select>
+                        </div>
+                        <div class="col-md-auto">
+                            <select name="order"
+                                    id="sort-order"
+                                    class="col form-control custom-select">
+                                <option value="ASC">Tăng dần</option>
+                                <option value="DESC">Giảm dần</option>
+                            </select>
+                        </div>
+                        <div class="col-md-auto">
+                            <select id="limit-select"
+                                    name="size"
+                                    class="col form-control custom-select">
+                                <option value="2">2</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="page" value="1">
+                    <%--<input type="hidden" name="size" value="${pagedCategories.size}">--%>
+                </form>
             </div>
             <div class="card-body p-0">
                 <table id="myTable" class="table table-bordered table-hover projects">
@@ -53,7 +87,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach varStatus="loop" var="category" items="${categories}">
+                    <c:forEach varStatus="loop" var="category" items="${pagedCategories.content}">
                         <tr>
                             <td>
                                 <div class="form-check icheck-material-red">
@@ -72,7 +106,8 @@
                                         ${category.title} <i class="ri-edit-box-line"></i>
                                 </a>
                                 <p style="font-size: 85%">
-                                    Alias: ${category.alias}<br>
+                                    Alias: <a target="_blank"
+                                              href="<c:url value="/categories/${category.alias}"/>">${category.alias}</a><br>
                                     Bài viết: <c:out value="${category.articles.size()}"/>
                                 </p>
                             </td>
@@ -95,7 +130,7 @@
                             </td>
                         </tr>
                     </c:forEach>
-                    <c:if test="${categories.size() < 1}">
+                    <c:if test="${pagedCategories.totalElements < 1}">
                         <tr>
                             <td colspan="8" class="text-center">Trống</td>
                         </tr>
@@ -103,11 +138,83 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer clear-fix row"></div>
+            <div class="card-footer clear-fix row">
+                <div class="col-auto">
+                    <span>Trang ${pagedCategories.number + 1} - Hiển thị ${pagedCategories.numberOfElements} trong số ${pagedCategories.totalElements} mục.</span>
+                </div>
+                <div class="col-auto">
+                    <ul id="pagination" class="pagination-sm"></ul>
+                </div>
+            </div>
         </div>
     </section>
     <!---->
 </div>
 <script src="<c:url value="/static/custom/js/category/main.js"/>"></script>
+<script>
+    $(function () {
+        const sortBy = `${sortBy}`;
+        const sortOrder = `${sortOrder}`;
+        const size = `${pagedCategories.size}`;
+        const $sortBySelect = $('#sort-by');
+        const $sortOrderSelect = $('#sort-order');
+        const $sizeSelect = $('#limit-select');
+        const $pageRequest = $('#page-request-form');
+        const $curPage = $('input[name=page]');
+        const $curSize = $('input[name=size]');
+
+        const totalItems = ${pagedCategories.totalElements};
+        const currentPage = ${pagedCategories.number+1};
+        const totalPages = ${pagedCategories.totalPages};
+
+        $sortBySelect.find('option').each(function () {
+            if (sortBy === $(this).val()) {
+                $(this).attr('selected', true);
+            }
+        })
+
+        $sortOrderSelect.find('option').each(function () {
+            if (sortOrder === $(this).val()) {
+                $(this).attr('selected', true);
+            }
+        })
+
+        $sizeSelect.find('option').each(function () {
+            if (size === $(this).val()) {
+                $(this).attr('selected', true);
+            }
+        })
+
+        $sortBySelect.change(function () {
+            $pageRequest.submit();
+        })
+
+        $sortOrderSelect.change(function () {
+            $pageRequest.submit();
+        })
+
+        $sizeSelect.change(function () {
+            $pageRequest.submit();
+        })
+
+        if (totalItems > 0) {
+            $('#pagination').twbsPagination({
+                startPage: currentPage,
+                totalPages: totalPages,
+                visiblePages: 7,
+                first: 'Đầu',
+                last: 'Cuối',
+                next: 'Tiếp',
+                prev: 'Lùi',
+                onPageClick: (event, page) => {
+                    if (currentPage !== page) {
+                        $curPage.val(page);
+                        $pageRequest.submit();
+                    }
+                }
+            });
+        }
+    })
+</script>
 </body>
 </html>
