@@ -19,7 +19,7 @@
     <!-- Main content -->
     <section class="content">
         <sec:authorize access="hasRole('ADMIN')">
-            <%@include file="../../components/admin/listFunctionalities.jsp" %>
+            <%--<%@include file="../../components/admin/listFunctionalities.jsp" %>--%>
         </sec:authorize>
         <sec:authorize access="hasRole('WRITER')">
             <%@include file="../../components/author/listFunctionalities.jsp" %>
@@ -27,36 +27,28 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="row">
-                            <select name="sort-by" id="sort-by" class="col form-control custom-select">
-                                <option value="title">Tiêu đề</option>
-                                <option value="categoryId">Chuyên mục</option>
-                                <option value="lastModifiedAt">Ngày sửa đổi</option>
-                                <option value="createdBy">Tác giả</option>
-                            </select>
-                        </div>
+                    <div class="col-md-auto">
+                        <select name="sort-by" id="sort-by" class="col form-control custom-select">
+                            <option value="title">Tiêu đề</option>
+                            <option value="categoryId">Chuyên mục</option>
+                            <option value="lastModifiedAt">Ngày sửa đổi</option>
+                            <option value="createdBy">Tác giả</option>
+                        </select>
                     </div>
-                    <div class="col-md-1">
-                        <div class="row">
-                            <select name="sort-order" id="sort-order" class="col form-control custom-select">
-                                <option value="ASC">Tăng dần</option>
-                                <option value="DESC">Giảm dần</option>
-                            </select>
-                        </div>
+                    <div class="col-md-auto">
+                        <select name="sort-order" id="sort-order" class="col form-control custom-select">
+                            <option value="ASC">Tăng dần</option>
+                            <option value="DESC">Giảm dần</option>
+                        </select>
                     </div>
-                    <div class="col-md-1">
-                        <div class="row">
-                            <select id="limit-select" class="col form-control custom-select">
-                                <option value="1">1</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </div>
+                    <div class="col-md-auto">
+                        <select id="limit-select" class="col form-control custom-select">
+                            <option value="2">2</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -115,7 +107,7 @@
                                         ${article.title} <i class="ri-edit-box-line"></i>
                                 </a>
                                 <p style="font-size: 85%">
-                                    Alias: <a href="/${article.alias}">${article.alias}</a><br>
+                                    Alias: <a target="_blank" href="/${article.alias}">${article.alias}</a><br>
                                     Chuyên mục: <a href="#">${article.categoryTitle}</a>
                                 </p>
                             </td>

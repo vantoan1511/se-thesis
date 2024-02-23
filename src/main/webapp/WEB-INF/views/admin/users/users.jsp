@@ -21,36 +21,27 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="row">
-                            <select name="sort-by" id="sort-by" class="col form-control custom-select">
-                                <option value="lastName">Tên</option>
-                                <option value="firstName">Họ</option>
-                                <option value="createdAt">Ngày tham gia</option>
-                            </select>
-                        </div>
+                    <div class="col-md-auto">
+                        <select name="sort-by" id="sort-by" class="col form-control custom-select">
+                            <option value="lastName">Tên</option>
+                            <option value="firstName">Họ</option>
+                            <option value="createdAt">Ngày tham gia</option>
+                        </select>
                     </div>
-                    <div class="col-md-1">
-                        <div class="row">
-                            <select name="sort-order" id="sort-order" class="col form-control custom-select">
-                                <option value="ASC">Tăng dần</option>
-                                <option value="DESC">Giảm dần</option>
-                            </select>
-                        </div>
+                    <div class="col-md-auto">
+                        <select name="sort-order" id="sort-order" class="col form-control custom-select">
+                            <option value="ASC">Tăng dần</option>
+                            <option value="DESC">Giảm dần</option>
+                        </select>
                     </div>
-                    <div class="col-md-1">
-                        <div class="row">
-                            <select id="limit-select" class="col form-control custom-select">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </div>
+                    <div class="col-md-auto">
+                        <select id="limit-select" class="col form-control custom-select">
+                            <option value="2">2</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
                     </div>
                 </div>
             </div>

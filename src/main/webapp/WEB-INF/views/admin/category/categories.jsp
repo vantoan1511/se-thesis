@@ -121,10 +121,12 @@
                                             class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown"
                                             aria-expanded="false"></button>
                                     <div class="dropdown-menu dropdown-menu-right" role="menu" style>
-                                        <button onclick="handleCategoryDeleteButton(event, ${category.id})"
-                                                class="dropdown-item btn btn-default btn-sm">
-                                            <i class="ri-delete-bin-line text-danger"></i> Xóa
-                                        </button>
+                                        <c:if test="${category.createdBy eq pageContext.request.userPrincipal.name}">
+                                            <button onclick="handleCategoryDeleteButton(event, ${category.id})"
+                                                    class="dropdown-item btn btn-default btn-sm">
+                                                <i class="ri-delete-bin-line text-danger"></i> Xóa
+                                            </button>
+                                        </c:if>
                                     </div>
                                 </div>
                             </td>

@@ -160,16 +160,16 @@
                         <!-- /.tab-content -->
                     </div>
 
-                    <sec:authorize access="hasRole('ADMIN')">
-                        <div class="card card-primary">
-                            <div class="card card-header">
-                                <h3 class="card-title">Tài khoản</h3>
-                            </div>
-                            <div class="card card-body">
-                                <label>Xóa tài khoản vĩnh viễn</label>
-                                <button id="delete-account-btn"
-                                        class="btn bg-gradient-danger col-md-3">Xóa tài khoản
-                                </button>
+                    <div class="card card-primary">
+                        <div class="card card-header">
+                            <h3 class="card-title">Tài khoản</h3>
+                        </div>
+                        <div class="card card-body">
+                            <label>Xóa tài khoản vĩnh viễn</label>
+                            <button id="delete-account-btn"
+                                    class="btn bg-gradient-danger col-md-3">Xóa tài khoản
+                            </button>
+                            <sec:authorize access="hasRole('ADMIN')">
                                 <label>Vô hiệu tài khoản</label>
                                 <c:choose>
                                     <c:when test="${userDetails.enabled}">
@@ -183,9 +183,9 @@
                                         </button>
                                     </c:otherwise>
                                 </c:choose>
-                            </div>
+                            </sec:authorize>
                         </div>
-                    </sec:authorize>
+                    </div>
                 </div>
             </div>
         </div>

@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="<c:url value="/static/web/css/demo.css"/>">
     <link rel="stylesheet" href="../static/remixicon/remixicon.css">
     <link rel="stylesheet" href="../static/custom/css/styles.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icheck-material@1.0.1/icheck-material.min.css">
+
     <script src="<c:url value="/static/web/js/jquery.js"/>"></script>
 
 </head>

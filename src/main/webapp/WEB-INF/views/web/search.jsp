@@ -40,35 +40,52 @@
                         <div class="aside-body">
                             <div class="checkbox-group">
                                 <div class="group-title">Chuyên mục</div>
-                                <div class="form-group">
-                                    <label><input id="select-all"
-                                                  onclick="handleSelectAllCheckboxClick(this, '.check-box')"
-                                                  type="checkbox">Tất cả
-                                    </label>
+                                <div class="form-group icheck-material-red">
+                                    <input id="select-all"
+                                           onclick="handleSelectAllCheckboxClick(this, '.check-box')"
+                                           type="checkbox">
+                                    <label for="select-all">Tất cả</label>
                                 </div>
                                 <c:forEach var="category" items="${categories}">
-                                    <div class="form-group">
-                                        <label><input type="checkbox"
-                                                      onclick="handleSingleCheckboxClick('#select-all', '.check-box')"
-                                                      class="check-box"
-                                                      name="categoryId"
-                                                      <c:if test="${categoryIds.contains(category.id)}">checked</c:if>
-                                                      value="${category.id}">${category.title}
-                                        </label>
+                                    <div class="form-group icheck-material-red">
+                                        <input id="${category.id}"
+                                               type="checkbox"
+                                               onclick="handleSingleCheckboxClick('#select-all', '.check-box')"
+                                               class="check-box"
+                                               name="categoryId"
+                                               <c:if test="${categoryIds.contains(category.id)}">checked</c:if>
+                                               value="${category.id}">
+                                        <label for="${category.id}">${category.title}</label>
                                     </div>
                                 </c:forEach>
                                 <div class="group-title">Ngày đăng tải</div>
-                                <div class="form-group">
-                                    <label><input type="radio" name="date_format" value="anytime" checked>Tất cả</label>
+                                <div class="form-group icheck-material-red">
+                                    <input id="anytime"
+                                           type="radio"
+                                           name="date_format"
+                                           value="anytime" checked>
+                                    <label for="anytime">Tất cả</label>
                                 </div>
-                                <div class="form-group">
-                                    <label><input type="radio" name="date_format" value="day">1 ngày qua</label>
+                                <div class="form-group icheck-material-red">
+                                    <input id="day"
+                                           type="radio"
+                                           name="date_format"
+                                           value="day">
+                                    <label for="day">1 ngày qua</label>
                                 </div>
-                                <div class="form-group">
-                                    <label><input type="radio" name="date_format" value="week">1 Tuần qua</label>
+                                <div class="form-group icheck-material-red">
+                                    <input id="week"
+                                           type="radio"
+                                           name="date_format"
+                                           value="week">
+                                    <label for="week">1 Tuần qua</label>
                                 </div>
-                                <div class="form-group">
-                                    <label><input type="radio" name="date_format" value="month">1 Tháng qua</label>
+                                <div class="form-group icheck-material-red">
+                                    <input id="month"
+                                           type="radio"
+                                           name="date_format"
+                                           value="month">
+                                    <label for="month">1 Tháng qua</label>
                                 </div>
 
                             </div>
