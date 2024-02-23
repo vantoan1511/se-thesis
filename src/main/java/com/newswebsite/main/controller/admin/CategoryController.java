@@ -25,18 +25,17 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ModelAndView getList(@RequestParam(name = "tab", required = false, defaultValue = "all") String tab,
-                                @RequestParam(name = "page", defaultValue = "1") int page,
-                                @RequestParam(name = "limit", defaultValue = "10") int limit,
-                                @RequestParam(name = "by", defaultValue = "lastModifiedAt") String by,
-                                @RequestParam(name = "order", defaultValue = "DESC") String order) {
+    public ModelAndView getList(
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            @RequestParam(name = "by", defaultValue = "lastModifiedAt") String by,
+            @RequestParam(name = "order", defaultValue = "DESC") String order) {
         String viewName = "admin/category/categories";
 
-        Sort.Direction direction = Sort.Direction.fromString(order);
-        Pageable pageable = new PageRequest(page - 1, limit, new Sort(direction, by));
+        Pageable pageable = new PageRequest(page - 1, size, Sort.Direction.fromString(order), by);
 
         ModelAndView view = new ModelAndView(viewName);
-        view.addObject("categories", categoryReader.getAll());
+        view.addObject("pagedCategories", categoryReader.getAll(pageable));
         view.addObject("sortBy", by);
         view.addObject("sortOrder", order);
         return view;
