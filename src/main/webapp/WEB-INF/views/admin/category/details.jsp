@@ -94,7 +94,7 @@
                                     <div class="form-group">
                                         <label>Chuyên mục cha</label>
                                         <form:select path="parentAlias"
-                                                     cssClass="wide">
+                                                     cssClass="form-control">
                                             <form:option value="">--Chọn chuyên mục--</form:option>
                                             <form:options items="${categories}"/>
                                         </form:select>
