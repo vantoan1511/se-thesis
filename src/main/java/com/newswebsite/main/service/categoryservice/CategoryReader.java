@@ -5,8 +5,9 @@ import com.newswebsite.main.entity.Category;
 import com.newswebsite.main.exception.CategoryCodeNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.CategoryRepo;
-import com.newswebsite.main.service.categoryservice.ICategoryReader;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +20,12 @@ public class CategoryReader implements ICategoryReader {
 
     private final MessageSource msg;
 
-    private final CollectionMapper mapper = new CollectionMapper();
+    private final CollectionMapper mapper;
 
-    public CategoryReader(CategoryRepo categoryRepo, MessageSource msg) {
+    public CategoryReader(CategoryRepo categoryRepo, MessageSource msg, CollectionMapper mapper) {
         this.categoryRepo = categoryRepo;
         this.msg = msg;
+        this.mapper = mapper;
     }
 
     @Override
@@ -37,6 +39,11 @@ public class CategoryReader implements ICategoryReader {
     @Override
     public List<CategoryDTO> getAll() {
         return mapper.map(categoryRepo.findAll(), CategoryDTO.class);
+    }
+
+    @Override
+    public Page<CategoryDTO> getAll(Pageable pageable) {
+        return categoryRepo.findAll(pageable).map(item -> mapper.map(item, CategoryDTO.class));
     }
 
     @Override
