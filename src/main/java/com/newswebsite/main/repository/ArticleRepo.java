@@ -19,7 +19,7 @@ public interface ArticleRepo extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a " +
             "WHERE CONCAT(a.title, ' ', a.description, ' ', a.text) LIKE %:q% " +
             "AND (a.category.id IN (:categoryIds))" +
-            "AND :startDate IS NULL OR a.publishedAt >= :startDate " +
+            "AND (:startDate IS NULL OR a.publishedAt >= :startDate) " +
             "AND a.state.id=5 ORDER BY a.publishedAt DESC")
     Page<Article> search(@Param("q") String q,
                          @Param("categoryIds") List<Long> categoryIds,
