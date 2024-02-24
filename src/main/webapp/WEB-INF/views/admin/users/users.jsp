@@ -20,6 +20,11 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
+                <c:if test="${not empty message}">
+                    <div class="row">
+                        <%@ include file="../../components/admin/alert.jsp" %>
+                    </div>
+                </c:if>
                 <div class="row">
                     <div class="col-md-auto">
                         <select name="sort-by" id="sort-by" class="col form-control custom-select">
