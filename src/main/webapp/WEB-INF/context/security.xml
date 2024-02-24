@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <b:beans xmlns:b="http://www.springframework.org/schema/beans"
          xmlns="http://www.springframework.org/schema/security"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.springframework.org/schema/security
-         http://www.springframework.org/schema/security/spring-security-3.2.xsd
-         http://www.springframework.org/schema/beans
-         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+                 http://www.springframework.org/schema/security/spring-security-3.2.xsd
+                 http://www.springframework.org/schema/beans
+                 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <http auto-config="false" use-expressions="true" disable-url-rewriting="true">
 
         <intercept-url pattern="/admin/**" access="hasAnyRole('ADMIN', 'WRITER')"/>
@@ -22,6 +23,11 @@
 
         <remember-me key="uniqueAndPrivateKey" remember-me-parameter="remember-me"/>
         <logout delete-cookies="JSESSIONID"/>
+        <session-management invalid-session-url="/login?invalidSession=true">
+            <concurrency-control max-sessions="1"
+                                 session-registry-ref="sessionRegistry"
+                                 expired-url="/login?expiredSession=true"/>
+        </session-management>
     </http>
     <authentication-manager>
         <authentication-provider
@@ -36,4 +42,6 @@
             class="com.newswebsite.main.service.userservice.CustomUserDetailsService"/>
     <b:bean id="customAuthSuccessHandler"
             class="com.newswebsite.main.security.CustomAuthSuccessHandler"/>
+    <b:bean id="sessionRegistry"
+            class="org.springframework.security.core.session.SessionRegistryImpl"/>
 </b:beans>
