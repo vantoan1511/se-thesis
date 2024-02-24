@@ -5,6 +5,7 @@ import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.roleservice.IRoleReader;
+import com.newswebsite.main.service.session.ISessionService;
 import com.newswebsite.main.service.userservice.IUserReader;
 import com.newswebsite.main.service.userservice.IUserWriter;
 import com.newswebsite.main.utils.FlashMessage;
@@ -27,11 +28,17 @@ public class UserController {
 
     private final IRoleReader roleReader;
 
+    private final ISessionService sessionService;
+
     @Autowired
-    public UserController(IUserReader userReader, IUserWriter userWriter, IRoleReader roleReader) {
+    public UserController(IUserReader userReader,
+                          IUserWriter userWriter,
+                          IRoleReader roleReader,
+                          ISessionService sessionService) {
         this.userReader = userReader;
         this.userWriter = userWriter;
         this.roleReader = roleReader;
+        this.sessionService = sessionService;
     }
 
     @GetMapping
@@ -82,7 +89,12 @@ public class UserController {
     public String disableAccount(@PathVariable("username") String username,
                                  RedirectAttributes attributes) {
         if (SecurityUtil.getAuthorities().contains(Role.ADMIN.name())) {
-            userWriter.disable(username);
+            try {
+                userWriter.disable(username);
+                sessionService.expireByUsername(username);
+            } catch (RuntimeException ex) {
+                attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
+            }
         } else {
             attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
         }
@@ -98,5 +110,25 @@ public class UserController {
             attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
         }
         return "redirect:/admin/users/".concat(username);
+    }
+
+    @GetMapping("/{username}/delete")
+    public String deleteAccount(@PathVariable("username") String username,
+                                RedirectAttributes attributes) {
+        if (SecurityUtil.username().equals(username)) {
+            userWriter.delete(username);
+            return "redirect:/logout";
+        }
+        if (SecurityUtil.getAuthorities().contains(Role.ADMIN.name())) {
+            try {
+                userWriter.delete(username);
+                sessionService.expireByUsername(username);
+            } catch (RuntimeException ex) {
+                attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
+            }
+        } else {
+            attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
+        }
+        return "redirect:/admin/users";
     }
 }
