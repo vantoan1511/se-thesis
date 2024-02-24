@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,15 +17,21 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @GetMapping("/login")
-    public ModelAndView getLoginPage(@RequestParam(value = "invalidCredentials", required = false) boolean invalidCredentials,
-                                     RedirectAttributes attributes) {
+    public String getLoginPage(
+            @RequestParam(value = "invalidCredentials", required = false) boolean invalidCredentials,
+            @RequestParam(value = "invalidSession", required = false) boolean invalidSession,
+            @RequestParam(value = "expiredSession", required = false) boolean expiredSession,
+            RedirectAttributes attributes) {
         String viewName = "web/login";
         if (invalidCredentials) {
             attributes.addFlashAttribute("message", FlashMessage.danger("Thông tin đăng nhập không hợp lệ"));
             viewName = "redirect:/login";
         }
-        ModelAndView view = new ModelAndView(viewName);
-        return view;
+        if (invalidSession || expiredSession) {
+            attributes.addFlashAttribute("message", FlashMessage.danger("Phiên đăng nhập không hợp lệ hoặc đã hết hạn"));
+            viewName = "redirect:/login";
+        }
+        return viewName;
     }
 
     @GetMapping("/logout")
