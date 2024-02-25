@@ -108,7 +108,7 @@
                                         #${user.username} <br>
                                         Vai trò:
                                         <c:forEach var="role" items="${user.authorities}" varStatus="index">
-                                            ${role.getAuthority()};
+                                            ${role.description}<c:if test="${not index.last}">, </c:if>
                                         </c:forEach>
                                     </span>
                                 </div>
