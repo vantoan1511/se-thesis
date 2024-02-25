@@ -7,6 +7,31 @@ $(function () {
     $disableAccountBtn.click((e) => handleDisableAccountButton(e));
     $enableAccountBtn.click((e) => handleEnableAccountButton(e));
 
+    $('#available-roles').change(function () {
+        let selectedRole = $(this).val();
+        let selectedRoleText = $(this).find('option:selected').text();
+        console.log("Selected Role >> ", selectedRole);
+        console.log("Selected Text >> ", selectedRoleText);
+
+        $('#user-roles').append($('<option>').val(selectedRole).text(selectedRoleText));
+        $(this).find('option:selected').remove();
+    })
+
+    $('#user-roles').change(function () {
+        if ($(this).children().length > 1) {
+            let selectedRole = $(this).val();
+            let selectedRoleText = $(this).find('option:selected').text();
+
+            console.log("Selected Role >> ", selectedRole);
+            console.log("Selected Text >> ", selectedRoleText);
+
+            $('#available-roles').append($('<option>').val(selectedRole).text(selectedRoleText));
+            $(this).find('option:selected').remove();
+        } else {
+            console.log('Need one role at least');
+        }
+    })
+
     $('#user-details-form').validate({
         rules: {
             firstName: {
