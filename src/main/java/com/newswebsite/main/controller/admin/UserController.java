@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -59,12 +60,18 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public ModelAndView getUser(@PathVariable("username") String username) {
-        UserDTO userDTO = userReader.getUser(username);
+    public String getUser(@PathVariable("username") String username,
+                          RedirectAttributes attributes,
+                          Model model) {
         String viewName = "admin/users/userDetails";
-        ModelAndView view = new ModelAndView(viewName);
-        view.addObject("profile", userDTO);
-        return view;
+        try {
+            model.addAttribute("profile", userReader.getUser(username));
+            model.addAttribute("allRoles", roleReader.getAllRoles());
+            return viewName;
+        } catch (RuntimeException ex) {
+            attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
+            return "redirect:/admin/users";
+        }
     }
 
     @PostMapping("/{username}")
