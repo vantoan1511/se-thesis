@@ -21,9 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -40,12 +38,31 @@ public class UserWriter implements IUserWriter {
     private final CollectionMapper mapper;
 
     @Autowired
-    public UserWriter(UserRepo userRepo, RoleRepo roleRepo, MessageSource msg, IEmailService emailService, CollectionMapper mapper) {
+    public UserWriter(
+            UserRepo userRepo,
+            RoleRepo roleRepo,
+            MessageSource msg,
+            IEmailService emailService,
+            CollectionMapper mapper
+    ) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
         this.msg = msg;
         this.emailService = emailService;
         this.mapper = mapper;
+    }
+
+    @Override
+    public void grant(String username, List<String> roles) {
+        User user = userRepo.findByUsername(username);
+        if (user == null) throw new UserNotFoundException("Không tìm thấy người dùng ");
+        if (roles.isEmpty()) throw new RuntimeException("Cần tối thiểu 1 vai trò");
+        List<com.newswebsite.main.entity.Role> authorities = new ArrayList<>();
+        for (String role : roles) {
+            authorities.add(roleRepo.findByAuthority(role));
+        }
+        user.setAuthorities(authorities);
+        userRepo.save(user);
     }
 
     @Override

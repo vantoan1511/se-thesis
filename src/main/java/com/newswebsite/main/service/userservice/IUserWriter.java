@@ -3,7 +3,11 @@ package com.newswebsite.main.service.userservice;
 import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
 
+import java.util.List;
+
 public interface IUserWriter {
+
+    void grant(String username, List<String> roles);
 
     void disable(String username);
 
