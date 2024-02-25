@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @NoArgsConstructor
@@ -28,10 +29,14 @@ public class UserDTO implements UserDetails, CredentialsContainer {
     private String token;
     private Date createdAt;
     private boolean enabled;
-    private List<GrantedAuthority> authorities;
+    private List<RoleDTO> authorities;
 
     public String fullName() {
         return firstName.concat(" ").concat(lastName);
+    }
+
+    public List<String> getRoles() {
+        return authorities.stream().map(RoleDTO::getAuthority).collect(Collectors.toList());
     }
 
     @Override
