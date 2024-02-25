@@ -5,6 +5,7 @@ import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.entity.User;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,14 +17,11 @@ import java.util.List;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepo userRepo;
+    @Autowired
+    private UserRepo userRepo;
 
-    private final CollectionMapper mapper;
-
-    public CustomUserDetailsService(UserRepo userRepo, CollectionMapper mapper) {
-        this.userRepo = userRepo;
-        this.mapper = mapper;
-    }
+    @Autowired
+    private CollectionMapper mapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
