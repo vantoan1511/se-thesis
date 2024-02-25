@@ -170,11 +170,9 @@
                                         class="form-control custom-select"
                                         size="3">
                                     <c:forEach items="${allRoles}" var="role">
-                                        <c:forEach items="${userDetails.authorities}" var="userRole">
-                                            <c:if test="${userRole.authority ne role.authority}">
-                                                <option value="${role.authority}">${role.description}</option>
-                                            </c:if>
-                                        </c:forEach>
+                                        <c:if test="${not userDetails.getRoles().contains(role.authority)}">
+                                            <option value="${role.authority}">${role.description}</option>
+                                        </c:if>
                                     </c:forEach>
                                 </select>
                             </div>
