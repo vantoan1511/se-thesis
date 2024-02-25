@@ -186,7 +186,9 @@
                                 </select>
                             </div>
                             <div class="col-md-auto">
-                                <button class="btn bg-gradient-success">Lưu</button>
+                                <button id="grant-privileges-btn"
+                                        class="btn bg-gradient-success">Lưu
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -2,10 +2,12 @@ $(function () {
     const $deleteAccountBtn = $('#delete-account-btn');
     const $disableAccountBtn = $('#disable-account-btn');
     const $enableAccountBtn = $('#enable-account-btn');
+    const $grantPrivileges = $('#grant-privileges-btn');
 
     $deleteAccountBtn.click((e) => handleDeleteAccountButton(e));
     $disableAccountBtn.click((e) => handleDisableAccountButton(e));
     $enableAccountBtn.click((e) => handleEnableAccountButton(e));
+    $grantPrivileges.click(e => handleGrantPrivilegesButton(e));
 
     $('#available-roles').change(function () {
         let selectedRole = $(this).val();
@@ -125,4 +127,28 @@ function handleEnableAccountButton(e) {
             location.replace(location.href + '/enable');
         }
     })
+}
+
+function handleGrantPrivilegesButton(e) {
+    e.preventDefault();
+    let url = location.pathname;
+    let parts = url.split('/');
+    let username = parts[parts.length - 1];
+    console.log(username)
+    let grantedRole = [];
+    let grantedRoleName = [];
+    $('#user-roles option').each(function () {
+        grantedRole.push($(this).val());
+        grantedRoleName.push($(this).text());
+    });
+    console.log(grantedRoleName)
+    showWarningAlert(`Xác nhận phân vai trò sau ${grantedRoleName}?`, result => {
+        if (result.isConfirmed) {
+            handlePutRequest(`/api/v1/users/${username}/grant`, grantedRole, () => {
+                showSuccessAlert(`Đã phân vai trò ${grantedRoleName} thành công`, () => {
+                    location.reload()
+                })
+            }, error => {console.log(error)});
+        }
+    });
 }
