@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "review")
 @Getter
 @Setter
-public class Review extends Base {
+public class Review extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

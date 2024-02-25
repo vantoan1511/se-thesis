@@ -17,7 +17,7 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Base {
+public class Audit {
     @CreatedBy
     @Column(name = "created_by")
     private String createdBy;
