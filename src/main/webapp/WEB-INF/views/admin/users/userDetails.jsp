@@ -161,28 +161,65 @@
                     </div>
 
                     <div class="card card-primary">
-                        <div class="card card-header">
+                        <div class="card-header">
+                            <h3 class="card-title">Vai trò</h3>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-3">
+                                <select id="available-roles"
+                                        class="form-control custom-select"
+                                        size="3">
+                                    <c:forEach items="${allRoles}" var="role">
+                                        <c:forEach items="${userDetails.authorities}" var="userRole">
+                                            <c:if test="${userRole.authority ne role.authority}">
+                                                <option value="${role.authority}">${role.description}</option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="user-roles"
+                                        class="form-control custom-select"
+                                        size="3">
+                                    <c:forEach items="${userDetails.authorities}" var="role">
+                                        <option value="${role.authority}">${role.description}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-md-auto">
+                                <button class="btn bg-gradient-success">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-primary">
+                        <div class=" card-header">
                             <h3 class="card-title">Tài khoản</h3>
                         </div>
-                        <div class="card card-body">
-                            <label>Xóa tài khoản vĩnh viễn</label>
-                            <button id="delete-account-btn"
-                                    class="btn bg-gradient-danger col-md-3">Xóa tài khoản
-                            </button>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Xóa tài khoản vĩnh viễn</label>
+                                <button id="delete-account-btn"
+                                        class="btn bg-gradient-danger col-md-3">Xóa tài khoản
+                                </button>
+                            </div>
                             <sec:authorize access="hasRole('ADMIN')">
-                                <label>Vô hiệu tài khoản</label>
-                                <c:choose>
-                                    <c:when test="${userDetails.enabled}">
-                                        <button id="disable-account-btn"
-                                                class="btn bg-gradient-danger col-md-3">Vô hiệu tài khoản
-                                        </button>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button id="enable-account-btn"
-                                                class="btn bg-gradient-success col-md-3">Kích hoạt tài khoản
-                                        </button>
-                                    </c:otherwise>
-                                </c:choose>
+                                <div class="form-group">
+                                    <label>Vô hiệu tài khoản</label>
+                                    <c:choose>
+                                        <c:when test="${userDetails.enabled}">
+                                            <button id="disable-account-btn"
+                                                    class="btn bg-gradient-danger col-md-3">Vô hiệu tài khoản
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button id="enable-account-btn"
+                                                    class="btn bg-gradient-success col-md-3">Kích hoạt tài khoản
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </sec:authorize>
                         </div>
                     </div>
