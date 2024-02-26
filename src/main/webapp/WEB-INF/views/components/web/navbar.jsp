@@ -20,28 +20,26 @@
             <ul class="nav-list">
                 <li class="for-tablet nav-title"><a>Menu</a></li>
                 <sec:authorize access="isAnonymous()">
-                    <li class="for-tablet"><a href="/login">Login</a></li>
-                    <li class="for-tablet"><a href="/register">Register</a></li>
+                    <li class="for-tablet"><a href="<c:url value="/login"/>">Login</a></li>
+                    <li class="for-tablet"><a href="<c:url value="/register"/>">Register</a></li>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <li class="for-tablet">
-                        <a href="#"><%=SecurityUtil.username()%>>
+                        <a href="/profiles/<%=SecurityUtil.username()%>"><%=SecurityUtil.fullname()%>
                         </a>
                     </li>
-                    <li class="for-tablet"><a href="/logout">Logout</a></li>
+                    <li class="for-tablet"><a href="<c:url value="/logout"/>">Logout</a></li>
                 </sec:authorize>
-                <li><a href="/home"><i class="ion-android-home"></i></a></li>
+                <li><a href="<c:url value="/home"/>"><i class="ion-android-home"></i></a></li>
                 <li class="dropdown magz-dropdown magz-dropdown-megamenu">
                     <a href="#"><i class="ion-android-menu"></i><i class="ion-ios-arrow-right"></i></a>
                     <div class="dropdown-menu megamenu">
                         <div class="megamenu-inner">
                             <div id="list-categories" class="row">
-                                <%--<div class="col-md-3">
-                                    <ul class="vertical-menu">
-                                        <li><a href="<c:url value="/categories/the-thao"/>">Thể thao</a></li>
-                                        <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
-                                    </ul>
-                                </div>--%>
+                               <%-- <ul>
+                                    <li><a href="<c:url value="/categories/the-thao"/>">#Thể thao</a></li>
+                                    <li><a href="<c:url value="/categories/bong-da"/>">Bóng đá</a></li>
+                                </ul>--%>
                             </div>
                         </div>
                     </div>

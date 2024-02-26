@@ -1,4 +1,5 @@
 $(function () {
+    loadCategories()
     const currentPath = location.pathname + location.search
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
@@ -22,15 +23,14 @@ function loadCategories() {
     $.get('/public/api/v1/categories').then((data) => {
         data.forEach(category => {
             if (category.parentAlias == null) {
-                let $div = $('<div>').addClass('col-md-3');
-                let $ul = $('<ul>').addClass('vertical-menu')
+                let $ul = $('<ul>')
                     .append($('<li>').append($('<a>').attr('href', '/categories/' + category.alias).text(`#${category.title}`)));
                 category.subCategories.forEach(child => {
                     let $li = $('<li>');
                     let $a = $('<a>').attr('href', '/categories/' + child.alias).text(child.title);
                     $ul.append($li.append($a))
                 })
-                $listCategories.append($div.append($ul))
+                $listCategories.append($ul)
             }
         })
     })
