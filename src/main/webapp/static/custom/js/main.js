@@ -15,15 +15,16 @@ $(function () {
             $('#back-to-top').fadeOut();
         }
     });
+})
 
+function loadCategories() {
     let $listCategories = $('#list-categories');
     $.get('/public/api/v1/categories').then((data) => {
         data.forEach(category => {
-            console.log(category)
             if (category.parentAlias == null) {
                 let $div = $('<div>').addClass('col-md-3');
                 let $ul = $('<ul>').addClass('vertical-menu')
-                    .append($('<li>').append($('<a>').attr('href', '/categories/' + category.alias).text(category.title)));
+                    .append($('<li>').append($('<a>').attr('href', '/categories/' + category.alias).text(`#${category.title}`)));
                 category.subCategories.forEach(child => {
                     let $li = $('<li>');
                     let $a = $('<a>').attr('href', '/categories/' + child.alias).text(child.title);
@@ -33,7 +34,8 @@ $(function () {
             }
         })
     })
-})
+}
+
 const scrollToTop = () => {
     if ($(window).scrollTop() > 20) {
         $('body, html').animate({
