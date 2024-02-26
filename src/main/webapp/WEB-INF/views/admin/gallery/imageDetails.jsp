@@ -39,7 +39,7 @@
                         </button>
                     </div>
                     <div class="col-auto">
-                        <a href="<c:url value="/admin/my-storage"/>" class="btn btn-block btn-default">
+                        <a href="<c:url value="/admin/gallery"/>" class="btn btn-block btn-default">
                             <i class="fas fa-undo text-success"></i> Quay lại
                         </a>
                     </div>
@@ -109,6 +109,6 @@
         </form:form>
     </section>
 </div>
-<script src="<c:url value="/static/custom/js/storage/main.js"/>"></script>
+<script src="<c:url value="/static/custom/js/gallery/gallery.js"/>"></script>
 </body>
 </html>

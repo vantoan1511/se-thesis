@@ -40,9 +40,9 @@ function handleImageDetailsSaveButton(event, selector, saveAndClose, saveAndNew)
     console.log('ID >> ', parseInt(id));
     let successCallback = (result) => {
         showSuccessAlert('Đã lưu thay đổi', () => {
-            if (saveAndClose) location.replace('/admin/my-storage')
-            else if (saveAndNew) location.replace('/admin/my-storage/new')
-            else location.replace('/admin/my-storage/' + result.alias)
+            if (saveAndClose) location.replace('/admin/gallery')
+            else if (saveAndNew) location.replace('/admin/gallery/new')
+            else location.replace('/admin/gallery/' + result.alias)
         })
     }
     if (id !== '') {
