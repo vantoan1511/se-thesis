@@ -22,7 +22,10 @@
                     authentication-failure-url="/login?invalidCredentials=true"/>
 
         <remember-me key="uniqueAndPrivateKey" remember-me-parameter="remember-me"/>
-        <logout delete-cookies="JSESSIONID"/>
+        <logout delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE"
+                logout-url="/logout"
+                logout-success-url="/login"
+                invalidate-session="true"/>
         <session-management invalid-session-url="/login?invalidSession=true">
             <concurrency-control max-sessions="1"
                                  session-registry-ref="sessionRegistry"
