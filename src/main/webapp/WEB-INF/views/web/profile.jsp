@@ -20,8 +20,8 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center text-center">
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                                                     alt="Admin"
+                                                <img src="${profile.avatarUrl}"
+                                                     alt="${profile.username}"
                                                      class="img-circle p-1 bg-primary" width="110">
                                                 <div class="mt-3">
                                                     <h4><c:out value="${profile.firstName}"/> <c:out
@@ -129,7 +129,6 @@
                                                     <div class="col-sm-9">
                                                         <button type="button"
                                                                 id="delete-my-account-btn"
-                                                                onclick="handleDeleteMyAccountButton(event)"
                                                                 class="btn btn-primary btn-rounded px-4">
                                                             Xóa tài khoản
                                                         </button>
@@ -148,16 +147,11 @@
     </div>
 </section>
 <script>
-    function handleDeleteMyAccountButton(event) {
-        event.preventDefault();
-        showWarningAlert('Tài khoản của bạn sẽ bị xóa vĩnh viễn và không thể khôi phục', (result) => {
-            if (result.isConfirmed) {
-                location.replace(location.href + '/delete');
-            }
-        });
-    }
-
     $(function () {
+        const $deleteAccountBtn = $('#delete-my-account-btn');
+
+        $deleteAccountBtn.click(e => handleDeleteMyAccountButton(e));
+
         $('#user-profile-form').validate({
             rules: {
                 firstName: {
@@ -194,6 +188,14 @@
         });
     });
 
+    function handleDeleteMyAccountButton(event) {
+        event.preventDefault();
+        showWarningAlert('Tài khoản của bạn sẽ bị xóa vĩnh viễn và không thể khôi phục', (result) => {
+            if (result.isConfirmed) {
+                location.replace(location.href + '/delete');
+            }
+        });
+    }
 </script>
 </body>
 </html>
