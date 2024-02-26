@@ -1,4 +1,4 @@
-$(document).ready(() => {
+$(function () {
     const currentPath = location.pathname + location.search
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
@@ -15,8 +15,25 @@ $(document).ready(() => {
             $('#back-to-top').fadeOut();
         }
     });
-});
 
+    let $listCategories = $('#list-categories');
+    $.get('/public/api/v1/categories').then((data) => {
+        data.forEach(category => {
+            console.log(category)
+            if (category.parentAlias == null) {
+                let $div = $('<div>').addClass('col-md-3');
+                let $ul = $('<ul>').addClass('vertical-menu')
+                    .append($('<li>').append($('<a>').attr('href', '/categories/' + category.alias).text(category.title)));
+                category.subCategories.forEach(child => {
+                    let $li = $('<li>');
+                    let $a = $('<a>').attr('href', '/categories/' + child.alias).text(child.title);
+                    $ul.append($li.append($a))
+                })
+                $listCategories.append($div.append($ul))
+            }
+        })
+    })
+})
 const scrollToTop = () => {
     if ($(window).scrollTop() > 20) {
         $('body, html').animate({
