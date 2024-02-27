@@ -1,5 +1,4 @@
 $(function () {
-    var youtube_api_key = 'YOUR_API_KEY';
 
     var loading = {
         show: function () {
@@ -80,125 +79,6 @@ $(function () {
         }
     }
 
-    // love
-    var love = function () {
-        $(".love").each(function () {
-            $(this).find("div").html($.number($(this).find("div").html()));
-            $(this).click(function () {
-                var countNow = $(this).find("div").html().replace(',', '');
-                if (!$(this).hasClass("active")) {
-                    $(this).find(".animated").remove();
-                    $(this).addClass("active");
-                    $(this).find("i").removeClass("ion-android-favorite-outline");
-                    $(this).find("i").addClass("ion-android-favorite");
-                    $(this).find("div").html(parseInt(countNow) + 1);
-                    $(this).find("div").html($.number($(this).find("div").html()));
-                    $(this).append($(this).find("i").clone().addClass("animated"));
-                    $(this).find("i.animated").on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function (e) {
-                        $(this).remove();
-                        $(this).off(e);
-                    });
-                    // add some code ("love")
-                } else {
-                    $(this).find(".animated").remove();
-                    $(this).removeClass("active");
-                    $(this).find("i").addClass("ion-android-favorite-outline");
-                    $(this).find("i").removeClass("ion-android-favorite");
-                    $(this).find("div").html(parseInt(countNow) - 1);
-                    $(this).find("div").html($.number($(this).find("div").html()));
-
-                    // add some code ("unlove")
-                }
-                return false;
-            });
-        });
-    }
-
-
-    // newsletter
-    var newsletter = function () {
-        $(".newsletter").submit(function () {
-            var $this = $(this),
-                newsletter = {
-                    start: function () {
-                        $this.find(".icon").addClass("spin");
-                        $this.find(".icon i").removeClass("ion-ios-email-outline");
-                        $this.find(".icon i").addClass("ion-load-b");
-                        $this.find(".icon h1").html("Please wait ...");
-                        $this.find(".btn").attr("disabled", true);
-                        $this.find(".email").attr("disabled", true);
-                    },
-                    end: function () {
-                        $this.find(".icon").removeClass("spin");
-                        $this.find(".icon").addClass("success");
-                        $this.find(".icon i").addClass("ion-checkmark");
-                        $this.find(".icon i").removeClass("ion-load-b");
-                        $this.find(".icon h1").html("Thank you!");
-                        $this.find(".email").val("");
-                        $this.find(".btn").attr("disabled", false);
-                        $this.find(".email").attr("disabled", false);
-                        $.toast({
-                            text: "Thanks for subscribing!",
-                            position: 'bottom-right',
-                            bgcolor: '#E01A31',
-                            icon: 'success',
-                            heading: 'Newsletter',
-                            loader: false
-                        });
-                    },
-                    error: function () {
-                        $this.find(".icon").removeClass("spin");
-                        $this.find(".icon").addClass("error");
-                        $this.find(".icon i").addClass("ion-ios-close-outline");
-                        $this.find(".icon i").removeClass("ion-load-b");
-                        $this.find(".icon h1").html("Failed, try again!");
-                        $this.find(".btn").attr("disabled", false);
-                        $this.find(".email").attr("disabled", false);
-                        $.toast({
-                            text: "Failed, network error. Please try again!",
-                            position: 'bottom-right',
-                            icon: 'error',
-                            heading: 'Newsletter',
-                            loader: false
-                        });
-                    }
-                }
-
-            if ($this.find(".email").val().trim().length < 1) {
-                $this.find(".email").focus();
-            } else {
-                /*
-                 * Add your ajax code
-                 * ------------------
-                 * For example:
-                 * $.ajax({
-                 * 		url: "subscribe_url",
-                 * 		type: "post",
-                 *  	data: $this.serialize(),
-                 * 		error: function() {
-                 * 			newsletter.error();
-                 * 		},
-                 * 		beforeSend: function() {
-                 * 			newsletter.start();
-                 * 		},
-                 * 		success: function() {
-                 * 			newsletter.end();
-                 * 		}
-                 * });
-                 });
-                */
-
-                newsletter.start();
-
-                setTimeout(function () {
-                    newsletter.end();
-                }, 2000);
-            }
-
-            return false;
-        });
-    }
-
     var featuredImage = function () {
         $("#featured figure img").each(function () {
             $(this).parent().css({
@@ -242,19 +122,6 @@ $(function () {
         });
     }
 
-    // browser
-    /*if ($.browser.safari) {
-        $("head").append($("<link/>", {
-            rel: "stylesheet",
-            href: "css/safari.css"
-        }));
-    } else if ($.browser.mozilla) {
-        $(".social li").each(function () {
-            $(this).find("rect").attr("width", "100%");
-            $(this).find("rect").attr("height", "100%");
-        });
-    }*/
-
     var bestOfTheWeek = function () {
         var botwCarousel = $(".carousel-1").owlCarousel({
             items: 4,
@@ -281,88 +148,6 @@ $(function () {
 
         $("#best-of-the-week-nav .prev").click(function () {
             botwCarousel.trigger('prev.owl.carousel');
-        });
-    }
-
-    var youtubeAPI = function () {
-        $("[data-youtube]").each(function (vl_i) {
-            var $this = $(this),
-                $options = $this.data("youtube"),
-                $options = JSON.parse("{" + $options + "}"),
-                options = {
-                    items: 1,
-                    dots: false,
-                };
-
-            if ($options.autoplay == true) {
-                options['autoplay'] = true;
-            }
-
-            var $id = "";
-            $this.find('[data-youtube-id]').each(function () {
-                var $item = $(this),
-                    $itemId = $item.data('youtube-id');
-                $id += $itemId + ',';
-            });
-            $id = $id.substr(0, $id.length - 1);
-
-            $.ajax({
-                url: 'https://www.googleapis.com/youtube/v3/videos?key=' + youtube_api_key + '&part=snippet,contentDetails,statistics,status&id=' + $id,
-                beforeSend: function () {
-                    var $element = '<figure><div class="duration">0:00</div><div class="play"><i class="ion-play"></i></div></figure>';
-                    $element += '	 <div class="desc">';
-                    $element += '  <h2 class="title loading"></h2>';
-                    $element += '  <div class="author loading"></div>';
-                    $element += '</div>';
-                    $this.find("[data-youtube-id]").each(function (i) {
-                        $(this).append($element);
-                    });
-                },
-                complete: function () {
-                },
-                success: function (data) {
-                    $this.find("[data-youtube-id]").each(function (i) {
-                        var $item = $(this);
-                        $item.find(".duration").html(convert_time(data.items[i].contentDetails.duration));
-                        $item.find("figure").removeClass("loading").append("<img src='" + data.items[i].snippet.thumbnails.medium.url + "'>");
-                        $item.find(".title").removeClass("loading").html(data.items[i].snippet.title);
-                        $item.find(".author").removeClass("loading").html(data.items[i].snippet.channelTitle);
-                        if ($item.data("action") == 'new_tab') {
-                            $item.attr('href', 'https://youtube.com/watch?v=' + data.items[i].id).attr('target', '_blank');
-                        } else if ($item.data("action") == 'magnific') {
-                            $item.attr('href', 'https://youtube.com/watch?v=' + data.items[i].id);
-                            $item.magnificPopup({
-                                type: 'iframe',
-                                iframe: {
-                                    markup: '<div class="mfp-iframe-scaler">' +
-                                        '<div class="mfp-close"></div>' +
-                                        '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>' +
-                                        '</div>',
-                                    patterns: {
-                                        youtube: {
-                                            index: 'youtube.com/',
-                                            id: 'v=',
-                                            src: '//www.youtube.com/embed/%id%?autoplay=1'
-                                        }
-                                    },
-                                    srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
-                                }
-                            })
-                        }
-                    });
-                }
-            });
-
-            if ($options.carousel == true) {
-                $this.addClass('owl-carousel owl-theme');
-                var video_list = $this.owlCarousel(options);
-                $($options.nav).find(".prev").click(function () {
-                    video_list.trigger('prev.owl.carousel');
-                });
-                $($options.nav).find(".next").click(function () {
-                    video_list.trigger('next.owl.carousel');
-                });
-            }
         });
     }
 
@@ -630,60 +415,10 @@ $(function () {
         });
     }
 
-    var sendContactForm = function () {
-        $("#contact-form").submit(function () {
-            var $this = $(this);
-            $.ajax({
-                url: 'server/send.php',
-                type: "post",
-                data: $this.serialize(),
-                dataType: 'json',
-                beforeSend: function () {
-                    loading.show();
-                },
-                complete: function () {
-                    loading.hide();
-                },
-                success: function (data) {
-                    if (data.status == true) {
-                        swal("Success", data.data, "success");
-                        $this[0].reset();
-                    } else {
-                        swal("Failed", data.data, "error");
-                    }
-                }
-            });
-            return false;
-        });
-    }
-
-    var loadFile = function () {
-        $("[data-load]").each(function () {
-            var $this = $(this);
-
-            $.ajax({
-                url: $this.attr('data-load'),
-                beforeSend: function () {
-                    $this.html('Loading data ...');
-                },
-                error: function (xhr) {
-                    $this.html("[ERROR] Status: " + xhr.status + "\nResponse Text:\n " + xhr.responseText);
-                },
-                success: function (data) {
-                    $this.html(data);
-                }
-            })
-        });
-    }
-
     // Run Function
     sectionFirstPadding();
 
     stickyHeader();
-
-    love();
-
-    newsletter();
 
     featuredImage();
 
@@ -693,21 +428,13 @@ $(function () {
 
     bestOfTheWeek();
 
-    youtubeAPI();
-
     verticalSlider();
 
     featured();
 
     magnificGallery();
 
-    easeScrollFunc();
-
     toggleMobile();
 
     showPassword();
-
-    sendContactForm();
-
-    loadFile();
 });
