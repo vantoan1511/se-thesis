@@ -47,3 +47,14 @@
     cursor: pointer;
     z-index: 9999;
 }
+
+.image-options {
+    display: none;
+    position: fixed;
+    /*bottom: 50%;
+    left: 50%;*/
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    z-index: 999;
+}
