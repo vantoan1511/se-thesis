@@ -22,7 +22,9 @@
                                             <div class="d-flex flex-column align-items-center text-center">
                                                 <img src="${profile.avatarUrl}"
                                                      alt="${profile.username}"
-                                                     class="img-circle p-1 bg-primary" width="110">
+                                                     class="img-circle p-1 bg-primary avatar"
+                                                     width="110"
+                                                     height="110">
                                                 <div class="mt-3">
                                                     <h4><c:out value="${profile.firstName}"/> <c:out
                                                             value="${profile.lastName}"/></h4>
@@ -103,12 +105,53 @@
                                                             </p>
                                                         </div>
                                                     </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0">Ảnh đại diện</h6>
+                                                            <p style="font-size: 85%"><i>Chọn ảnh có sẵn trong thư viện
+                                                                hoặc tải lên</i></p>
+                                                        </div>
+                                                        <div class="col-sm-9 form-group floating text-secondary">
+                                                            <form:hidden path="avatarUrl"
+                                                                         cssClass="form-control"
+                                                                         placeholder="Nhập đường dẫn vào đây"/>
+                                                            <div class="block">
+                                                                <ul class="item-list-round gallery">
+                                                                    <div class="image-options">
+                                                                        <button id="inspect-btn"
+                                                                                class="btn btn-sm btn-primary">Xem
+                                                                        </button>
+                                                                        <button id="set-avatar-btn"
+                                                                                class="btn btn-sm btn-primary">Đặt làm
+                                                                            avatar
+                                                                        </button>
+                                                                        <button id="delete-image-btn"
+                                                                                class="btn btn-sm btn-primary">Xóa
+                                                                        </button>
+                                                                    </div>
+                                                                    <c:forEach var="image"
+                                                                               items="${uploadedImages.content}">
+                                                                        <li>
+                                                                            <a data-image-id="${image.id}"
+                                                                               href="${image.url}"
+                                                                               style="background-image: url('${image.url}')"></a>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                            <button id="upload-btn"
+                                                                    type="button"
+                                                                    class="btn btn-primary btn-rounded">
+                                                                <i class="ion-android-arrow-up"></i> Tải lên
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                     <div class="row">
                                                         <div class="col-sm-3"></div>
                                                         <div class="col-sm-9 text-secondary">
                                                             <button type="submit"
                                                                     class="btn btn-primary btn-rounded px-4">
-                                                                Lưu
+                                                                <i class="ion-android-done"></i> Lưu
                                                             </button>
                                                         </div>
                                                     </div>
@@ -125,12 +168,13 @@
                                                 <div class="row mb-3">
                                                     <div class="col-sm-3">
                                                         <h6 class="mb-0">Xóa tài khoản</h6>
+                                                        <p style="font-size: 85%"><i>Xóa vĩnh viễn tài khoản</i></p>
                                                     </div>
                                                     <div class="col-sm-9">
                                                         <button type="button"
                                                                 id="delete-my-account-btn"
                                                                 class="btn btn-primary btn-rounded px-4">
-                                                            Xóa tài khoản
+                                                            <i class="ion-android-delete"></i> Xóa tài khoản
                                                         </button>
                                                     </div>
                                                 </div>
@@ -146,56 +190,6 @@
         </div>
     </div>
 </section>
-<script>
-    $(function () {
-        const $deleteAccountBtn = $('#delete-my-account-btn');
-
-        $deleteAccountBtn.click(e => handleDeleteMyAccountButton(e));
-
-        $('#user-profile-form').validate({
-            rules: {
-                firstName: {
-                    required: true
-                },
-                lastName: {
-                    required: true
-                },
-                email: {
-                    email: true,
-                    required: true
-                },
-            },
-            messages: {
-                firstName: {
-                    required: "Vui lòng nhập họ"
-                },
-                lastName: {
-                    required: "Vui lòng nhập tên"
-                },
-                email: {
-                    required: "Vui lòng nhập địa chỉ email",
-                    email: "Vui lòng nhập một địa chỉ email hợp lệ"
-                }
-            },
-            errorElement: 'span',
-            errorClass: 'help-block',
-            highlight: function (element, errorClass, validClass) {
-                $(element).closest('.form-group').addClass('has-error');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).closest('.form-group').removeClass('has-error');
-            }
-        });
-    });
-
-    function handleDeleteMyAccountButton(event) {
-        event.preventDefault();
-        showWarningAlert('Tài khoản của bạn sẽ bị xóa vĩnh viễn và không thể khôi phục', (result) => {
-            if (result.isConfirmed) {
-                location.replace(location.href + '/delete');
-            }
-        });
-    }
-</script>
+<script src="<c:url value="/static/custom/js/webProfile.js"/>"></script>
 </body>
 </html>
