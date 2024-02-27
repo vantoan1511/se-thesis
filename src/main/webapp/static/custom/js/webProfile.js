@@ -10,12 +10,6 @@ $(function () {
     loadAvatar();
 });
 
-function loadAvatar() {
-    $('.avatar').on('error', function () {
-        $(this).attr('src', '/static/public/images/avatar.png');
-    })
-}
-
 function imageOptionsFunc() {
     const $options = $('.image-options');
 
