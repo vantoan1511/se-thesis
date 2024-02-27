@@ -20,11 +20,23 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center text-center">
-                                                <img src="${profile.avatarUrl}"
-                                                     alt="${profile.username}"
-                                                     class="img-circle p-1 bg-primary avatar"
-                                                     width="110"
-                                                     height="110">
+                                                <c:choose>
+                                                    <c:when test="${not empty profile.avatarUrl}">
+                                                        <img src="${profile.avatarUrl}"
+                                                             alt="${profile.username}"
+                                                             class="img-circle p-1 bg-primary avatar"
+                                                             width="110"
+                                                             height="110">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img src="<c:url value="/static/public/images/avatar.png"/>"
+                                                             alt="${profile.username}"
+                                                             class="img-circle p-1 bg-primary avatar"
+                                                             width="110"
+                                                             height="110">
+                                                    </c:otherwise>
+                                                </c:choose>
+
                                                 <div class="mt-3">
                                                     <h4><c:out value="${profile.firstName}"/> <c:out
                                                             value="${profile.lastName}"/></h4>

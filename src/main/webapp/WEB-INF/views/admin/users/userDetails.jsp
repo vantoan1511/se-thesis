@@ -29,16 +29,21 @@
                             <div class="text-center">
                                 <c:choose>
                                     <c:when test="${not empty userDetails.avatarUrl}">
-                                        <img class="profile-user-img img-fluid img-circle"
+                                        <img class="avatar img-circle"
                                              src="${userDetails.avatarUrl}"
-                                             alt="${userDetails.username}-avatar">
+                                             alt="${userDetails.username}-avatar"
+                                             width="110"
+                                             height="110">
                                     </c:when>
                                     <c:otherwise>
-                                        <img class="profile-user-img img-fluid img-circle"
-                                             src="<c:url value="/static/admin/dist/img/avatar.png"/>"
-                                             alt="${userDetails.username}-avatar">
+                                        <img class="avatar img-circle"
+                                             src="<c:url value="/static/public/images/avatar.png"/>"
+                                             alt="${userDetails.username}-avatar"
+                                             width="110"
+                                             height="110">
                                     </c:otherwise>
                                 </c:choose>
+
                             </div>
 
                             <h3 class="profile-username text-center">${userDetails.fullName()}</h3>
@@ -230,6 +235,6 @@
     </section>
     <!-- /.content -->
 </div>
-<script src="<c:url value="/static/custom/js/user/details.js"/>"></script>
+<script src="<c:url value="/static/custom/js/adminUserProfile.js"/>"></script>
 </body>
 </html>

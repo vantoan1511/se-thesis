@@ -9,11 +9,15 @@ $(function () {
     $enableAccountBtn.click((e) => handleEnableAccountButton(e));
     $grantPrivileges.click(e => handleGrantPrivilegesButton(e));
 
+    validateUserProfile();
+    grantPrivilegesFunc();
+    loadAvatar();
+})
+
+function grantPrivilegesFunc() {
     $('#available-roles').change(function () {
         let selectedRole = $(this).val();
         let selectedRoleText = $(this).find('option:selected').text();
-        console.log("Selected Role >> ", selectedRole);
-        console.log("Selected Text >> ", selectedRoleText);
 
         $('#user-roles').append($('<option>').val(selectedRole).text(selectedRoleText));
         $(this).find('option:selected').remove();
@@ -24,16 +28,15 @@ $(function () {
             let selectedRole = $(this).val();
             let selectedRoleText = $(this).find('option:selected').text();
 
-            console.log("Selected Role >> ", selectedRole);
-            console.log("Selected Text >> ", selectedRoleText);
-
             $('#available-roles').append($('<option>').val(selectedRole).text(selectedRoleText));
             $(this).find('option:selected').remove();
         } else {
             console.log('Need one role at least');
         }
     })
+}
 
+function validateUserProfile() {
     $('#user-details-form').validate({
         rules: {
             firstName: {
@@ -100,7 +103,7 @@ $(function () {
             $(element).removeClass('is-invalid');
         }
     });
-})
+}
 
 function handleDeleteAccountButton(e) {
     e.preventDefault();
@@ -148,7 +151,9 @@ function handleGrantPrivilegesButton(e) {
                 showSuccessAlert(`Đã phân vai trò ${grantedRoleName} thành công`, () => {
                     location.reload()
                 })
-            }, error => {console.log(error)});
+            }, xhr => {
+                errorCallback(xhr);
+            });
         }
     });
 }
