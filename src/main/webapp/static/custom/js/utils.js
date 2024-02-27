@@ -153,3 +153,62 @@ const defaultDateFormatOptions = {
     hour: '2-digit',    // HH
     minute: '2-digit'   // mm
 };
+
+async function handleUploadButton(e) {
+    e.preventDefault();
+    const {value: file} = await Swal.fire({
+        title: "Chọn hình ảnh",
+        input: "file",
+        inputValidator: ((value) => {
+            return new Promise((resolve) => {
+                if (value !== null) {
+                    resolve();
+                } else {
+                    resolve("Không có file nào được chọn");
+                }
+            });
+        }),
+        confirmButtonText: "Tiếp",
+        inputAttributes: {
+            "accept": "image/*",
+            "aria-label": "Upload your profile picture"
+        }
+    });
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            Swal.fire({
+                input: 'text',
+                inputPlaceholder: 'Tiêu đề',
+                inputValue: file.name,
+                allowOutsideClick: false,
+                imageUrl: e.target.result,
+                imageAlt: "An image will be uploaded",
+                showCancelButton: true,
+                confirmButtonText: 'Tải lên'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const titleInput = $('#swal2-input').val();
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('title', titleInput);
+                    $.ajax({
+                        url: '/api/v1/files',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: () => {
+                            showSuccessAlert('Tải lên thành công', () => {
+                                location.reload()
+                            })
+                        },
+                        error: (xhr) => errorCallback(xhr)
+                    })
+                }
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+}
