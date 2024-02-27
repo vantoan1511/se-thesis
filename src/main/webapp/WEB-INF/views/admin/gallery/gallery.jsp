@@ -124,8 +124,6 @@
                 </div>
             </div>
         </div>
-
-        <%@ include file="defaultAvatar.jsp" %>
     </section>
 </div>
 <script src="<c:url value="/static/custom/js/gallery/gallery.js"/>"></script>
