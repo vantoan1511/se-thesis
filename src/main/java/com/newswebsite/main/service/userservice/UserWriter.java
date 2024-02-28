@@ -82,16 +82,17 @@ public class UserWriter implements IUserWriter {
     }
 
     @Override
-    public void updateProfile(String username, ProfileRequest profile) {
-        User user = userRepo.findByUsername(username);
+    public void updateProfile(UserDTO userDTO) {
+        User user = userRepo.findByUsername(userDTO.getUsername());
         if (user == null || !user.isEnabled()) throw new UserNotFoundException("Người dùng không tồn tại");
         //update email
-        User anotherUser = userRepo.findByEmail(profile.getEmail());
-        if (anotherUser != null && !anotherUser.getUsername().equals(username))
+        User anotherUser = userRepo.findByEmail(userDTO.getEmail());
+        if (anotherUser != null && !anotherUser.getUsername().equals(userDTO.getUsername()))
             throw new EmailExistedException("Địa chỉ email đã liên kết với một tài khoản khác");
-        user.setEmail(profile.getEmail());
-        user.setFirstName(profile.getFirstName());
-        user.setLastName(profile.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setAvatarUrl(userDTO.getAvatarUrl());
         userRepo.save(user);
     }
 

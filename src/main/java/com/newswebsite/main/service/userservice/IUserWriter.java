@@ -1,6 +1,5 @@
 package com.newswebsite.main.service.userservice;
 
-import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface IUserWriter {
 
     void enable(String username);
 
-    void updateProfile(String username, ProfileRequest profile);
+    void updateProfile(UserDTO userDTO);
 
     void register(UserDTO newUserDTO);
 
