@@ -71,7 +71,7 @@
                     <c:if test="${files.numberOfElements lt 1}">
                         <i>Trống</i>
                     </c:if>
-                    <c:forEach var="image" items="${files.content}">
+                    <%--<c:forEach var="image" items="${files.content}">
                         <div class="col-md-3 col-sm-6">
                             <div class="card my-2">
                                 <div class="card-body">
@@ -112,7 +112,40 @@
                                 </div>
                             </div>
                         </div>
-                    </c:forEach>
+                    </c:forEach>--%>
+                    <div class="gallery row">
+                        <div class="image-options">
+                            <a id="inspect-btn"
+                               class="dropdown-item btn btn-default btn-sm">
+                                <i class="ri-search-line text-success"></i> Xem trước
+                            </a>
+                            <a id="edit-btn"
+                               class="btn btn-sm dropdown-item"
+                               title="Click để xem chi tiết">
+                                <i class="ri-edit-box-line text-success"></i> Chi tiết
+                            </a>
+                            <a id="copy-url-btn"
+                               title="Click để copy url"
+                               class="btn btn-sm btn-default dropdown-item">
+                                <i class="ri-clipboard-line text-success"></i> Copy Url
+                            </a>
+                            <a id="delete-image-btn"
+                               class="dropdown-item btn btn-default btn-sm">
+                                <i class="ri-delete-bin-line text-danger"></i> Xóa
+                            </a>
+                        </div>
+                        <c:forEach var="image"
+                                   items="${files.content}">
+                            <div class="image-item col-md-auto">
+                                <img style="object-fit: cover"
+                                     data-image-id="${image.id}"
+                                     data-image-alias="${image.alias}"
+                                     src="${image.url}"
+                                     height="200"
+                                     width="200">
+                            </div>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
             <div class="card-footer clear-fix row">
@@ -129,6 +162,68 @@
 <script src="<c:url value="/static/custom/js/gallery/gallery.js"/>"></script>
 <script>
     $(function () {
+        paginationFunc();
+        adminImageOptionsFunc();
+    })
+
+    function adminImageOptionsFunc() {
+        const $options = $('.image-options');
+
+        $(".gallery img").click(function (e) {
+            e.preventDefault();
+            $options.css({
+                top: e.clientY,
+                left: e.clientX
+            }).show();
+            $(this).closest('div').append($options);
+        });
+
+        $(document).click(function (e) {
+            let $img = $('.image-item img');
+            let clickedOnImg = false;
+            $img.each(function () {
+                if ($(this).is(e.target)) {
+                    clickedOnImg = true;
+                }
+            });
+            if (!clickedOnImg) {
+                $options.hide();
+            }
+        });
+
+        $('#inspect-btn').click(function (e) {
+            e.preventDefault();
+            let imageUrl = $(this).closest(".image-item").find("img").attr("src");
+            handleImageInspect(e, imageUrl);
+        });
+
+        $('#edit-btn').click(function (e) {
+            e.preventDefault();
+            let imageAlias = $(this).closest(".image-item").find("img").data("image-alias");
+            location.replace(location.href + '/' + imageAlias);
+        })
+
+        $('#copy-url-btn').click(function (e) {
+            e.preventDefault();
+            let imageUrl = $(this).closest(".image-item").find("img").attr("src");
+            handleCopyToClipboard(e, imageUrl);
+        })
+
+        $('#delete-image-btn').click(function (e) {
+            e.preventDefault();
+            let imageId = $(this).closest(".image-item").find("img").data("image-id");
+            let data = [imageId];
+            showWarningAlert('Xóa mục này?', result => {
+                if (result.isConfirmed) {
+                    handleDeleteRequest('/api/v1/files', data, () => {
+                        location.reload()
+                    }, (xhr) => errorCallback(xhr));
+                }
+            });
+        });
+    }
+
+    function paginationFunc() {
         const sortBy = `${sortBy}`;
         const sortOrder = `${sortOrder}`;
         const size = `${files.size}`;
@@ -190,7 +285,7 @@
                 }
             });
         }
-    })
+    }
 </script>
 </body>
 </html>

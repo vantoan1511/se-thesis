@@ -1,9 +1,8 @@
-<%@ page import="com.newswebsite.main.security.SecurityUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
 
-<c:set var="loggedUsername" value="<%=SecurityUtil.username()%>"/>
+<c:set var="loggedUser" value="${pageContext.request.userPrincipal.principal}"/>
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -19,14 +18,10 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="<c:url value="/static/admin/dist/img/user2-160x160.jpg"/>" class="img-circle elevation-2"
-                     alt="User Image">
-            </div>
             <div class="info">
                 <c:catch var="error">
-                    <a href="/admin/users/${loggedUsername}" class="d-block">
-                        <%=SecurityUtil.fullname()%>
+                    <a href="/admin/users/${loggedUser.username}" class="d-block">
+                        Xin chào, ${loggedUser.fullName()}
                     </a>
                 </c:catch>
                 <c:if test="${not empty error}">

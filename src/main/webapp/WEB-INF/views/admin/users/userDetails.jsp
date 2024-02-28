@@ -156,16 +156,18 @@
                                             <form:hidden path="avatarUrl"/>
                                             <div class="gallery row">
                                                 <div class="image-options">
-                                                    <button id="inspect-btn"
-                                                            class="btn btn-sm bg-gradient-success">Xem
-                                                    </button>
-                                                    <button id="set-avatar-btn"
-                                                            class="btn btn-sm bg-gradient-success">Đặt làm
-                                                        avatar
-                                                    </button>
-                                                    <button id="delete-image-btn"
-                                                            class="btn btn-sm bg-gradient-success">Xóa
-                                                    </button>
+                                                    <a id="inspect-btn"
+                                                       class="dropdown-item btn btn-default btn-sm">
+                                                        <i class="ri-search-line text-success"></i> Xem trước
+                                                    </a>
+                                                    <a id="set-avatar-btn"
+                                                       class="dropdown-item btn btn-sm">
+                                                        <i class="ri-paint-line text-success"></i> Đặt làm avatar
+                                                    </a>
+                                                    <a id="delete-image-btn"
+                                                       class="dropdown-item btn btn-sm">
+                                                        <i class="ri-delete-bin-line text-danger"></i> Xóa
+                                                    </a>
                                                 </div>
                                                 <c:forEach var="image"
                                                            items="${uploadedImages.content}">

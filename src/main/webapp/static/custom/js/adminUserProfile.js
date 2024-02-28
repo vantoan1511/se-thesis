@@ -19,6 +19,7 @@ $(function () {
 $('.avatar').on('error', function () {
     $(this).attr('src', '/static/public/images/avatar.png');
 })
+
 function adminImageOptionsFunc() {
     const $options = $('.image-options');
 
@@ -32,7 +33,14 @@ function adminImageOptionsFunc() {
     });
 
     $(document).click(function (e) {
-        if (!$(e.target).closest(".gallery").length) {
+        let $img = $('.image-item img');
+        let clickedOnImg = false;
+        $img.each(function () {
+            if ($(this).is(e.target)) {
+                clickedOnImg = true;
+            }
+        });
+        if (!clickedOnImg) {
             $options.hide();
         }
     });
