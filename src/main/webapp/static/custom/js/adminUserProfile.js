@@ -3,16 +3,66 @@ $(function () {
     const $disableAccountBtn = $('#disable-account-btn');
     const $enableAccountBtn = $('#enable-account-btn');
     const $grantPrivileges = $('#grant-privileges-btn');
+    const $uploadBtn = $('#upload-btn');
 
     $deleteAccountBtn.click((e) => handleDeleteAccountButton(e));
     $disableAccountBtn.click((e) => handleDisableAccountButton(e));
     $enableAccountBtn.click((e) => handleEnableAccountButton(e));
     $grantPrivileges.click(e => handleGrantPrivilegesButton(e));
+    $uploadBtn.click(e => handleUploadButtonClick(e));
 
     validateUserProfile();
     grantPrivilegesFunc();
-    loadAvatar();
+    adminImageOptionsFunc();
+
 })
+$('.avatar').on('error', function () {
+    $(this).attr('src', '/static/public/images/avatar.png');
+})
+function adminImageOptionsFunc() {
+    const $options = $('.image-options');
+
+    $(".gallery img").click(function (e) {
+        e.preventDefault();
+        $options.css({
+            top: e.clientY,
+            left: e.clientX
+        }).show();
+        $(this).closest('div').append($options);
+    });
+
+    $(document).click(function (e) {
+        if (!$(e.target).closest(".gallery").length) {
+            $options.hide();
+        }
+    });
+
+    $('#inspect-btn').click(function (e) {
+        e.preventDefault();
+        let imageUrl = $(this).closest(".image-item").find("img").attr("src");
+        handleImageInspect(e, imageUrl);
+    });
+
+    $('#set-avatar-btn').click(function (e) {
+        e.preventDefault();
+        let newAvatarUrl = $(this).closest(".image-item").find("img").attr("src");
+        $('input[name=avatarUrl]').val(newAvatarUrl);
+        $('.avatar').attr('src', newAvatarUrl);
+    });
+
+    $('#delete-image-btn').click(function (e) {
+        e.preventDefault();
+        let imageId = $(this).closest(".image-item").find("img").data("image-id");
+        let data = [imageId];
+        showWarningAlert('Xóa mục này?', result => {
+            if (result.isConfirmed) {
+                handleDeleteRequest('/api/v1/files', data, () => {
+                    location.reload()
+                }, (xhr) => errorCallback(xhr));
+            }
+        });
+    });
+}
 
 function grantPrivilegesFunc() {
     $('#available-roles').change(function () {
