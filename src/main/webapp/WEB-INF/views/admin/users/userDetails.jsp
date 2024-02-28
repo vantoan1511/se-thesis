@@ -151,6 +151,46 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-2">Ảnh đại diện</label>
+                                        <div class="col-sm-10">
+                                            <form:hidden path="avatarUrl"/>
+                                            <div class="gallery row">
+                                                <div class="image-options">
+                                                    <button id="inspect-btn"
+                                                            class="btn btn-sm bg-gradient-success">Xem
+                                                    </button>
+                                                    <button id="set-avatar-btn"
+                                                            class="btn btn-sm bg-gradient-success">Đặt làm
+                                                        avatar
+                                                    </button>
+                                                    <button id="delete-image-btn"
+                                                            class="btn btn-sm bg-gradient-success">Xóa
+                                                    </button>
+                                                </div>
+                                                <c:forEach var="image"
+                                                           items="${uploadedImages.content}">
+                                                    <div class="image-item col-md-auto">
+                                                        <img style="object-fit: cover"
+                                                             data-image-id="${image.id}"
+                                                             src="${image.url}"
+                                                             height="100"
+                                                             width="100">
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2"></label>
+                                        <div class="col-sm-10">
+                                            <button id="upload-btn"
+                                                    type="button"
+                                                    class="btn bg-gradient-success">
+                                                <i class="ri-arrow-up-line"></i> Tải lên
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <div class="offset-sm-2 col-sm-10">
                                             <button type="submit"
                                                     class="btn btn-default bg-gradient-success">
