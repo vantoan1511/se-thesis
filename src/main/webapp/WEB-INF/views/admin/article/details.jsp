@@ -56,16 +56,20 @@
                             <p class="text-gray">Alias sẽ được sử dụng làm một phần cho URL bài viết</p>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="card card-outline card-tabs">
+                <div class="card-header">
                     <ul class="nav nav-tabs" id="content-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="content-general-tab" data-toggle="pill"
-                               href="#general" role="tab" aria-controls="general"
+                               href="#general" role="tab" aria-controls="content-tab"
                                aria-selected="true">Thông tin chung</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="article-content-tab" data-toggle="pill"
                                href="#article-content" role="tab"
-                               aria-controls="article-content" aria-selected="false">Nội dung</a>
+                               aria-controls="content-tab" aria-selected="false">Nội dung</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="media-and-links-tab" data-toggle="pill"
@@ -79,6 +83,8 @@
                                aria-controls="details" aria-selected="false">Chi tiết</a>
                         </li>
                     </ul>
+                </div>
+                <div class="card-body">
                     <div class="tab-content" id="tab-content">
                         <div class="tab-pane fade active show" id="general" role="tabpanel"
                              aria-labelledby="content-general-tab">
@@ -132,13 +138,63 @@
                         </div>
                         <div class="tab-pane fade" id="media-and-links" role="tabpanel"
                              aria-labelledby="media-and-links-tab">
-                            <div class="form-group">
-                                <label for="thumbnailUrl">Ảnh bìa</label>
-                                <form:input path="thumbnailUrl"
-                                            class="form-control"
-                                            value="${article.thumbnailUrl}"
-                                            placeholder="Dán đường dẫn vào đây"/>
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    <label for="thumbnailUrl">Ảnh bìa</label>
+                                </div>
+                                <div class="col-md-10 row">
+                                    <div class="col-md-auto">
+                                        <a id="preview-thumbnail-btn"
+                                           class="btn btn-default"> <i class="ri-search-line text-success"></i>Xem trước</a>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <form:input path="thumbnailUrl"
+                                                    cssClass="form-control"
+                                                    value="${article.thumbnailUrl}"
+                                                    placeholder="Dán đường dẫn vào đây"/>
+                                    </div>
+                                </div>
                             </div>
+                            <c:if test="${article.createdBy eq loggedUser.username}">
+                                <div class="form-group row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <div class="gallery row">
+                                            <div class="image-options">
+                                                <a id="inspect-btn"
+                                                   class="dropdown-item btn btn-default btn-sm">
+                                                    <i class="ri-search-line text-success"></i> Xem trước
+                                                </a>
+                                                <a id="set-thumbnail-btn"
+                                                   class="dropdown-item btn btn-sm">
+                                                    <i class="ri-paint-line text-success"></i> Đặt làm ảnh bìa
+                                                </a>
+                                                <a id="delete-image-btn"
+                                                   class="dropdown-item btn btn-sm">
+                                                    <i class="ri-delete-bin-line text-danger"></i> Xóa
+                                                </a>
+                                            </div>
+                                            <c:forEach var="image"
+                                                       items="${uploadedImages.content}">
+                                                <div class="image-item col-md-auto">
+                                                    <img style="object-fit: cover"
+                                                         data-image-id="${image.id}"
+                                                         src="${image.url}"
+                                                         height="100"
+                                                         width="100">
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <a id="upload-btn"
+                                           class="btn bg-gradient-success"><i class="ri-arrow-up-line"></i> Tải lên</a>
+                                    </div>
+                                </div>
+                            </c:if>
                         </div>
                         <div class="tab-pane fade" id="details" role="tabpanel"
                              aria-labelledby="details-tab">

@@ -71,48 +71,6 @@
                     <c:if test="${files.numberOfElements lt 1}">
                         <i>Trống</i>
                     </c:if>
-                    <%--<c:forEach var="image" items="${files.content}">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="card my-2">
-                                <div class="card-body">
-                                    <img style=";height: 250px; object-fit: cover"
-                                         class="img-fluid"
-                                         src="<c:url value="${image.url}"/>" alt="${image.alias}">
-                                </div>
-                                <div class="card-footer">
-                                    <div class="text-right">
-                                        <a class="btn btn-sm bg-gradient-success" title="Click để xem chi tiết"
-                                           href="/admin/gallery/${image.alias}">
-                                            <i class="ri-edit-box-line"></i> Chi tiết
-                                        </a>
-                                        <a onclick="handleCopyToClipboard(event, '${image.url}')"
-                                           title="Click để copy url"
-                                           class="btn btn-sm btn-default"
-                                           href="#"><i class="ri-clipboard-line"></i> Copy Url
-                                        </a>
-                                        <div class="btn-group">
-                                            <button type="button"
-                                                    class="btn btn-default dropdown-toggle dropdown-icon"
-                                                    data-toggle="dropdown"
-                                                    aria-expanded="false">
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right"
-                                                 role="menu">
-                                                <button onclick="handleImageInspect(event, `${image.url}`)"
-                                                        class="dropdown-item btn btn-default btn-sm">
-                                                    <i class="ri-search-line text-success"></i> Xem trước
-                                                </button>
-                                                <button onclick="handleImageDeleteButton(event, `${image.id}`)"
-                                                        class="dropdown-item btn btn-default btn-sm">
-                                                    <i class="ri-delete-bin-line text-danger"></i> Xóa
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>--%>
                     <div class="gallery row">
                         <div class="image-options">
                             <a id="inspect-btn"

@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
 
-<c:set var="loggedUser" value="${pageContext.request.userPrincipal.principal}"/>
+<c:set var="loggedUser" value="${pageContext.request.userPrincipal.principal}" scope="application"/>
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->

@@ -28,14 +28,14 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="col-md-auto col-sm-3">
+                <%--<div class="col-md-auto col-sm-3">
                     <button onclick="handleMultipleTrashButtonClick(event, '.check-box:checked')"
                             type="button"
                             class="btn btn-block btn-default"
                             title="Chuyển vào thùng rác">
                         <i class="ri-delete-bin-line text-danger"></i> Chuyển vào thùng rác
                     </button>
-                </div>
+                </div>--%>
             </c:otherwise>
         </c:choose>
     </div>
