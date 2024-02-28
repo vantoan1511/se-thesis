@@ -124,9 +124,7 @@
                                                                 hoặc tải lên</i></p>
                                                         </div>
                                                         <div class="col-sm-9 form-group floating text-secondary">
-                                                            <form:hidden path="avatarUrl"
-                                                                         cssClass="form-control"
-                                                                         placeholder="Nhập đường dẫn vào đây"/>
+                                                            <form:hidden path="avatarUrl"/>
                                                             <div class="block">
                                                                 <ul class="item-list-round gallery">
                                                                     <div class="image-options">
