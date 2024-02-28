@@ -6,6 +6,7 @@ import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.articleservice.IArticleReader;
 import com.newswebsite.main.service.categoryservice.ICategoryReader;
+import com.newswebsite.main.service.imageservice.IImageReader;
 import com.newswebsite.main.service.stateservice.IStateReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -22,14 +23,21 @@ import java.util.List;
 @RequestMapping("/admin/articles")
 public class ArticleController {
 
-    @Autowired
-    private IArticleReader articleReader;
+    private final IArticleReader articleReader;
+
+    private final ICategoryReader categoryReader;
+
+    private final IStateReader stateReader;
+
+    private final IImageReader imageReader;
 
     @Autowired
-    private ICategoryReader categoryReader;
-
-    @Autowired
-    private IStateReader stateReader;
+    public ArticleController(IArticleReader articleReader, ICategoryReader categoryReader, IStateReader stateReader, IImageReader imageReader) {
+        this.articleReader = articleReader;
+        this.categoryReader = categoryReader;
+        this.stateReader = stateReader;
+        this.imageReader = imageReader;
+    }
 
     @GetMapping
     public ModelAndView getListPage(@RequestParam(name = "tab", required = false, defaultValue = "all") String tab,
@@ -88,6 +96,8 @@ public class ArticleController {
         mav.addObject("article", articleDTO);
         mav.addObject("categories", categoryReader.getAllAsMap());
         mav.addObject("states", stateReader.findAll());
+        mav.addObject("uploadedImages",
+                imageReader.getFiles(SecurityUtil.username(), new PageRequest(0, 99, Sort.Direction.DESC, "createdAt")));
         return mav;
     }
 }
