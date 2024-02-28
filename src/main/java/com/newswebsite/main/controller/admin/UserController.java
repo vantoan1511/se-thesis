@@ -4,6 +4,7 @@ import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;
+import com.newswebsite.main.service.imageservice.IImageReader;
 import com.newswebsite.main.service.roleservice.IRoleReader;
 import com.newswebsite.main.service.session.ISessionService;
 import com.newswebsite.main.service.userservice.IUserReader;
@@ -31,15 +32,18 @@ public class UserController {
 
     private final ISessionService sessionService;
 
+    private final IImageReader imageReader;
+
     @Autowired
     public UserController(IUserReader userReader,
                           IUserWriter userWriter,
                           IRoleReader roleReader,
-                          ISessionService sessionService) {
+                          ISessionService sessionService, IImageReader imageReader) {
         this.userReader = userReader;
         this.userWriter = userWriter;
         this.roleReader = roleReader;
         this.sessionService = sessionService;
+        this.imageReader = imageReader;
     }
 
     @GetMapping
@@ -64,9 +68,14 @@ public class UserController {
                           RedirectAttributes attributes,
                           Model model) {
         String viewName = "admin/users/userDetails";
+        String loggedUsername = SecurityUtil.username();
         try {
             model.addAttribute("profile", userReader.getUser(username));
             model.addAttribute("allRoles", roleReader.getAllRoles());
+            if (loggedUsername.equals(username)) {
+                model.addAttribute("uploadedImages",
+                        imageReader.getFiles(username, new PageRequest(0, 99, Sort.Direction.DESC, "createdAt")));
+            }
             return viewName;
         } catch (RuntimeException ex) {
             attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
@@ -81,7 +90,7 @@ public class UserController {
         String loggedUsername = SecurityUtil.username();
         if (loggedUsername.equals(username)) {
             try {
-                userWriter.updateProfile(loggedUsername, new ProfileRequest(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail()));
+                userWriter.updateProfile(userDTO);
                 attributes.addFlashAttribute("message", FlashMessage.success("Cập nhật thành công"));
             } catch (RuntimeException ex) {
                 attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
