@@ -12,6 +12,7 @@ import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.RoleRepo;
 import com.newswebsite.main.repository.UserRepo;
 import com.newswebsite.main.service.emailservice.IEmailService;
+import com.newswebsite.main.service.imageservice.IImageWriter;
 import com.newswebsite.main.utils.EmailContentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -31,6 +32,7 @@ public class UserWriter implements IUserWriter {
 
     private final RoleRepo roleRepo;
 
+    private final IImageWriter imageWriter;
     private final MessageSource msg;
 
     private final IEmailService emailService;
@@ -40,13 +42,14 @@ public class UserWriter implements IUserWriter {
     @Autowired
     public UserWriter(
             UserRepo userRepo,
-            RoleRepo roleRepo,
+            RoleRepo roleRepo, IImageWriter imageWriter,
             MessageSource msg,
             IEmailService emailService,
             CollectionMapper mapper
     ) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
+        this.imageWriter = imageWriter;
         this.msg = msg;
         this.emailService = emailService;
         this.mapper = mapper;
@@ -144,6 +147,7 @@ public class UserWriter implements IUserWriter {
         User user = userRepo.findByUsername(username);
         if (user == null) throw new UsernameNotFoundException("Không tìm thấy người dùng " + username);
         userRepo.delete(user);
+        imageWriter.deleteAllByUsername(username);
     }
 
     @Override
