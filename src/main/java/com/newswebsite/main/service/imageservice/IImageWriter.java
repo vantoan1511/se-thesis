@@ -13,5 +13,7 @@ public interface IImageWriter {
 
     void delete(long id);
 
+    void deleteAllByUsername(String username);
+
     void deleteMultiple(List<Long> ids);
 }

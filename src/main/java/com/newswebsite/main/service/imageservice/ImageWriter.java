@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class ImageWriter implements IImageWriter {
 
     private final ImageRepo imageRepo;
@@ -82,7 +83,6 @@ public class ImageWriter implements IImageWriter {
     }
 
     @Override
-    @Transactional
     public void delete(long id) {
         Image image = imageRepo.findOne(id);
         if (image == null) throw new ImageNotFoundException("Hình ảnh không tồn tại ");
@@ -93,7 +93,17 @@ public class ImageWriter implements IImageWriter {
     }
 
     @Override
-    @Transactional
+    public void deleteAllByUsername(String username) {
+        List<Image> images = imageRepo.findAllByCreatedBy(username, null).getContent();
+        for (Image image : images) {
+            File file = new File(image.getDirectory());
+            if (file.exists() && file.delete()) {
+                imageRepo.delete(image.getId());
+            }
+        }
+    }
+
+    @Override
     public void deleteMultiple(List<Long> ids) {
         for (long id : ids) {
             delete(id);
