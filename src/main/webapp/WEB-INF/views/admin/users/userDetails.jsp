@@ -207,38 +207,40 @@
                         <!-- /.tab-content -->
                     </div>
 
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Vai trò</h3>
-                        </div>
-                        <div class="card-body row">
-                            <div class="col-md-3">
-                                <select id="available-roles"
-                                        class="form-control custom-select"
-                                        size="3">
-                                    <c:forEach items="${allRoles}" var="role">
-                                        <c:if test="${not userDetails.getRoles().contains(role.authority)}">
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Vai trò</h3>
+                            </div>
+                            <div class="card-body row">
+                                <div class="col-md-3">
+                                    <select id="available-roles"
+                                            class="form-control custom-select"
+                                            size="3">
+                                        <c:forEach items="${allRoles}" var="role">
+                                            <c:if test="${not userDetails.getRoles().contains(role.authority)}">
+                                                <option value="${role.authority}">${role.description}</option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select id="user-roles"
+                                            class="form-control custom-select"
+                                            size="3">
+                                        <c:forEach items="${userDetails.authorities}" var="role">
                                             <option value="${role.authority}">${role.description}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <select id="user-roles"
-                                        class="form-control custom-select"
-                                        size="3">
-                                    <c:forEach items="${userDetails.authorities}" var="role">
-                                        <option value="${role.authority}">${role.description}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-md-auto">
-                                <button id="grant-privileges-btn"
-                                        class="btn bg-gradient-success">Lưu
-                                </button>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="col-md-auto">
+                                    <button id="grant-privileges-btn"
+                                            class="btn bg-gradient-success">Lưu
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </sec:authorize>
 
                     <div class="card card-primary">
                         <div class=" card-header">
