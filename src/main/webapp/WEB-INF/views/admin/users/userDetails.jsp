@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <!-- Profile Image -->
-                    <div class="card card-primary card-outline">
+                    <div class="card card-success card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <c:choose>
@@ -61,22 +61,12 @@
                                 </c:otherwise>
                             </c:choose>
 
-                            <ul class="list-group list-group-unbordered mb-3">
-                                <li class="list-group-item">
-                                    <b>Bài viết</b> <a class="float-right">1,322</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Bình luận</b> <a class="float-right">543</a>
-                                </li>
-                            </ul>
-
                         </div>
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-
                     <!-- About Me Box -->
-                    <div class="card card-primary">
+                    <div class="card card-outline card-success">
                         <div class="card-header">
                             <h3 class="card-title">Chi tiết</h3>
                         </div>
@@ -97,7 +87,7 @@
                         <%@ include file="../../components/admin/alert.jsp" %>
                     </c:if>
 
-                    <div class="card card-primary">
+                    <div class="card card-outline card-success">
                         <div class="card-header">
                             <h3 class="card-title">Thông tin chung</h3>
                         </div>
@@ -208,7 +198,7 @@
                     </div>
 
                     <sec:authorize access="hasRole('ADMIN')">
-                        <div class="card card-primary">
+                        <div class="card card-outline card-success">
                             <div class="card-header">
                                 <h3 class="card-title">Vai trò</h3>
                             </div>
@@ -242,7 +232,7 @@
                         </div>
                     </sec:authorize>
 
-                    <div class="card card-primary">
+                    <div class="card card-outline card-success">
                         <div class=" card-header">
                             <h3 class="card-title">Tài khoản</h3>
                         </div>
