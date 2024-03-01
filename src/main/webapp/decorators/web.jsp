@@ -27,8 +27,8 @@
     <link rel="stylesheet" href="<c:url value="/static/web/css/style.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/web/css/skins/all.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/web/css/demo.css"/>">
-    <link rel="stylesheet" href="../static/remixicon/remixicon.css">
-    <link rel="stylesheet" href="../static/custom/css/styles.css">
+    <link rel="stylesheet" href="<c:url value="/static/remixicon/remixicon.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static/custom/css/styles.css"/>">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icheck-material@1.0.1/icheck-material.min.css">
 
@@ -61,8 +61,8 @@
 
 <script src="<c:url value="/static/web/js/demo.js"/>"></script>
 <script src="<c:url value="/static/web/js/e-magz.js"/>"></script>
-<script src="../static/custom/js/utils.js"></script>
-<script src="../static/custom/js/main.js"></script>
+<script src="<c:url value="/static/custom/js/utils.js"/>"></script>
+<script src="<c:url value="/static/custom/js/main.js"/>"></script>
 <script src="<c:url value="/static/twbspagination/jquery.twbsPagination.min.js"/>"></script>
 </body>
 </html>
