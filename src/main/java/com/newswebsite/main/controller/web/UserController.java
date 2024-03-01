@@ -12,6 +12,7 @@ import com.newswebsite.main.utils.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
-@Controller(value = "WebProfileController")
-@RequestMapping("/profiles/{username}")
-public class ProfileController {
+@Controller(value = "webUserController")
+@RequestMapping("/users/{username}")
+public class UserController {
 
     private final IUserReader userReader;
 
@@ -33,7 +34,7 @@ public class ProfileController {
     private final IReviewReader reviewReader;
 
     @Autowired
-    public ProfileController(IUserReader userReader, IUserWriter userWriter, IImageReader imageReader, IReviewReader reviewReader) {
+    public UserController(IUserReader userReader, IUserWriter userWriter, IImageReader imageReader, IReviewReader reviewReader) {
         this.userReader = userReader;
         this.userWriter = userWriter;
         this.imageReader = imageReader;
@@ -41,7 +42,7 @@ public class ProfileController {
     }
 
     @GetMapping
-    public String getProfile(@PathVariable("username") String username,
+    public String getUser(@PathVariable("username") String username,
                              Model model) {
         String viewName = "web/profile";
         Page<ImageDTO> uploadedImages = imageReader.getFiles(username, new PageRequest(0, 99, Sort.Direction.DESC, "createdAt"));
@@ -49,6 +50,21 @@ public class ProfileController {
         model.addAttribute("uploadedImages", uploadedImages);
         model.addAttribute("recentReviews", recentReviews);
         model.addAttribute("profile", userReader.getUser(username));
+        return viewName;
+    }
+
+    @GetMapping("/reviews")
+    public String getReviews(@PathVariable("username") String username,
+                             @RequestParam(value = "page", defaultValue = "1") int page,
+                             @RequestParam(value = "size", defaultValue = "2") int size,
+                             @RequestParam(value = "order", defaultValue = "DESC") String order,
+                             @RequestParam(value = "by", defaultValue = "createdAt") String by,
+                             Model model) {
+        String viewName = "web/listReviews";
+        Sort.Direction direction = order.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = new PageRequest(page - 1, size, direction, by);
+        model.addAttribute("pagedReviews", reviewReader.getAllReviewsByUsername(username, pageable));
+        model.addAttribute("username", username);
         return viewName;
     }
 
