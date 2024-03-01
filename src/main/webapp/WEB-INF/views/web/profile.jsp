@@ -75,6 +75,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <br>
                                 <div class="block">
                                     <h2 class="block-title">Bình luận gần đây</h2>
                                     <div class="block-body">
@@ -85,7 +86,8 @@
                                 </div>
                                 <div class="featured-author-footer">
                                     <c:if test="${profile.username eq loggedUsername}">
-                                        <a id="show-all-reviews-btn" href="#">Tất cả bình luận</a>
+                                        <a id="show-all-reviews-btn"
+                                           href="/profiles/${loggedUsername}/reviews">Tất cả bình luận</a>
                                     </c:if>
                                 </div>
                             </div>
