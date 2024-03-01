@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ReviewWriter implements IReviewWriter {
 
     private final ReviewRepo reviewRepo;
@@ -37,7 +38,6 @@ public class ReviewWriter implements IReviewWriter {
     }
 
     @Override
-    @Transactional
     public ReviewDTO save(ReviewDTO reviewDTO) {
         Review review = new Review();
         Article article = articleRepo.findOne(reviewDTO.getArticleId());
@@ -59,7 +59,6 @@ public class ReviewWriter implements IReviewWriter {
     }
 
     @Override
-    @Transactional
     public ReviewDTO update(ReviewDTO reviewDTO) {
         Review review = reviewRepo.findOne(reviewDTO.getId());
 
@@ -71,14 +70,12 @@ public class ReviewWriter implements IReviewWriter {
     }
 
     @Override
-    @Transactional
     public void delete(long id) {
         if (!reviewRepo.exists(id)) throw new ReviewNotFoundException("Bình luận không còn tồn tại");
         reviewRepo.delete(id);
     }
 
     @Override
-    @Transactional
     public void deleteMultiple(List<Long> ids) {
         for (long id : ids) {
             delete(id);
