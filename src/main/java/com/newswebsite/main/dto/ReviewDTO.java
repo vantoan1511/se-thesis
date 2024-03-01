@@ -22,6 +22,7 @@ public class ReviewDTO extends BaseDTO {
     private String userLastName;
     @NotNull(message = "Mục này là bắt buộc")
     private Long articleId;
+    private String articleAlias;
     private Long parentId;
     private String parentText;
 }
