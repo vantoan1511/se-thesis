@@ -6,4 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface IReviewReader {
     Page<ReviewDTO> getArticleReviews(long articleId, Pageable pageable);
+
+    Page<ReviewDTO> getAllReviewsByUsername(String username, Pageable pageable);
 }

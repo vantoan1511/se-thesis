@@ -13,16 +13,23 @@ public class ReviewReader implements IReviewReader {
 
     private final ReviewRepo reviewRepo;
 
-    private final CollectionMapper mapper = new CollectionMapper();
+    private final CollectionMapper mapper;
 
     @Autowired
-    public ReviewReader(ReviewRepo reviewRepo) {
+    public ReviewReader(ReviewRepo reviewRepo, CollectionMapper mapper) {
         this.reviewRepo = reviewRepo;
+        this.mapper = mapper;
     }
 
     @Override
     public Page<ReviewDTO> getArticleReviews(long articleId, Pageable pageable) {
         return reviewRepo.findAllByArticleId(articleId, pageable)
+                .map(item -> mapper.map(item, ReviewDTO.class));
+    }
+
+    @Override
+    public Page<ReviewDTO> getAllReviewsByUsername(String username, Pageable pageable) {
+        return reviewRepo.findAllByUserUsername(username, pageable)
                 .map(item -> mapper.map(item, ReviewDTO.class));
     }
 }
