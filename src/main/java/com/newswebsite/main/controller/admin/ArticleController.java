@@ -45,7 +45,7 @@ public class ArticleController {
                                     @RequestParam(name = "limit", defaultValue = "10") int limit,
                                     @RequestParam(name = "by", defaultValue = "lastModifiedAt") String by,
                                     @RequestParam(name = "order", defaultValue = "DESC") String order) {
-        String viewName = "admin/article/list";
+        String viewName = "admin/listArticles";
         String username = SecurityUtil.username();
         List<String> authorities = SecurityUtil.getAuthorities();
 
@@ -87,7 +87,7 @@ public class ArticleController {
     @GetMapping({"/new", "/{id}"})
     public ModelAndView modifyArticle(@PathVariable(name = "id", required = false) Long id,
                                       @RequestParam(value = "previewMode", required = false) boolean previewMode) {
-        String viewName = previewMode ? "web/details" : "admin/article/details";
+        String viewName = previewMode ? "web/details" : "admin/articleDetails";
         List<String> roles = SecurityUtil.getAuthorities();
 
         ArticleDTO articleDTO = id == null ? new ArticleDTO() : articleReader.getById(id);

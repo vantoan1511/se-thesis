@@ -15,14 +15,14 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <%@ include file="../../components/admin/contentHeader.jsp" %>
+    <%@ include file="../components/admin/contentHeader.jsp" %>
     <!-- Main content -->
     <section class="content">
         <div class="card">
             <div class="card-header">
                 <c:if test="${not empty message}">
                     <div class="row">
-                        <%@ include file="../../components/admin/alert.jsp" %>
+                        <%@ include file="../components/admin/alert.jsp" %>
                     </div>
                 </c:if>
                 <div class="row">
@@ -116,10 +116,10 @@
                             <td><fmt:formatDate value="${user.createdAt}" pattern="dd MMM yyyy"/></td>
                             <td>
                                 <sec:authorize access="hasRole('ADMIN')">
-                                    <%@ include file="../../components/admin/articleOnListOptions.jsp" %>
+                                    <%@ include file="../components/admin/articleOnListOptions.jsp" %>
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('WRITER')">
-                                    <%@ include file="../../components/author/articleOnListOptions.jsp" %>
+                                    <%@ include file="../components/author/articleOnListOptions.jsp" %>
                                 </sec:authorize>
                             </td>
                         </tr>

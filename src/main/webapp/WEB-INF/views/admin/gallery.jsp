@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="content-wrapper">
-    <%@ include file="../../components/admin/contentHeader.jsp" %>
+    <%@ include file="../components/admin/contentHeader.jsp" %>
 
     <section class="content">
         <!-- Functionality bar -->

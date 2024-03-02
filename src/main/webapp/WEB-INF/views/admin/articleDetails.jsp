@@ -25,7 +25,7 @@
         <iframe class="preview-frame" src=""></iframe>
     </div>
     <!-- Content Header (Page header) -->
-    <%@ include file="../../components/admin/contentHeader.jsp" %>
+    <%@ include file="../components/admin/contentHeader.jsp" %>
 
     <!-- Main content -->
     <section class="content">
@@ -33,10 +33,10 @@
         <form:form modelAttribute="article" id="form">
             <form:hidden path="id"/>
             <sec:authorize access="hasRole('ADMIN')">
-                <%@ include file="../../components/admin/detailsFunctionalities.jsp" %>
+                <%@ include file="../components/admin/detailsFunctionalities.jsp" %>
             </sec:authorize>
             <sec:authorize access="hasRole('WRITER')">
-                <%@ include file="../../components/author/detailsFunctionalities.jsp" %>
+                <%@ include file="../components/author/detailsFunctionalities.jsp" %>
             </sec:authorize>
             <div class="card">
                 <div class="card-body">

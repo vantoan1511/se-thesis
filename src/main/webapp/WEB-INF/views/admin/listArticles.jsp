@@ -15,14 +15,14 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <%@ include file="../../components/admin/contentHeader.jsp" %>
+    <%@ include file="../components/admin/contentHeader.jsp" %>
     <!-- Main content -->
     <section class="content">
         <sec:authorize access="hasRole('ADMIN')">
             <%--<%@include file="../../components/admin/listFunctionalities.jsp" %>--%>
         </sec:authorize>
         <sec:authorize access="hasRole('WRITER')">
-            <%@include file="../../components/author/listFunctionalities.jsp" %>
+            <%@include file="../components/author/listFunctionalities.jsp" %>
         </sec:authorize>
         <div class="card">
             <div class="card-header">
@@ -121,10 +121,10 @@
                             </td>
                             <td>
                                 <sec:authorize access="hasRole('ADMIN')">
-                                    <%@ include file="../../components/admin/articleOnListOptions.jsp" %>
+                                    <%@ include file="../components/admin/articleOnListOptions.jsp" %>
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('WRITER')">
-                                    <%@ include file="../../components/author/articleOnListOptions.jsp" %>
+                                    <%@ include file="../components/author/articleOnListOptions.jsp" %>
                                 </sec:authorize>
                             </td>
                         </tr>

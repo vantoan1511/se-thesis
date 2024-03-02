@@ -30,7 +30,7 @@ public class CategoryController {
             @RequestParam(name = "size", defaultValue = "2") int size,
             @RequestParam(name = "by", defaultValue = "lastModifiedAt") String by,
             @RequestParam(name = "order", defaultValue = "DESC") String order) {
-        String viewName = "admin/category/categories";
+        String viewName = "admin/listCategories";
 
         Pageable pageable = new PageRequest(page - 1, size, Sort.Direction.fromString(order), by);
 
@@ -43,7 +43,7 @@ public class CategoryController {
 
     @GetMapping({"/new", "/{categoryAlias}"})
     public ModelAndView createOrUpdate(@PathVariable(value = "categoryAlias", required = false) String categoryAlias) {
-        String viewName = "admin/category/details";
+        String viewName = "admin/categoryDetails";
 
         CategoryDTO categoryDTO = categoryAlias != null ? categoryReader.getCategory(categoryAlias) : new CategoryDTO();
 

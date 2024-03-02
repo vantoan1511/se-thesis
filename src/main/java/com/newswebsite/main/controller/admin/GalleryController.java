@@ -17,12 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin/gallery")
-public class StorageController {
+public class GalleryController {
 
     private final IImageReader imageReader;
 
     @Autowired
-    public StorageController(IImageReader imageReader) {
+    public GalleryController(IImageReader imageReader) {
         this.imageReader = imageReader;
     }
 
@@ -34,7 +34,7 @@ public class StorageController {
             @RequestParam(value = "by", defaultValue = "title") String by,
             Model model
     ) {
-        String viewName = "admin/gallery/gallery";
+        String viewName = "admin/gallery";
         String username = SecurityUtil.username();
 
         Sort.Direction direction = order.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
@@ -45,9 +45,9 @@ public class StorageController {
         return viewName;
     }
 
-    @GetMapping({"/new", "/{alias}"})
+    @GetMapping({"/{alias}"})
     public ModelAndView upload(@PathVariable(value = "alias", required = false) String alias) {
-        String viewName = "admin/gallery/imageDetails";
+        String viewName = "admin/imageDetails";
         ImageDTO fileRequest = alias != null ? imageReader.getFile(alias) : new ImageDTO();
 
         ModelAndView view = new ModelAndView(viewName);

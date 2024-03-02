@@ -16,7 +16,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <%@ include file="../../components/admin/contentHeader.jsp" %>
+    <%@ include file="../components/admin/contentHeader.jsp" %>
 
     <!-- Main content -->
     <section class="content">
@@ -84,7 +84,7 @@
                 <div class="col-md-9">
 
                     <c:if test="${not empty message}">
-                        <%@ include file="../../components/admin/alert.jsp" %>
+                        <%@ include file="../components/admin/alert.jsp" %>
                     </c:if>
 
                     <div class="card card-outline card-success">

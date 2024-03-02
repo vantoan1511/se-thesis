@@ -55,7 +55,7 @@ public class UserController {
         Sort sort = new Sort(direction, by);
         Pageable pageable = new PageRequest(page - 1, limit, sort);
 
-        String viewName = "admin/users/users";
+        String viewName = "admin/listUsers";
         ModelAndView view = new ModelAndView(viewName);
         view.addObject("userPage", userReader.getAllUsers(pageable));
         view.addObject("sortBy", by);
@@ -67,7 +67,7 @@ public class UserController {
     public String getUser(@PathVariable("username") String username,
                           RedirectAttributes attributes,
                           Model model) {
-        String viewName = "admin/users/userDetails";
+        String viewName = "admin/userDetails";
         String loggedUsername = SecurityUtil.username();
         try {
             model.addAttribute("profile", userReader.getUser(username));
