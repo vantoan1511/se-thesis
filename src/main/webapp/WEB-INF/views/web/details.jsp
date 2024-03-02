@@ -26,7 +26,7 @@
                                                             pattern="HH:mm dd MMM, yyyy"/>
                             </li>
                             <li><a href="/categories/${article.categoryAlias}">${article.categoryTitle}</a></li>
-                            <li>Bởi <a href="#">${article.createdBy}</a></li>
+                            <li>Bởi <a href="/users/${article.createdBy}">${article.createdBy}</a></li>
                         </ul>
                     </header>
                     <div class="main">${article.text}</div>
@@ -39,20 +39,18 @@
                         </div>
                     </footer>
                 </article>
-                <!--
-                    Sharing Section
-                -->
+
                 <div class="line">
                     <div>Tác giả</div>
                 </div>
 
                 <%@ include file="../components/web/author.jsp" %>
 
-                <div class="line">
+                <%--<div class="line">
                     <div>Bạn có thể thích</div>
                 </div>
 
-                <%@ include file="../components/web/youMayAlsoLike.jsp" %>
+                <%@ include file="../components/web/youMayAlsoLike.jsp" %>--%>
 
                 <div class="line thin"></div>
 
@@ -61,6 +59,6 @@
         </div>
     </div>
 </section>
-<script src="../../../static/custom/js/single.js"></script>
+<script src="<c:url value="/static/custom/js/single.js"/>"></script>
 </body>
 </html>
