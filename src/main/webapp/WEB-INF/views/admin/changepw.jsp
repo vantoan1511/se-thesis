@@ -25,7 +25,7 @@
                 <div class="col">
 
                     <c:if test="${not empty message}">
-                        <%@ include file="../components/utils/alert.jsp" %>
+                        <%@ include file="../components/admin/alert.jsp" %>
                     </c:if>
 
                     <div class="card">
