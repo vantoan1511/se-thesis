@@ -31,11 +31,16 @@ public class CategoryWriter implements ICategoryWriter {
 
     @Override
     public CategoryDTO save(CategoryDTO categoryDTO) {
-        Category category = mapper.map(categoryDTO, Category.class);
+        //Category category = mapper.map(categoryDTO, Category.class);
+        Category category = new Category();
+        category.setTitle(categoryDTO.getTitle());
+        category.setAlias(categoryDTO.getAlias());
+        category.setDescription(categoryDTO.getDescription());
+        category.setPublishedAt(new Date());
+
         Category oldCategory = categoryDTO.getId() != null ? categoryRepo.findOne(categoryDTO.getId()) : new Category();
         Category parent = categoryDTO.getParentAlias().isBlank() ? null : categoryRepo.findByAlias(categoryDTO.getParentAlias());
 
-        category.setPublishedAt(new Date());
         if (oldCategory != null) {
             category.setCreatedAt(oldCategory.getCreatedAt());
             category.setCreatedBy(oldCategory.getCreatedBy());
