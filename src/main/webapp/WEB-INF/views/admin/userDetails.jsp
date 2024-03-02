@@ -225,7 +225,7 @@
                                 </div>
                                 <div class="col-md-auto">
                                     <button id="grant-privileges-btn"
-                                            class="btn bg-gradient-success">Lưu
+                                            class="btn bg-gradient-success"><i class="ri-send-plane-line"></i> Lưu
                                     </button>
                                 </div>
                             </div>
@@ -237,27 +237,49 @@
                             <h3 class="card-title">Tài khoản</h3>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>Xóa tài khoản vĩnh viễn</label>
-                                <button id="delete-account-btn"
-                                        class="btn bg-gradient-danger col-md-3">Xóa tài khoản
-                                </button>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Xóa tài khoản</label>
+                                    <p style="font-size: 85%">
+                                        <i>
+                                            Xóa vĩnh viễn tài khoản cùng các tài nguyên liên quan: ảnh, bài viết, bình
+                                            luận,...
+                                        </i>
+                                    </p>
+                                </div>
+                                <div class="col-md-10">
+                                    <button id="delete-account-btn"
+                                            class="btn bg-gradient-danger">
+                                        <i class="ri-delete-bin-line"></i> Xóa tài khoản
+                                    </button>
+                                </div>
                             </div>
                             <sec:authorize access="hasRole('ADMIN')">
-                                <div class="form-group">
-                                    <label>Vô hiệu tài khoản</label>
-                                    <c:choose>
-                                        <c:when test="${userDetails.enabled}">
-                                            <button id="disable-account-btn"
-                                                    class="btn bg-gradient-danger col-md-3">Vô hiệu tài khoản
-                                            </button>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <button id="enable-account-btn"
-                                                    class="btn bg-gradient-success col-md-3">Kích hoạt tài khoản
-                                            </button>
-                                        </c:otherwise>
-                                    </c:choose>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Vô hiệu tài khoản</label>
+                                        <p style="font-size: 85%">
+                                            <i>
+                                                Vô hiệu hóa tài khoản. Tài khoản bị vô hiệu không thể đăng nhập
+                                            </i>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <c:choose>
+                                            <c:when test="${userDetails.enabled}">
+                                                <button id="disable-account-btn"
+                                                        class="btn bg-gradient-danger">
+                                                    <i class="ri-lock-line"></i> Vô hiệu tài khoản
+                                                </button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button id="enable-account-btn"
+                                                        class="btn bg-gradient-success">
+                                                    <i class="ri-lock-unlock-line"></i> Kích hoạt tài khoản
+                                                </button>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
                             </sec:authorize>
                         </div>
@@ -269,6 +291,6 @@
     </section>
     <!-- /.content -->
 </div>
-<script src="<c:url value="/static/custom/js/adminUserProfile.js"/>"></script>
+<script src="<c:url value="/static/custom/js/adminUserDetails.js"/>"></script>
 </body>
 </html>
