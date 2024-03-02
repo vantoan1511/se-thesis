@@ -18,8 +18,12 @@ import java.util.List;
 @RequestMapping("/{alias}")
 public class ArticleController {
 
+    private final IArticleReader articleReader;
+
     @Autowired
-    private IArticleReader articleReader;
+    public ArticleController(IArticleReader articleReader) {
+        this.articleReader = articleReader;
+    }
 
     @GetMapping
     public ModelAndView getDetails(@PathVariable("alias") String alias,
