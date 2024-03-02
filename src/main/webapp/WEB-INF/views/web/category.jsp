@@ -18,7 +18,7 @@
                         <ol class="breadcrumb">
                             <li><a href="/home">Trang chủ</a></li>
                             <c:if test="${category.parentAlias != null}">
-                                <li><a href="/categories/${category.parentAlias}">${category.title}</a></li>
+                                <li><a href="/categories/${category.parentAlias}">${category.parentTitle}</a></li>
                             </c:if>
                             <li class="active">${category.title}</li>
                         </ol>
