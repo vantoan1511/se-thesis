@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 public class CategoryDTO extends ContentDTO {
     private String parentAlias;
+    private String parentTitle;
     private List<CategoryDTO> subCategories;
     private List<ArticleDTO> articles;
 }
