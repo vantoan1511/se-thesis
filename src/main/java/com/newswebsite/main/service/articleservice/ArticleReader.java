@@ -54,7 +54,7 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public ArticleDTO getAllPublished(String alias) {
+    public ArticleDTO getPublished(String alias) {
         Article article = articleRepo.findByAliasAndStateCode(alias, ArticleState.PUBLISHED.name());
         if (article == null)
             throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null) + alias);
