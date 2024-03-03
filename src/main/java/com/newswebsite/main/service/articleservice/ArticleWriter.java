@@ -48,6 +48,16 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
+    public void increaseTraffic(String alias) {
+        Article article = articleRepo.findByAlias(alias);
+        if (article == null) throw new ArticleNotFoundException("Không tìm thấy bài viết có alias " + alias);
+        long currentTraffic = article.getTraffic();
+        currentTraffic += 1;
+        article.setTraffic(currentTraffic);
+        articleRepo.save(article);
+    }
+
+    @Override
     @Transactional
     public void submit(long id) {
         Article article = getArticleFromId(id);

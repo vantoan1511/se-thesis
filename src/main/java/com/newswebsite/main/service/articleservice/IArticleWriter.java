@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IArticleWriter {
 
+    void increaseTraffic(String alias);
+
     void submit(long id);
 
     void trash(long id);
