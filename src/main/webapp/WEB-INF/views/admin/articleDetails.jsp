@@ -114,7 +114,8 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <form:checkbox path="featured"
+                                                <form:checkbox disabled="true"
+                                                               path="featured"
                                                                id="featured"/>
                                             </div>
                                         </div>
