@@ -114,6 +114,14 @@ public class ArticleAPI {
                 articleWriter.restoreMultiple(ids);
                 message = "Bài viết đã được khôi phục";
             }
+            case "on-featured" -> {
+                articleWriter.setFeaturedMultiple(ids, true);
+                message = "Bài viết đã đánh dấu nổi bật";
+            }
+            case "off-featured" -> {
+                articleWriter.setFeaturedMultiple(ids, false);
+                message = "Bài viết đã gỡ khỏi nổi bật";
+            }
             default -> throw new IllegalArgumentException("Thao tác không hợp lệ: " + action);
         }
         return ResponseEntity.ok(new SuccessResponse(new Date(), HttpStatus.OK, message, ids));
