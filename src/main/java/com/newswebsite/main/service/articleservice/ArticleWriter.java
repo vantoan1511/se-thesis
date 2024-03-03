@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class ArticleWriter implements IArticleWriter {
 
     private final ArticleRepo articleRepo;
@@ -58,7 +59,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void submit(long id) {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
@@ -67,7 +67,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void trash(long id) {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
@@ -76,7 +75,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void approve(long id) {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
@@ -85,7 +83,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void reject(long id) {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
@@ -94,7 +91,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void publish(long id) {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
@@ -104,7 +100,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void edit(long id) {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
@@ -113,7 +108,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void unPublish(long id) {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
@@ -122,7 +116,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void restore(long id) {
         Article article = getArticleFromId(id);
         stateService = createStateService(article.getState().getCode());
@@ -131,7 +124,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void approveMultiple(List<Long> ids) {
         for (long id : ids) {
             approve(id);
@@ -139,7 +131,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void rejectMultiple(List<Long> ids) {
         for (long id : ids) {
             reject(id);
@@ -147,7 +138,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void trashMultiple(List<Long> ids) {
         for (long id : ids) {
             trash(id);
@@ -155,7 +145,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void restoreMultiple(List<Long> ids) {
         for (long id : ids) {
             restore(id);
@@ -163,7 +152,21 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
+    public void setFeatured(long id, boolean featured) {
+        Article article = articleRepo.findOne(id);
+        if (article == null) throw new ArticleNotFoundException("Không tìm thấy bài viết id " + id);
+        article.setFeatured(featured);
+        articleRepo.save(article);
+    }
+
+    @Override
+    public void setFeaturedMultiple(List<Long> ids, boolean featured) {
+        for (long id : ids) {
+            setFeatured(id, featured);
+        }
+    }
+
+    @Override
     public ArticleDTO save(ArticleDTO articleDTO) {
         Category category = categoryRepo.findByAlias(articleDTO.getCategoryAlias());
         if (category == null)
@@ -199,7 +202,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         Article article = articleRepo.findOne(id);
         if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
@@ -209,7 +211,6 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    @Transactional
     public void deleteArticles(List<Long> ids) {
         for (long id : ids) {
             delete(id);

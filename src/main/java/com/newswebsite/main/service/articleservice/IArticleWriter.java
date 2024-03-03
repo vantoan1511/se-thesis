@@ -32,6 +32,10 @@ public interface IArticleWriter {
 
     void restoreMultiple(List<Long> ids);
 
+    void setFeatured(long id, boolean featured);
+
+    void setFeaturedMultiple(List<Long> ids, boolean featured);
+
     ArticleDTO save(ArticleDTO articleDTO);
 
     void delete(Long id);
