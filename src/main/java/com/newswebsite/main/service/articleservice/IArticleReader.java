@@ -12,7 +12,7 @@ public interface IArticleReader {
 
     ArticleDTO getByAlias(String alias);
 
-    ArticleDTO getAllPublished(String alias);
+    ArticleDTO getPublished(String alias);
 
     Page<ArticleDTO> search(String q, List<Long> categoryIds, Date startDate, Pageable pageable);
 
