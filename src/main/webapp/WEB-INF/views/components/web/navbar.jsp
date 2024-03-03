@@ -20,12 +20,12 @@
             <ul class="nav-list">
                 <li class="for-tablet nav-title"><a>Menu</a></li>
                 <sec:authorize access="isAnonymous()">
-                    <li class="for-tablet"><a href="<c:url value="/login"/>">Login</a></li>
-                    <li class="for-tablet"><a href="<c:url value="/register"/>">Register</a></li>
+                    <li class="for-tablet"><a href="<c:url value="/login"/>">Đăng nhập</a></li>
+                    <li class="for-tablet"><a href="<c:url value="/register"/>">Đăng ký</a></li>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <li class="for-tablet">
-                        <a href="/profiles/<%=SecurityUtil.username()%>"><%=SecurityUtil.fullname()%>
+                        <a href="/users/<%=SecurityUtil.username()%>"><%=SecurityUtil.fullname()%>
                         </a>
                     </li>
                     <li class="for-tablet"><a href="<c:url value="/logout"/>">Logout</a></li>
