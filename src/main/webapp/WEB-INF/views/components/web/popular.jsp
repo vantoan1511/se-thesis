@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ include file="../../../../common/taglib.jsp" %>
+<%@ include file="/common/taglib.jsp" %>
 
 <aside>
-    <h1 class="aside-title">Phổ biến <a href="#" class="all">Tất cả <i class="ion-ios-arrow-right"></i></a></h1>
+    <h1 class="aside-title">Phổ biến</h1>
     <div class="aside-body">
-        <c:forEach items="${popular}" var="article">
+        <c:forEach items="${popularArticles}" var="article">
             <article class="article-mini">
                 <div class="inner">
                     <figure>
