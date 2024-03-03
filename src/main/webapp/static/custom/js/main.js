@@ -1,4 +1,5 @@
 $(function () {
+    imageFallbackFunc();
     loadCategories()
     const currentPath = location.pathname + location.search
     const navLinks = document.querySelectorAll('.nav-link');
@@ -17,6 +18,18 @@ $(function () {
         }
     });
 })
+
+function imageFallbackFunc() {
+    $('figure').find('img').each(function () {
+        if ($(this).attr('src') === '') {
+            $(this).attr('src', '/static/web/images/sponsored.png');
+            return;
+        }
+        $(this).error(function () {
+            $(this).attr('src', '/static/web/images/sponsored.png');
+        });
+    })
+}
 
 function loadCategories() {
     let $listCategories = $('#list-categories');
