@@ -4,15 +4,13 @@
 <div class="card">
     <div class="card-body row">
         <div class="col-md-auto col-sm-3">
-            <button onclick="handleMultipleApproveButtonClick(event)"
-                    class="btn btn-block bg-gradient-success" title="Chấp nhận">
-                <i class="fas fa-check"></i> Chấp nhận
+            <button id="on-featured-btn" class="btn bg-gradient-yellow" title="Đánh dấu nổi bật">
+                <i class="ri-star-line"></i> Đánh dấu Nổi bật
             </button>
         </div>
         <div class="col-md-auto col-sm-3">
-            <button onclick="handleMultipleApproveButtonClick(event)"
-                    class="btn btn-block btn-default" title="Từ chối">
-                <i class="fas fa-times text-danger"></i> Từ chối
+            <button id="off-featured-btn" class="btn btn-default" title="Gỡ khỏi Nổi bật">
+                <i class="ri-star-line text-yellow"></i> Gỡ khỏi Nổi bật
             </button>
         </div>
     </div>

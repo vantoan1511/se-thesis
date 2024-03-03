@@ -19,7 +19,7 @@
     <!-- Main content -->
     <section class="content">
         <sec:authorize access="hasRole('ADMIN')">
-            <%--<%@include file="../../components/admin/listFunctionalities.jsp" %>--%>
+            <%@include file="../components/admin/listFunctionalities.jsp" %>
         </sec:authorize>
         <sec:authorize access="hasRole('WRITER')">
             <%@include file="../components/author/listFunctionalities.jsp" %>
@@ -89,7 +89,7 @@
                             </td>
                             <td>${article.id}</td>
                             <td class="text-center" style="font-size: 1.5rem">
-                                <a href="#">
+                                <a>
                                     <c:choose>
                                         <c:when test="${article.featured}">
                                             <i class="ri-star-fill text-yellow"></i>
@@ -157,7 +157,37 @@
     </form>
 </div>
 <script>
-    $(document).ready(() => {
+    $(function () {
+        const $onFeaturedBtn = $('#on-featured-btn');
+        const $offFeaturedBtn = $('#off-featured-btn');
+
+        $onFeaturedBtn.click(e => onFeatured(e));
+        $offFeaturedBtn.click(e => offFeatured(e));
+
+        paginationFunc();
+    });
+
+    function onFeatured(e) {
+        e.preventDefault();
+        let data = getElementsID('.check-box:checked');
+        if (data.length < 1) {
+            showErrorToast('Chưa chọn mục nào');
+        } else {
+            handlePutRequest('/api/v1/articles/on-featured', data, () => location.reload(), xhr => errorCallback(xhr));
+        }
+    }
+
+    function offFeatured(e) {
+        e.preventDefault();
+        let data = getElementsID('.check-box:checked');
+        if (data.length < 1) {
+            showErrorToast('Chưa chọn mục nào');
+        } else {
+            handlePutRequest('/api/v1/articles/off-featured', data, () => location.reload(), xhr => errorCallback(xhr));
+        }
+    }
+
+    function paginationFunc() {
         var currentPage = ${model.number+1};
         var totalPages = ${model.totalPages};
         var sortBy = '${sortBy}';
@@ -214,7 +244,7 @@
                 }
             });
         }
-    });
+    }
 </script>
 </body>
 </html>
