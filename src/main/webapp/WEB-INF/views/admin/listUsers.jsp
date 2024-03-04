@@ -98,8 +98,8 @@
 
                             <td class="post">
                                 <div class="user-block">
-                                    <img class="img-circle img-bordered-sm"
-                                         src="/static/admin/dist/img/avatar.png"
+                                    <img class="avatar img-circle img-bordered-sm"
+                                         src="${user.avatarUrl}"
                                          alt="${user.username}-avatar">
                                     <span class="username">
                                         <a href="/admin/users/${user.username}">${user.fullName()}</a>
@@ -152,16 +152,34 @@
     </form>
 </div>
 <script>
-    $(document).ready(() => {
-        var currentPage = ${userPage.number+1};
-        var totalPages = ${userPage.totalPages};
-        var sortBy = '${sortBy}';
-        var sortOrder = '${sortOrder}';
-        var limit = ${userPage.size};
-        var totalItems = ${userPage.totalElements};
+    $(function () {
+        paginationFunc();
+        avatarFallbackFunc();
+    });
+
+    function avatarFallbackFunc() {
+        const $avatar = $('.avatar');
+        $avatar.each(function () {
+            if ($(this).attr('src') === '') {
+                $(this).attr('src', '/static/public/images/avatar.png');
+            } else {
+                $(this).on('error', function () {
+                    $(this).attr('src', '/static/public/images/avatar.png');
+                })
+            }
+        })
+    }
+
+    function paginationFunc() {
+        let currentPage = ${userPage.number+1};
+        let totalPages = ${userPage.totalPages};
+        let sortBy = '${sortBy}';
+        let sortOrder = '${sortOrder}';
+        let limit = ${userPage.size};
+        let totalItems = ${userPage.totalElements};
 
         $('#sort-by option').each(function () {
-            var value = $(this).attr('value');
+            let value = $(this).attr('value');
             if (sortBy === value) {
                 $(this).attr('selected', true);
             }
@@ -209,7 +227,7 @@
                 }
             });
         }
-    });
+    }
 </script>
 </body>
 </html>
