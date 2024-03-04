@@ -87,7 +87,7 @@
                                 <div class="featured-author-footer">
                                     <c:if test="${profile.username eq loggedUsername}">
                                         <a id="show-all-reviews-btn"
-                                           href="/profiles/${loggedUsername}/reviews">Tất cả bình luận</a>
+                                           href="/users/${loggedUsername}/reviews">Tất cả bình luận</a>
                                     </c:if>
                                 </div>
                             </div>
