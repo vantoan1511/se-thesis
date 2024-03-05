@@ -4,6 +4,7 @@
 <%@ include file="/common/taglib.jsp" %>
 
 <c:set var="loggedUsername" value="<%=SecurityUtil.username()%>"/>
+<c:set var="loggedUser" value="${pageContext.request.userPrincipal.principal}"/>
 
 <!DOCTYPE html>
 <html>
@@ -34,14 +35,16 @@
                                     <c:if test="${not empty review.parentText }">
                                         Phản hồi "${review.parentText}":
                                     </c:if>
-                                    <a target="_blank"
-                                       href="/${review.articleAlias}">"${review.text}"</a>
+                                    <a class="review-text"
+                                       target="_blank"
+                                       href="/${review.articleAlias}">${review.text}</a>
                                 </td>
-                                <td><fmt:formatDate value="${review.createdAt}"/></td>
+                                <td class="review-time"><fmt:formatDate value="${review.createdAt}"/></td>
                                 <td>
                                     <c:if test="${username eq loggedUsername}">
                                         <a href="#"
-                                           class="btn btn-sm btn-magz "><i class="ion-edit"></i> Sửa</a>
+                                           data-review-id="${review.id}"
+                                           class="btn btn-sm btn-magz edit-review-btn"><i class="ion-edit"></i> Sửa</a>
                                         <a href="/reviews/${review.id}/delete"
                                            class="delete-review-btn btn btn-sm btn-primary ">
                                             <i class="ion-android-delete"></i> Xóa</a>
@@ -68,14 +71,77 @@
         </div>
     </div>
 </section>
+<div class="modal-box">
+    <div class="modal-inner">
+        <div class="inner-title">
+            <h5>Chỉnh sửa bình luận</h5>
+        </div>
+        <div class="inner-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>${loggedUser.fullName()}</label>
+                    <p class="review-time"></p>
+                </div>
+                <div class="col-md-9">
+                    <form id="review-submit-form">
+                        <input type="hidden" name="id" value="">
+                        <textarea class="form-control review-text" name="text"></textarea>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="inner-footer">
+            <button class="btn btn-rounded btn-primary close-modal-btn">Hủy</button>
+            <button id="update-review-btn" class="btn btn-rounded btn-primary">Lưu</button>
+        </div>
+    </div>
+</div>
 <script>
     $(function () {
         const $deleteReviewBtn = $('.delete-review-btn');
+        const $editReviewBtn = $('.edit-review-btn');
+        const $closeModalBtn = $('.close-modal-btn');
+        const $updateReviewBtn = $('#update-review-btn');
 
         $deleteReviewBtn.click(e => handleDeleteReviewButton(e));
+        $editReviewBtn.click(e => handleEditReviewButton(e));
+        $closeModalBtn.click(e => handleCloseModalButton(e));
+        $updateReviewBtn.click(e => handleUpdateReviewButton(e));
 
         paginationFunc();
     });
+
+    function handleUpdateReviewButton(e) {
+        e.preventDefault();
+        const $reviewSubmitForm = $('#review-submit-form');
+        let data = {};
+        let formData = $reviewSubmitForm.serializeArray().forEach((i, e) => {
+            data["" + i.name + ""] = i.value;
+        });
+        console.log(data);
+        handlePutRequest('/api/v1/reviews', data, () => {
+            location.reload()
+        }, xhr => errorCallback(xhr));
+    }
+
+    function handleCloseModalButton(e) {
+        e.preventDefault();
+        let $modal = $('.modal-box');
+        $modal.hide();
+    }
+
+    function handleEditReviewButton(e) {
+        e.preventDefault();
+        let $modal = $('.modal-box');
+        let $currentReview = $(e.target).closest('tr');
+        let currentReviewText = $currentReview.find('.review-text').text();
+        let reviewTime = $currentReview.find('.review-time').text();
+        let reviewId = $(e.target).data("review-id");
+        $modal.find('.review-time').text(reviewTime);
+        $modal.find('.review-text').text(currentReviewText);
+        $modal.find('[name=id]').val(reviewId);
+        $modal.show();
+    }
 
     function handleDeleteReviewButton(e) {
         e.preventDefault();
