@@ -27,8 +27,8 @@ public class JPAConfig {
     private String dataSourceUrl;
     @Value("${datasource.username}")
     private String dataSourceUsername;
-    @Value("${datasource.password}")
-    private String dataSourcePassword;
+    //@Value("${datasource.password}")
+    private String dataSourcePassword = System.getenv("DB_PASSWORD");
     @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddl;
 
