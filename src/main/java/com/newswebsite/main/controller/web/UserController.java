@@ -83,7 +83,7 @@ public class UserController {
         } else {
             attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
         }
-        return "redirect:/profiles/".concat(username);
+        return "redirect:/users/".concat(username);
     }
 
     @GetMapping("/delete")
@@ -97,12 +97,12 @@ public class UserController {
                 viewName = "redirect:/logout";
                 attributes.addFlashAttribute("message", FlashMessage.success("Tài khoản của bạn đã xóa thành công"));
             } catch (RuntimeException ex) {
-                viewName = "redirect:/profiles/".concat(username);
+                viewName = "redirect:/users/".concat(username);
                 attributes.addFlashAttribute("message", FlashMessage.danger(ex.getMessage()));
             }
         } else {
             attributes.addFlashAttribute("message", FlashMessage.danger("Thao tác không được phép"));
-            viewName = "redirect:/profiles/".concat(username);
+            viewName = "redirect:/users/".concat(username);
         }
         return viewName;
     }

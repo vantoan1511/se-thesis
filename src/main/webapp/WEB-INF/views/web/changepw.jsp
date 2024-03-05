@@ -43,7 +43,7 @@
                             <button class="btn btn-primary btn-block">Xác nhận</button>
                         </div>
                         <div class="form-group text-center">
-                            <span class="text-muted"><a href="/profiles/${loggedUsername}">Hủy</a></span>
+                            <span class="text-muted"><a href="/users/${loggedUsername}">Hủy</a></span>
                         </div>
                     </form>
                 </div>
