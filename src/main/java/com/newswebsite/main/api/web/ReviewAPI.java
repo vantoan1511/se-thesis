@@ -24,12 +24,12 @@ public class ReviewAPI {
     }
 
     @PostMapping
-    public ReviewDTO create(@RequestBody @Valid ReviewDTO reviewDTO) {
+    public ReviewDTO create(@RequestBody ReviewDTO reviewDTO) {
         return reviewWriter.save(reviewDTO);
     }
 
     @PutMapping
-    public ReviewDTO update(@RequestBody @Valid ReviewDTO reviewDTO) {
+    public ReviewDTO update(@RequestBody ReviewDTO reviewDTO) {
         return reviewWriter.update(reviewDTO);
     }
 
