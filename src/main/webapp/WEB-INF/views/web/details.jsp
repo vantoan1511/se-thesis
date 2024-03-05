@@ -33,18 +33,18 @@
                     <footer>
                         <div class="col"></div>
                         <div class="col">
-                            <a href="#" class="love"><i class="ion-android-favorite-outline"></i>
+                            <a class="love"><i class="ion-eye"></i>
                                 <div>${article.traffic}</div>
                             </a>
                         </div>
                     </footer>
                 </article>
 
-                <div class="line">
-                    <div>Tác giả</div>
-                </div>
+                <%-- <div class="line">
+                     <div>Tác giả</div>
+                 </div>
 
-                <%@ include file="../components/web/author.jsp" %>
+                 <%@ include file="../components/web/author.jsp" %>--%>
 
                 <%--<div class="line">
                     <div>Bạn có thể thích</div>

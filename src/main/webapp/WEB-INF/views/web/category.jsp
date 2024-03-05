@@ -55,7 +55,7 @@
                                     </h1>
                                     <p>${article.description}</p>
                                     <footer>
-                                        <a href="#" class="love""><i class="ion-ios-eye-outline"></i>
+                                        <a class="love"><i class="ion-eye"></i>
                                         <div>${article.traffic}</div>
                                         </a>
                                         <a class="btn btn-primary more" href="/${article.alias}">
