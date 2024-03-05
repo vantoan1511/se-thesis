@@ -2,19 +2,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.thesisnewswebsite.main</groupId>
-    <artifactId>thesis-news-website-2024</artifactId>
+    <artifactId>newsapp</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
 
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
         <spring.version>4.3.15.RELEASE</spring.version>
         <hibernate.version>4.3.6.Final</hibernate.version>
         <spring.data>1.11.5.RELEASE</spring.data>
         <spring.security.ver>3.2.8.RELEASE</spring.security.ver>
         <jackson.version>2.15.2</jackson.version>
-        <lombok.version>1.18.24</lombok.version>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
+        <lombok.version>1.18.22</lombok.version>
         <servlet.api.ver>4.0.1</servlet.api.ver>
         <jsp.api.ver>2.0</jsp.api.ver>
         <jstl.ver>1.2</jstl.ver>
