@@ -1,14 +1,14 @@
 package com.newswebsite.main.service.userservice;
 
-import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
+import com.newswebsite.main.dto.request.UserRegistrationRequest;
 import com.newswebsite.main.entity.User;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.exception.EmailExistedException;
 import com.newswebsite.main.exception.EmailNotFoundException;
 import com.newswebsite.main.exception.InvalidUserToken;
 import com.newswebsite.main.exception.UserNotFoundException;
-import com.newswebsite.main.mapper.CollectionMapper;
+import com.newswebsite.main.mapper.UserMapper;
 import com.newswebsite.main.repository.RoleRepo;
 import com.newswebsite.main.repository.UserRepo;
 import com.newswebsite.main.service.emailservice.IEmailService;
@@ -33,26 +33,28 @@ public class UserWriter implements IUserWriter {
     private final RoleRepo roleRepo;
 
     private final IImageWriter imageWriter;
+
     private final MessageSource msg;
 
     private final IEmailService emailService;
 
-    private final CollectionMapper mapper;
+    private final UserMapper userMapper;
 
     @Autowired
     public UserWriter(
             UserRepo userRepo,
-            RoleRepo roleRepo, IImageWriter imageWriter,
+            RoleRepo roleRepo,
+            IImageWriter imageWriter,
             MessageSource msg,
             IEmailService emailService,
-            CollectionMapper mapper
+            UserMapper userMapper
     ) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
         this.imageWriter = imageWriter;
         this.msg = msg;
         this.emailService = emailService;
-        this.mapper = mapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -100,12 +102,13 @@ public class UserWriter implements IUserWriter {
     }
 
     @Override
-    public void register(UserDTO newUserDTO) {
-        User user = mapper.map(newUserDTO, User.class);
+    public void register(UserRegistrationRequest newUserRequest) {
+        User user = userMapper.toUser(newUserRequest);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(newUserDTO.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreatedAt(new Date());
         user.setEnabled(true);
+        user.setAvatarUrl("/static/public/images/avatar.png");
         user.setAuthorities(Collections.singletonList(roleRepo.findByAuthority(Role.USER.name())));
         userRepo.save(user);
     }

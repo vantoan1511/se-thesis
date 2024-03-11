@@ -1,6 +1,7 @@
 package com.newswebsite.main.service.userservice;
 
 import com.newswebsite.main.dto.UserDTO;
+import com.newswebsite.main.dto.request.UserRegistrationRequest;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface IUserWriter {
 
     void updateProfile(UserDTO userDTO);
 
-    void register(UserDTO newUserDTO);
+    void register(UserRegistrationRequest newUserRequest);
 
     void resetPassword(String email);
 
