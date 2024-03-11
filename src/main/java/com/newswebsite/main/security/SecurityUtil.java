@@ -1,6 +1,6 @@
 package com.newswebsite.main.security;
 
-import com.newswebsite.main.dto.UserDTO;
+import com.newswebsite.main.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -14,7 +14,7 @@ public class SecurityUtil {
     }
 
     public static String fullname() {
-        UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDTO = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDTO.getFirstName() + " " + userDTO.getLastName();
     }
 
