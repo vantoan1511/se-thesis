@@ -1,6 +1,6 @@
 package com.newswebsite.main.controller.web;
 
-import com.newswebsite.main.dto.UserDTO;
+import com.newswebsite.main.dto.request.UserRegistrationRequest;
 import com.newswebsite.main.service.userservice.IUserWriter;
 import com.newswebsite.main.utils.FlashMessage;
 import com.newswebsite.main.validator.CustomUserValidator;
@@ -33,12 +33,12 @@ public class RegisterController {
 
     @GetMapping
     public String getRegisterPage(Model model) {
-        model.addAttribute("user", new UserDTO());
+        model.addAttribute("user", new UserRegistrationRequest());
         return "web/register";
     }
 
     @PostMapping
-    public String register(@Valid @ModelAttribute("user") UserDTO userDTO,
+    public String register(@Valid @ModelAttribute("user") UserRegistrationRequest userRegistrationRequest,
                            BindingResult result,
                            Model model,
                            RedirectAttributes attributes) {
@@ -47,8 +47,8 @@ public class RegisterController {
             viewName = "web/register";
             model.addAttribute("message", FlashMessage.danger(result.getFieldError().getDefaultMessage()));
         } else {
-            userWriter.register(userDTO);
-            attributes.addFlashAttribute("message", FlashMessage.success("Đăng ký thành công"));
+            userWriter.register(userRegistrationRequest);
+            attributes.addFlashAttribute("message", FlashMessage.success("Đăng ký thành công. Đăng nhập để tiếp tục"));
         }
         return viewName;
     }
