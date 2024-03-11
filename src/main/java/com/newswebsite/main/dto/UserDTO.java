@@ -4,11 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.CredentialsContainer;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +13,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserDTO implements UserDetails, CredentialsContainer {
+public class UserDTO{
 
     private Long id;
     private String email;
@@ -37,35 +33,5 @@ public class UserDTO implements UserDetails, CredentialsContainer {
 
     public List<String> getRoles() {
         return authorities.stream().map(RoleDTO::getAuthority).collect(Collectors.toList());
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public void eraseCredentials() {
-        this.password = null;
     }
 }
