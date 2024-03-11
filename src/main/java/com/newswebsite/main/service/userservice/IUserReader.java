@@ -1,6 +1,7 @@
 package com.newswebsite.main.service.userservice;
 
 import com.newswebsite.main.dto.UserDTO;
+import com.newswebsite.main.dto.response.UserProfileResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,6 +18,8 @@ public interface IUserReader {
     UserDTO findByToken(String token);
 
     UserDTO getUser(String username);
+
+    UserProfileResponse getUserById(long id);
 
     Page<UserDTO> getAllUsers(Pageable pageable);
 }
