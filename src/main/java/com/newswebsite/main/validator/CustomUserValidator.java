@@ -1,6 +1,6 @@
 package com.newswebsite.main.validator;
 
-import com.newswebsite.main.dto.UserDTO;
+import com.newswebsite.main.dto.request.UserRegistrationRequest;
 import com.newswebsite.main.service.userservice.IUserReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,16 +19,16 @@ public class CustomUserValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return UserDTO.class.isAssignableFrom(aClass);
+        return UserRegistrationRequest.class.isAssignableFrom(aClass);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        UserDTO userDTO = (UserDTO) target;
-        if (userRetrievalService.existsEmail(userDTO.getEmail())) {
+        UserRegistrationRequest userRegistrationRequest = (UserRegistrationRequest) target;
+        if (userRetrievalService.existsEmail(userRegistrationRequest.getEmail())) {
             errors.rejectValue("email", "email.exists", "Email đã liên kết với một tài khoản khác");
         }
-        if (userRetrievalService.existsUsername(userDTO.getUsername())) {
+        if (userRetrievalService.existsUsername(userRegistrationRequest.getUsername())) {
             errors.rejectValue("username", "username.exists", "Tên đăng nhập đã tồn tại");
         }
     }
