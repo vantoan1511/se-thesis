@@ -21,7 +21,7 @@
             <div class="info">
                 <c:catch var="error">
                     <a href="/admin/users/${loggedUser.username}" class="d-block">
-                        Xin chào, ${loggedUser.fullName()}
+                        Xin chào, ${loggedUser.firstName.concat(" ").concat(loggedUser.lastName)}
                     </a>
                 </c:catch>
                 <c:if test="${not empty error}">
