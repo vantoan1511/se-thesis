@@ -87,9 +87,8 @@ public class ImageWriter implements IImageWriter {
         Image image = imageRepo.findOne(id);
         if (image == null) throw new ImageNotFoundException("Hình ảnh không tồn tại ");
         File file = new File(image.getDirectory());
-        if (file.exists() && file.delete()) {
-            imageRepo.delete(id);
-        }
+        file.delete();
+        imageRepo.delete(id);
     }
 
     @Override
