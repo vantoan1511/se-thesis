@@ -108,7 +108,7 @@ public class UserWriter implements IUserWriter {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreatedAt(new Date());
         user.setEnabled(true);
-        user.setAvatarUrl("/static/public/images/avatar.png");
+        user.setAvatarUrl("/static/public/images/default-avatar.png");
         user.setAuthorities(Collections.singletonList(roleRepo.findByAuthority(Role.USER.name())));
         userRepo.save(user);
     }
