@@ -1,6 +1,7 @@
 package com.newswebsite.main.api.admin;
 
 import com.newswebsite.main.dto.CategoryDTO;
+import com.newswebsite.main.dto.request.CategoryCreationRequest;
 import com.newswebsite.main.http.SuccessResponse;
 import com.newswebsite.main.service.categoryservice.ICategoryWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -24,13 +24,13 @@ public class CategoryAPI {
     }
 
     @PostMapping
-    public CategoryDTO createNewCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
-        return categoryWriter.save(categoryDTO);
+    public CategoryDTO createNewCategory(@RequestBody CategoryCreationRequest categoryCreationRequest) {
+        return categoryWriter.save(categoryCreationRequest);
     }
 
     @PutMapping
-    public CategoryDTO updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
-        return categoryWriter.save(categoryDTO);
+    public CategoryDTO updateCategory(@RequestBody CategoryCreationRequest categoryCreationRequest) {
+        return categoryWriter.save(categoryCreationRequest);
     }
 
     @DeleteMapping
