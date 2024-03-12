@@ -2,21 +2,17 @@ package com.newswebsite.main.service.articleservice;
 
 import com.newswebsite.main.dto.ArticleDTO;
 import com.newswebsite.main.entity.Article;
-import com.newswebsite.main.entity.Category;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
-import com.newswebsite.main.service.articleservice.IArticleReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
