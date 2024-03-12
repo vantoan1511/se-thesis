@@ -1,6 +1,7 @@
 package com.newswebsite.main.service.articleservice;
 
 import com.newswebsite.main.dto.ArticleDTO;
+import com.newswebsite.main.dto.request.ArticleCreationRequest;
 import com.newswebsite.main.entity.Article;
 import com.newswebsite.main.entity.Category;
 import com.newswebsite.main.entity.State;
@@ -169,21 +170,21 @@ public class ArticleWriter implements IArticleWriter {
     }
 
     @Override
-    public ArticleDTO save(ArticleDTO articleDTO) {
-        Category category = categoryRepo.findByAlias(articleDTO.getCategoryAlias());
+    public ArticleDTO save(ArticleCreationRequest articleCreationRequest) {
+        Category category = categoryRepo.findByAlias(articleCreationRequest.getCategoryAlias());
         if (category == null)
-            throw new CategoryNotFoundException("Không tìm thấy chuyên mục với alias [%s]".formatted(articleDTO.getCategoryAlias()));
-        Article article = mapper.map(articleDTO, Article.class);
+            throw new CategoryNotFoundException("Không tìm thấy chuyên mục với alias [%s]".formatted(articleCreationRequest.getCategoryAlias()));
+        Article article = mapper.map(articleCreationRequest, Article.class);
         article.setCategory(category);
 
         State state = stateRepo.findByCode(ArticleState.DRAFT.name());
         article.setState(state);
 
         Article oldArticle = new Article();
-        if (articleDTO.getId() != null) {
-            oldArticle = articleRepo.findOne(articleDTO.getId());
+        if (articleCreationRequest.getId() != null) {
+            oldArticle = articleRepo.findOne(articleCreationRequest.getId());
             if (!oldArticle.getState().getCode().equals(ArticleState.DRAFT.name()))
-                throw new InvalidArticleOperationException("Bài viết hiện không thể chỉnh sửa");
+                throw new InvalidArticleOperationException("Bài viết có id [%s] hiện không thể chỉnh sửa".formatted(oldArticle.getId()));
             article.setCreatedAt(oldArticle.getCreatedAt());
             article.setCreatedBy(oldArticle.getCreatedBy());
             article.setPublishedAt(oldArticle.getPublishedAt());
@@ -204,7 +205,10 @@ public class ArticleWriter implements IArticleWriter {
         User author = new User();
         author.setId(authorId);
         article.setAuthor(author);
-        return mapper.map(articleRepo.save(article), ArticleDTO.class);
+
+        article = articleRepo.save(article);
+
+        return mapper.map(article, ArticleDTO.class);
     }
 
     @Override

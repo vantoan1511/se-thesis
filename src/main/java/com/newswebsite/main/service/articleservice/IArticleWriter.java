@@ -1,6 +1,7 @@
 package com.newswebsite.main.service.articleservice;
 
 import com.newswebsite.main.dto.ArticleDTO;
+import com.newswebsite.main.dto.request.ArticleCreationRequest;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface IArticleWriter {
 
     void setFeaturedMultiple(List<Long> ids, boolean featured);
 
-    ArticleDTO save(ArticleDTO articleDTO);
+    ArticleDTO save(ArticleCreationRequest articleCreationRequest);
 
     void delete(Long id);
 
