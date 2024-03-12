@@ -23,17 +23,21 @@ public class ArticleAPI {
     private final IArticleWriter articleWriter;
 
     @Autowired
-    public ArticleAPI(IArticleReader articleReader,
-                      IArticleWriter articleWriter) {
+    public ArticleAPI(
+            IArticleReader articleReader,
+            IArticleWriter articleWriter
+    ) {
         this.articleReader = articleReader;
         this.articleWriter = articleWriter;
     }
 
     @GetMapping
-    public Object getArticles(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                              @RequestParam(value = "size", required = false, defaultValue = "5") int size,
-                              @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
-                              @RequestParam(value = "by", required = false, defaultValue = "id") String by) {
+    public Object getArticles(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+            @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
+            @RequestParam(value = "by", required = false, defaultValue = "id") String by
+    ) {
 
         Sort.Direction direction = order.equalsIgnoreCase("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = new PageRequest(page - 1, size, new Sort(direction, by));
