@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <c:forEach items="${latest.content}" var="article" begin="0" step="2">
+        <c:forEach items="${latest}" var="article" begin="0" step="2">
             <article class="article">
                 <div class="inner">
                     <figure>
@@ -40,7 +40,7 @@
         </c:forEach>
     </div>
     <div class="col-md-6">
-        <c:forEach items="${latest.content}" var="article" begin="1" step="2">
+        <c:forEach items="${latest}" var="article" begin="1" step="2">
             <article class="article">
                 <div class="inner">
                     <figure>

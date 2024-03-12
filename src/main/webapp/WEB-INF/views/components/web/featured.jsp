@@ -3,7 +3,7 @@
 <%@ include file="../../../../common/taglib.jsp" %>
 
 <div class="owl-carousel owl-theme slide" id="featured">
-    <c:forEach items="${featured.content}" var="article">
+    <c:forEach items="${featured}" var="article">
         <div class="item">
             <article class="featured">
                 <div class="overlay"></div>
