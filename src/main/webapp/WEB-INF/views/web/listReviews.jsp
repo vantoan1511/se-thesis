@@ -79,7 +79,7 @@
         <div class="inner-body">
             <div class="row">
                 <div class="col-md-3">
-                    <label>${loggedUser.fullName()}</label>
+                    <label>${loggedUser.getFullName()}</label>
                     <p class="review-time"></p>
                 </div>
                 <div class="col-md-9">

@@ -26,7 +26,7 @@
                                              height="80">
                                     </figure>
                                     <div class="featured-author-info">
-                                        <h2 class="name">${profile.fullName()}</h2>
+                                        <h2 class="name">${profile.getFullName()}</h2>
                                         <div class="desc">@${profile.username}</div>
                                     </div>
                                 </div>
