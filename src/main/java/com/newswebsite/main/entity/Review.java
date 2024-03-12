@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,21 +11,27 @@ import java.util.List;
 @Getter
 @Setter
 public class Review extends Audit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private Long id;
+
     @Column(name = "text", columnDefinition = "TEXT")
     private String text;
+
     @ManyToOne
     @JoinColumn(name = "article_id", nullable = false)
     private Article article;
+
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Review parent;
+
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private List<Review> subReviews = new ArrayList<>();
+    private List<Review> subReviews;
 }

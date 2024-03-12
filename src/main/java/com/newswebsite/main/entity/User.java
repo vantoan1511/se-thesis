@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -18,23 +17,33 @@ public class User implements UserDetails, CredentialsContainer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
+
     @Column(unique = true)
     private String email;
+
     @Column(unique = true)
     private String username;
+
     @Column(nullable = false)
     private String password;
+
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "avatar_url")
     private String avatarUrl;
+
     @Column
     private String token;
+
     @Column(name = "created_at")
     private Date createdAt;
+
     @Column(columnDefinition = "tinyint default 1")
     private boolean enabled;
 
@@ -42,10 +51,16 @@ public class User implements UserDetails, CredentialsContainer {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> authorities = new ArrayList<>();
+    private List<Role> authorities;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Review> reviews = new ArrayList<>();
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Article> articles;
+
+    @OneToMany(mappedBy = "uploadedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Image> images;
 
     public String getFullName() {
         return firstName.concat(" ").concat(lastName);
