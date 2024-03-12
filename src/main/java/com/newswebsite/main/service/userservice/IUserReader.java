@@ -21,5 +21,7 @@ public interface IUserReader {
 
     UserProfileResponse getUserById(long id);
 
+    UserProfileResponse getUserByUsername(String username);
+
     Page<UserDTO> getAllUsers(Pageable pageable);
 }
