@@ -34,7 +34,11 @@ public class UserController {
     private final IReviewReader reviewReader;
 
     @Autowired
-    public UserController(IUserReader userReader, IUserWriter userWriter, IImageReader imageReader, IReviewReader reviewReader) {
+    public UserController(
+            IUserReader userReader,
+            IUserWriter userWriter,
+            IImageReader imageReader,
+            IReviewReader reviewReader) {
         this.userReader = userReader;
         this.userWriter = userWriter;
         this.imageReader = imageReader;
@@ -43,13 +47,13 @@ public class UserController {
 
     @GetMapping
     public String getUser(@PathVariable("username") String username,
-                             Model model) {
+                          Model model) {
         String viewName = "web/profile";
         Page<ImageDTO> uploadedImages = imageReader.getFiles(username, new PageRequest(0, 99, Sort.Direction.DESC, "createdAt"));
         Page<ReviewDTO> recentReviews = reviewReader.getAllReviewsByUsername(username, new PageRequest(0, 4, Sort.Direction.DESC, "createdAt"));
         model.addAttribute("uploadedImages", uploadedImages);
         model.addAttribute("recentReviews", recentReviews);
-        model.addAttribute("profile", userReader.getUser(username));
+        model.addAttribute("profile", userReader.getUserByUsername(username));
         return viewName;
     }
 
