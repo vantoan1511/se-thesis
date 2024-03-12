@@ -28,8 +28,10 @@ public class HomeController {
         ModelAndView view = new ModelAndView(viewName);
         Pageable pageable = new PageRequest(0, 10, Sort.Direction.DESC, "traffic");
         List<ArticleDTO> popularArticles = articleReader.getAllPublished(pageable).getContent();
-        view.addObject("featured", articleReader.getFeaturedArticles(new PageRequest(0, 3)));
-        view.addObject("latest", articleReader.getLatestArticles(new PageRequest(0, 10)));
+        List<ArticleDTO> featuredArticles = articleReader.getFeaturedArticles(new PageRequest(0, 3)).getContent();
+        List<ArticleDTO> latestArticles = articleReader.getLatestArticles(new PageRequest(0, 10)).getContent();
+        view.addObject("featured", featuredArticles);
+        view.addObject("latest", latestArticles);
         view.addObject("popularArticles", popularArticles);
         return view;
     }
