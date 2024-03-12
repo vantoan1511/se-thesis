@@ -23,7 +23,8 @@ public class ArticleAPI {
     private final IArticleWriter articleWriter;
 
     @Autowired
-    public ArticleAPI(IArticleReader articleReader, IArticleWriter articleWriter) {
+    public ArticleAPI(IArticleReader articleReader,
+                      IArticleWriter articleWriter) {
         this.articleReader = articleReader;
         this.articleWriter = articleWriter;
     }

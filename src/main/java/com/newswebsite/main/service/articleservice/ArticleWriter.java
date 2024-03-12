@@ -4,6 +4,7 @@ import com.newswebsite.main.dto.ArticleDTO;
 import com.newswebsite.main.entity.Article;
 import com.newswebsite.main.entity.Category;
 import com.newswebsite.main.entity.State;
+import com.newswebsite.main.entity.User;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
 import com.newswebsite.main.exception.CategoryNotFoundException;
@@ -12,6 +13,7 @@ import com.newswebsite.main.exception.StateCodeNotFoundException;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
 import com.newswebsite.main.repository.StateRepo;
+import com.newswebsite.main.security.SecurityUtil;
 import com.newswebsite.main.service.stateservice.*;
 import com.newswebsite.main.utils.SlugGenerator;
 import org.modelmapper.ModelMapper;
@@ -170,8 +172,7 @@ public class ArticleWriter implements IArticleWriter {
     public ArticleDTO save(ArticleDTO articleDTO) {
         Category category = categoryRepo.findByAlias(articleDTO.getCategoryAlias());
         if (category == null)
-            throw new CategoryNotFoundException(msg.getMessage("category.not.found", null, null) + articleDTO.getCategoryAlias());
-
+            throw new CategoryNotFoundException("Không tìm thấy chuyên mục với alias [%s]".formatted(articleDTO.getCategoryAlias()));
         Article article = mapper.map(articleDTO, Article.class);
         article.setCategory(category);
 
@@ -198,6 +199,11 @@ public class ArticleWriter implements IArticleWriter {
         }
 
         article.setAlias(newAlias);
+
+        Long authorId = SecurityUtil.getUser().getId();
+        User author = new User();
+        author.setId(authorId);
+        article.setAuthor(author);
         return mapper.map(articleRepo.save(article), ArticleDTO.class);
     }
 

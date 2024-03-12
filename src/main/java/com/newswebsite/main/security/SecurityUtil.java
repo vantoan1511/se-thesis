@@ -9,6 +9,10 @@ import java.util.List;
 
 public class SecurityUtil {
 
+    public static User getUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
     public static String username() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
