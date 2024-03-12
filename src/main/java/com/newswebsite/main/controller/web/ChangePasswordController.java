@@ -48,6 +48,6 @@ public class ChangePasswordController {
             userWriter.changePassword(username, newPassword);
             attributes.addFlashAttribute("message", FlashMessage.success("Đổi mật khẩu thành công!"));
         }
-        return "redirect:/profiles/".concat(username);
+        return "redirect:/users/".concat(username);
     }
 }
