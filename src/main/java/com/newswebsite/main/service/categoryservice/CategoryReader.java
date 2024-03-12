@@ -2,7 +2,7 @@ package com.newswebsite.main.service.categoryservice;
 
 import com.newswebsite.main.dto.CategoryDTO;
 import com.newswebsite.main.entity.Category;
-import com.newswebsite.main.exception.CategoryCodeNotFoundException;
+import com.newswebsite.main.exception.CategoryNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.CategoryRepo;
 import org.springframework.context.MessageSource;
@@ -32,7 +32,7 @@ public class CategoryReader implements ICategoryReader {
     public CategoryDTO getCategory(String alias) {
         Category category = categoryRepo.findByAlias(alias);
         if (category == null)
-            throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + alias);
+            throw new CategoryNotFoundException(msg.getMessage("category.not.found", null, null) + alias);
         return mapper.map(category, CategoryDTO.class);
     }
 

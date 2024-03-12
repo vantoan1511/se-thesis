@@ -2,10 +2,9 @@ package com.newswebsite.main.service.categoryservice;
 
 import com.newswebsite.main.dto.CategoryDTO;
 import com.newswebsite.main.entity.Category;
-import com.newswebsite.main.exception.CategoryCodeNotFoundException;
+import com.newswebsite.main.exception.CategoryNotFoundException;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.CategoryRepo;
-import com.newswebsite.main.service.categoryservice.ICategoryWriter;
 import com.newswebsite.main.utils.SlugGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,7 +63,7 @@ public class CategoryWriter implements ICategoryWriter {
     @Override
     public void delete(long id) {
         if (!categoryRepo.exists(id)) {
-            throw new CategoryCodeNotFoundException("Chuyên mục không tồn tại " + id);
+            throw new CategoryNotFoundException("Chuyên mục không tồn tại " + id);
         }
         categoryRepo.delete(id);
     }
