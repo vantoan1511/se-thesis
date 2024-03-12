@@ -1,9 +1,10 @@
 package com.newswebsite.main.api.admin;
 
 import com.newswebsite.main.dto.ArticleDTO;
+import com.newswebsite.main.dto.request.ArticleCreationRequest;
 import com.newswebsite.main.http.SuccessResponse;
-import com.newswebsite.main.service.articleservice.IArticleWriter;
 import com.newswebsite.main.service.articleservice.IArticleReader;
+import com.newswebsite.main.service.articleservice.IArticleWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -45,15 +46,15 @@ public class ArticleAPI {
     }
 
     @PostMapping
-    public ResponseEntity<ArticleDTO> createArticle(@RequestBody ArticleDTO articleDTO) {
-        ArticleDTO savedArticle = articleWriter.save(articleDTO);
+    public ResponseEntity<ArticleDTO> createArticle(@RequestBody ArticleCreationRequest articleCreationRequest) {
+        ArticleDTO savedArticle = articleWriter.save(articleCreationRequest);
         URI articleURI = URI.create("/api/v1/articles/" + savedArticle.getId());
         return ResponseEntity.created(articleURI).body(savedArticle);
     }
 
     @PutMapping
-    public ArticleDTO updateArticle(@RequestBody ArticleDTO articleDTO) {
-        return articleWriter.save(articleDTO);
+    public ArticleDTO updateArticle(@RequestBody ArticleCreationRequest articleCreationRequest) {
+        return articleWriter.save(articleCreationRequest);
     }
 
     @PutMapping("/{id}/{action}")
