@@ -120,9 +120,6 @@
                                                                          pattern="dd/MM/yyyy HH:mm:ss"/></p>
                                     <p>Bởi: <c:out value="${category.lastModifiedBy}"/></p>
                                 </div>
-                                <div class="col-md-6">
-                                    <h5>Bài viết: <c:out value="${category.articles.size()}"/></h5>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,9 @@
 package com.newswebsite.main.dto;
 
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,6 +12,4 @@ import java.util.List;
 public class CategoryDTO extends ContentDTO {
     private String parentAlias;
     private String parentTitle;
-    private List<CategoryDTO> subCategories;
-    private List<ArticleDTO> articles;
 }
