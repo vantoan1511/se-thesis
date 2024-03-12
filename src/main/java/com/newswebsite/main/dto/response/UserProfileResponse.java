@@ -22,4 +22,8 @@ public class UserProfileResponse {
     private Date createdAt;
     private List<String> authorities;
     private boolean enabled;
+
+    public String getFullName() {
+        return firstName.concat(" ").concat(lastName);
+    }
 }
