@@ -80,6 +80,11 @@ public class UserReader implements IUserReader {
     }
 
     @Override
+    public UserProfileResponse getUserByUsername(String username) {
+        return userMapper.toUserProfileResponse(userRepo.findByUsername(username));
+    }
+
+    @Override
     public Page<UserDTO> getAllUsers(Pageable pageable) {
         Page<UserDTO> page = userRepo.findAll(pageable).map(item -> mapper.map(item, UserDTO.class));
         page.forEach(item -> item.setPassword(null));
