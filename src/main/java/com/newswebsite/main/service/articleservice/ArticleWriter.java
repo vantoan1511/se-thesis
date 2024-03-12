@@ -6,7 +6,7 @@ import com.newswebsite.main.entity.Category;
 import com.newswebsite.main.entity.State;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
-import com.newswebsite.main.exception.CategoryCodeNotFoundException;
+import com.newswebsite.main.exception.CategoryNotFoundException;
 import com.newswebsite.main.exception.InvalidArticleOperationException;
 import com.newswebsite.main.exception.StateCodeNotFoundException;
 import com.newswebsite.main.repository.ArticleRepo;
@@ -170,7 +170,7 @@ public class ArticleWriter implements IArticleWriter {
     public ArticleDTO save(ArticleDTO articleDTO) {
         Category category = categoryRepo.findByAlias(articleDTO.getCategoryAlias());
         if (category == null)
-            throw new CategoryCodeNotFoundException(msg.getMessage("category.not.found", null, null) + articleDTO.getCategoryAlias());
+            throw new CategoryNotFoundException(msg.getMessage("category.not.found", null, null) + articleDTO.getCategoryAlias());
 
         Article article = mapper.map(articleDTO, Article.class);
         article.setCategory(category);
