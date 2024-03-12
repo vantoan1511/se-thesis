@@ -21,13 +21,13 @@ public class Category extends Content {
     @Column(name = "category_id")
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "parent_id")
     private Category parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Category> subCategories;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Article> articles;
 }
