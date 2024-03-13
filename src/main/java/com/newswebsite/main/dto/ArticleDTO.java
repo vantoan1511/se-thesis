@@ -21,5 +21,5 @@ public class ArticleDTO extends ContentDTO {
     private String categoryAlias;
     private String categoryTitle;
     private String stateCode = ArticleState.DRAFT.name();
-    private String stateName;
+    private String stateName = ArticleState.DRAFT.getValue();
 }
