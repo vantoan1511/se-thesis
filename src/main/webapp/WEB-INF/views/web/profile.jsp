@@ -15,19 +15,19 @@
                 <div class="col-md-4">
                     <div class="featured-author">
                         <div class="featured-author-inner">
-                            <div class="featured-author-cover"
-                                 style="background-image: url('/static/web/images/news/img15.jpg')">
+                            <div class="featured-author-cover">
                                 <div class="featured-author-center">
                                     <figure class="featured-author-picture">
                                         <img class="avatar"
                                              src="${profile.avatarUrl}"
+                                             onerror="this.src='/static/public/images/default-avatar.png'"
                                              alt="${profile.username}-avatar"
                                              width="80"
                                              height="80">
                                     </figure>
                                     <div class="featured-author-info">
                                         <h2 class="name">${profile.getFullName()}</h2>
-                                        <div class="desc">@${profile.username}</div>
+                                        <div class="">@${profile.username}</div>
                                     </div>
                                 </div>
                             </div>
