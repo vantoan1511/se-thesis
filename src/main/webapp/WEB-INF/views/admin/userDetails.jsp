@@ -27,22 +27,11 @@
                     <div class="card card-success card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <c:choose>
-                                    <c:when test="${not empty userDetails.avatarUrl}">
-                                        <img class="avatar img-circle"
-                                             src="${userDetails.avatarUrl}"
-                                             alt="${userDetails.username}-avatar"
-                                             width="110"
-                                             height="110">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img class="avatar img-circle"
-                                             src="<c:url value="/static/public/images/avatar.png"/>"
-                                             alt="${userDetails.username}-avatar"
-                                             width="110"
-                                             height="110">
-                                    </c:otherwise>
-                                </c:choose>
+                                <img class="avatar img-circle"
+                                     src="${userDetails.avatarUrl}"
+                                     alt="/static/public/images/default-avatar.png"
+                                     width="110"
+                                     height="110">
 
                             </div>
 
