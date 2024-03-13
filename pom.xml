@@ -29,6 +29,7 @@
         <java.mail.ver>8.5.1</java.mail.ver>
         <common.file.ver>1.5</common.file.ver>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <slf4j.version>1.7.30</slf4j.version>
     </properties>
 
     <dependencies>
@@ -220,6 +221,19 @@
             <artifactId>commons-fileupload</artifactId>
             <version>${common.file.ver}</version>
         </dependency>
+        <!-- logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
