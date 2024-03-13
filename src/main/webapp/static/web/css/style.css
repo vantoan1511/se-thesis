@@ -4551,7 +4551,7 @@ blockquote {
 
 .featured-author .featured-author-cover .featured-author-info .name {
     font-size: 18px;
-    color: #fff;
+    /*color: #fff;*/
     margin: 0;
     margin-top: 10px;
 }
