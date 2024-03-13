@@ -16,9 +16,6 @@ $(function () {
     adminImageOptionsFunc();
 
 })
-$('.avatar').on('error', function () {
-    $(this).attr('src', '/static/public/images/avatar.png');
-})
 
 function adminImageOptionsFunc() {
     const $options = $('.image-options');
