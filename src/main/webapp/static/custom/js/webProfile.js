@@ -7,7 +7,6 @@ $(function () {
 
     validateUserProfile();
     imageOptionsFunc();
-    loadAvatar();
 });
 
 function imageOptionsFunc() {

@@ -212,9 +212,3 @@ async function handleUploadButton(e) {
         reader.readAsDataURL(file);
     }
 }
-
-function loadAvatar() {
-    $('.avatar').on('error', function () {
-        $(this).attr('src', '/static/public/images/avatar.png');
-    })
-}
