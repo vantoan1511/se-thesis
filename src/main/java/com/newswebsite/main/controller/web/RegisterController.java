@@ -21,7 +21,10 @@ public class RegisterController {
 
     private final CustomUserValidator userValidator;
 
-    public RegisterController(IUserWriter userWriter, CustomUserValidator userValidator) {
+    public RegisterController(
+            IUserWriter userWriter,
+            CustomUserValidator userValidator
+    ) {
         this.userWriter = userWriter;
         this.userValidator = userValidator;
     }
@@ -38,10 +41,12 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String register(@Valid @ModelAttribute("user") UserRegistrationRequest userRegistrationRequest,
-                           BindingResult result,
-                           Model model,
-                           RedirectAttributes attributes) {
+    public String register(
+            @Valid @ModelAttribute("user") UserRegistrationRequest userRegistrationRequest,
+            BindingResult result,
+            Model model,
+            RedirectAttributes attributes
+    ) {
         String viewName = "redirect:/login";
         if (result.hasErrors()) {
             viewName = "web/register";

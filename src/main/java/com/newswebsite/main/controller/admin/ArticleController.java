@@ -9,7 +9,10 @@ import com.newswebsite.main.service.categoryservice.ICategoryReader;
 import com.newswebsite.main.service.imageservice.IImageReader;
 import com.newswebsite.main.service.stateservice.IStateReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +35,12 @@ public class ArticleController {
     private final IImageReader imageReader;
 
     @Autowired
-    public ArticleController(IArticleReader articleReader, ICategoryReader categoryReader, IStateReader stateReader, IImageReader imageReader) {
+    public ArticleController(
+            IArticleReader articleReader,
+            ICategoryReader categoryReader,
+            IStateReader stateReader,
+            IImageReader imageReader
+    ) {
         this.articleReader = articleReader;
         this.categoryReader = categoryReader;
         this.stateReader = stateReader;
@@ -95,9 +103,8 @@ public class ArticleController {
         ModelAndView mav = new ModelAndView(viewName);
         mav.addObject("article", articleDTO);
         mav.addObject("categories", categoryReader.getAllAsMap());
-        mav.addObject("states", stateReader.findAll());
-        mav.addObject("uploadedImages",
-                imageReader.getFiles(SecurityUtil.username(), new PageRequest(0, 99, Sort.Direction.DESC, "createdAt")));
+        /*mav.addObject("uploadedImages",
+                imageReader.getFiles(SecurityUtil.username(), new PageRequest(0, 99, Sort.Direction.DESC, "createdAt")));*/
         return mav;
     }
 }

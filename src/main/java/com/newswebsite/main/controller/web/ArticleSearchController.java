@@ -32,12 +32,14 @@ public class ArticleSearchController {
     }
 
     @GetMapping
-    public String search(@RequestParam(value = "q", required = false, defaultValue = "") String q,
-                         @RequestParam(value = "date_format", required = false, defaultValue = "anytime") String dateFormat,
-                         @RequestParam(value = "categoryId", required = false) List<Long> categoryIds,
-                         @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                         @RequestParam(value = "size", required = false, defaultValue = "2") int size,
-                         Model model) {
+    public String search(
+            @RequestParam(value = "q", required = false, defaultValue = "") String q,
+            @RequestParam(value = "date_format", required = false, defaultValue = "anytime") String dateFormat,
+            @RequestParam(value = "categoryId", required = false) List<Long> categoryIds,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "2") int size,
+            Model model
+    ) {
         Date startDate;
         switch (dateFormat) {
             case "day" ->
