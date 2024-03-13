@@ -27,7 +27,7 @@ public class CategoryController {
     @GetMapping
     public ModelAndView getList(
             @RequestParam(name = "page", defaultValue = "1") int page,
-            @RequestParam(name = "size", defaultValue = "2") int size,
+            @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "by", defaultValue = "lastModifiedAt") String by,
             @RequestParam(name = "order", defaultValue = "DESC") String order) {
         String viewName = "admin/listCategories";
