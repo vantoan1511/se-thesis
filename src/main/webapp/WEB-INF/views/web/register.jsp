@@ -70,7 +70,7 @@
                     <!-- /.col -->
                     <div class="col">
                         <button type="submit"
-                                class="btn bg-gradient-success btn-block">
+                                class="btn bg-gradient-success btn-block register-btn">
                             Đăng ký <i class="ri-user-add-line"></i></button>
                     </div>
                     <!-- /.col -->
@@ -90,6 +90,9 @@
 </div>
 <script>
     $(function () {
+        const $registerBtn = $('.register-btn');
+        $registerBtn.click(e => preloaderEffect(e));
+
         $('#register-user-form').validate({
             rules: {
                 firstName: {
@@ -137,6 +140,13 @@
             }
         })
     })
+
+    function preloaderEffect(e) {
+        $(e.target).text('Đang đăng ký...')
+            .attr('disabled', true)
+            .closest('form')
+            .submit();
+    }
 </script>
 </body>
 </html>

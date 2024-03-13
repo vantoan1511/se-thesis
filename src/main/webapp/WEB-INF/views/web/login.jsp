@@ -49,7 +49,8 @@
                 <div class="row">
                     <div class="col">
                         <button type="submit"
-                                class="btn bg-gradient-primary btn-block">Đăng nhập <i class="ri-login-box-line"></i>
+                                class="btn bg-gradient-primary btn-block login-btn">
+                            Đăng nhập <i class="ri-login-box-line"></i>
                         </button>
                     </div>
                 </div>
@@ -66,5 +67,18 @@
         </div>
     </div>
 </div>
+<script>
+    $(function () {
+        const $loginBtn = $('.login-btn');
+        $loginBtn.click(e => preloaderEffect(e));
+    });
+
+    function preloaderEffect(e) {
+        $(e.target).text('Đang đăng nhập ...')
+            .attr('disabled', true)
+            .closest('form')
+            .submit();
+    }
+</script>
 </body>
 </html>
