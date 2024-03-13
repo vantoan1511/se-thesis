@@ -92,11 +92,9 @@
                                 <div class="col-md-4 col-sm-12">
                                     <div class="form-group">
                                         <form:label path="stateCode">Trạng thái</form:label>
-                                        <form:select path="stateCode"
-                                                     cssClass="form-control"
-                                                     disabled="true">
-                                            <form:options items="${states}"/>
-                                        </form:select>
+                                        <form:input path="stateName"
+                                                    cssClass="form-control"
+                                                    disabled="true"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="categoryCode">Chuyên mục</label>
