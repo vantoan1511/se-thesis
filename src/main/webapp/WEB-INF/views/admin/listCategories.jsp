@@ -108,6 +108,7 @@
                                 <p style="font-size: 85%">
                                     Alias: <a target="_blank"
                                               href="<c:url value="/categories/${category.alias}"/>">${category.alias}</a><br>
+                                    Parent: ${category.parentTitle}
                                 </p>
                             </td>
                             <td>
