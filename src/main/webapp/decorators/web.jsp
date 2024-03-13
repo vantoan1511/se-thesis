@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title><dec:title default="Toan's News - Mang tin tức đến cho mọi nhà"/></title>
+    <link rel="shortcut icon" href="/static/public/favicon.ico" type="image/x-icon">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="<c:url value="/static/web/scripts/bootstrap/bootstrap.min.css"/>">
     <!-- IonIcons -->

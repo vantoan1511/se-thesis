@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title><dec:title default="Trang chủ"/></title>
-
+    <link rel="shortcut icon" href="/static/public/favicon.ico" type="image/x-icon">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <!-- Google Font: Source Sans Pro -->
