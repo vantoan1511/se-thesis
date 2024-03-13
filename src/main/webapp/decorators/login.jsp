@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <title><dec:title default="Đăng nhập"/></title>
-
+    <link rel="shortcut icon" href="/static/public/favicon.ico" type="image/x-icon">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,9 +24,7 @@
     <script src="<c:url value="/static/admin/plugins/jquery/jquery.min.js"/>"></script>
 </head>
 <body class="hold-transition login-page">
-
 <dec:body/>
-
 <!-- Bootstrap 4 -->
 <script src="<c:url value="/static/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 <!-- Validation -->

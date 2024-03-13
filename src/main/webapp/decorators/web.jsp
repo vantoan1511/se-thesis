@@ -23,30 +23,21 @@
     <!-- Magnific Popup -->
     <link rel="stylesheet" href="<c:url value="/static/web/scripts/magnific-popup/dist/magnific-popup.css"/>">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css" rel="stylesheet">
-
     <!-- Custom style -->
     <link rel="stylesheet" href="<c:url value="/static/web/css/style.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/web/css/skins/all.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/web/css/demo.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/remixicon/remixicon.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/custom/css/styles.css"/>">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icheck-material@1.0.1/icheck-material.min.css">
-
     <script src="<c:url value="/static/web/js/jquery.js"/>"></script>
-
 </head>
 <body class="skin-orange">
-
 <%@include file="../WEB-INF/views/components/web/header.jsp" %>
-
 <dec:body/>
-
 <%@include file="../WEB-INF/views/components/web/footer.jsp" %>
-
 <!-- Back to Top Button -->
 <button id="back-to-top" onclick="scrollToTop()"><i class="ion-android-arrow-up"></i></button>
-
 <!-- JS -->
 <script src="<c:url value="/static/web/scripts/bootstrap/bootstrap.min.js"/>"></script>
 <script>var $target_end = $(".best-of-the-week");</script>
@@ -59,7 +50,6 @@
 <!-- Validation -->
 <script src="<c:url value="/static/admin/plugins/jquery-validation/jquery.validate.min.js"/>"></script>
 <script src="<c:url value="/static/admin/plugins/jquery-validation/additional-methods.min.js"/>"></script>
-
 <script src="<c:url value="/static/web/js/demo.js"/>"></script>
 <script src="<c:url value="/static/web/js/e-magz.js"/>"></script>
 <script src="<c:url value="/static/custom/js/utils.js"/>"></script>
