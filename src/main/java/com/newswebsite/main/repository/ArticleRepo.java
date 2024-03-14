@@ -27,7 +27,13 @@ public interface ArticleRepo extends JpaRepository<Article, Long> {
 
     Page<Article> findAll(Pageable pageable);
 
-    Page<Article> findAllByFeatured(boolean featured, Pageable pageable);
+    @Query(value = "SELECT DISTINCT a FROM Article a LEFT JOIN FETCH a.category c WHERE a.featured=:featured AND a.state.code=:stateCode ORDER BY a.publishedAt DESC",
+            countQuery = "SELECT COUNT( DISTINCT a) FROM Article a LEFT JOIN a.category c WHERE a.featured=:featured AND a.state.code=:stateCode")
+    Page<Article> findAllPublishedAndFeaturedArticles(@Param("featured") boolean featured, @Param("stateCode") String stateCode, Pageable pageable);
+
+    @Query(value = "SELECT DISTINCT a FROM Article a LEFT JOIN FETCH a.category WHERE a.state.code=:stateCode ORDER BY a.publishedAt DESC ",
+            countQuery = "SELECT COUNT(DISTINCT a) FROM Article a LEFT JOIN a.category WHERE a.state.code=:stateCode")
+    Page<Article> findAllLatestArticles(@Param("stateCode") String stateCode, Pageable pageable);
 
     Page<Article> findAllByStateCode(String stateCode, Pageable pageable);
 
