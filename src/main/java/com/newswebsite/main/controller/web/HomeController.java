@@ -1,6 +1,8 @@
 package com.newswebsite.main.controller.web;
 
-import com.newswebsite.main.dto.ArticleDTO;
+import com.newswebsite.main.dto.response.FeaturedArticleResponse;
+import com.newswebsite.main.dto.response.LatestArticleResponse;
+import com.newswebsite.main.dto.response.PopularArticleResponse;
 import com.newswebsite.main.service.articleservice.IArticleReader;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,11 +29,11 @@ public class HomeController {
         String viewName = "web/home";
         ModelAndView view = new ModelAndView(viewName);
         Pageable pageable = new PageRequest(0, 10, Sort.Direction.DESC, "traffic");
-        List<ArticleDTO> popularArticles = articleReader.getAllPublished(pageable).getContent();
-        List<ArticleDTO> featuredArticles = articleReader.getFeaturedArticles(new PageRequest(0, 3)).getContent();
-        List<ArticleDTO> latestArticles = articleReader.getLatestArticles(new PageRequest(0, 10)).getContent();
-        view.addObject("featured", featuredArticles);
+        List<PopularArticleResponse> popularArticles = articleReader.getAllPublished(pageable).getContent();
+        List<FeaturedArticleResponse> featuredArticles = articleReader.getFeaturedArticles(new PageRequest(0, 99)).getContent();
+        List<LatestArticleResponse> latestArticles = articleReader.getLatestArticles(new PageRequest(0, 10)).getContent();
         view.addObject("latest", latestArticles);
+        view.addObject("featured", featuredArticles);
         view.addObject("popularArticles", popularArticles);
         return view;
     }
