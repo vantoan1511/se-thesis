@@ -36,25 +36,30 @@ public class ArticleWriter implements IArticleWriter {
     private final CategoryRepo categoryRepo;
     private final StateRepo stateRepo;
     private final MessageSource msg;
-    private final ModelMapper mapper = new ModelMapper();
+    private final ModelMapper mapper;
 
     private IStateService stateService;
 
     @Autowired
-    public ArticleWriter(ArticleRepo articleRepo,
-                         CategoryRepo categoryRepo,
-                         MessageSource msg,
-                         StateRepo stateRepo) {
+    public ArticleWriter(
+            ArticleRepo articleRepo,
+            CategoryRepo categoryRepo,
+            MessageSource msg,
+            StateRepo stateRepo,
+            ModelMapper mapper
+    ) {
         this.articleRepo = articleRepo;
         this.categoryRepo = categoryRepo;
         this.msg = msg;
         this.stateRepo = stateRepo;
+        this.mapper = mapper;
     }
 
     @Override
     public void increaseTraffic(String alias) {
         Article article = articleRepo.findByAlias(alias);
-        if (article == null) throw new ArticleNotFoundException("Không tìm thấy bài viết có alias " + alias);
+        if (article == null)
+            throw new ArticleNotFoundException("Không tìm thấy bài viết có alias [%s] ".formatted(alias));
         long currentTraffic = article.getTraffic();
         currentTraffic += 1;
         article.setTraffic(currentTraffic);
@@ -157,7 +162,7 @@ public class ArticleWriter implements IArticleWriter {
     @Override
     public void setFeatured(long id, boolean featured) {
         Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException("Không tìm thấy bài viết id " + id);
+        if (article == null) throw new ArticleNotFoundException("Không tìm thấy bài viết với id [%s]".formatted(id));
         article.setFeatured(featured);
         articleRepo.save(article);
     }
@@ -233,7 +238,7 @@ public class ArticleWriter implements IArticleWriter {
 
     private Article getArticleFromId(long id) {
         Article article = articleRepo.findOne(id);
-        if (article == null) throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null));
+        if (article == null) throw new ArticleNotFoundException("Không tìm thấy bài viết có id [%s]".formatted(id));
         return article;
     }
 

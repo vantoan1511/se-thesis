@@ -60,7 +60,7 @@ public class ArticleController {
         Sort.Direction direction = Sort.Direction.fromString(order);
         Pageable pageable = new PageRequest(page - 1, limit, new Sort(direction, by));
 
-        Page<ArticleDTO> contents = null;
+        Page<?> contents = null;
 
         if (authorities.contains(Role.ADMIN.name())) {
             switch (tab) {

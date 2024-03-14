@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller(value = "WebArticleController")
-@RequestMapping("/{alias}")
+@RequestMapping("/articles/{alias}")
 public class ArticleController {
 
     private final IArticleReader articleReader;
@@ -30,8 +30,10 @@ public class ArticleController {
     }
 
     @GetMapping
-    public ModelAndView getDetails(@PathVariable("alias") String alias,
-                                   @RequestParam(value = "previewMode", required = false) boolean previewMode) {
+    public ModelAndView getDetails(
+            @PathVariable("alias") String alias,
+            @RequestParam(value = "previewMode", required = false) boolean previewMode
+    ) {
         String viewName = "web/details";
         List<String> roles = SecurityUtil.getAuthorities();
 
