@@ -1,6 +1,9 @@
 package com.newswebsite.main.service.articleservice;
 
 import com.newswebsite.main.dto.ArticleDTO;
+import com.newswebsite.main.dto.response.FeaturedArticleResponse;
+import com.newswebsite.main.dto.response.LatestArticleResponse;
+import com.newswebsite.main.dto.response.PopularArticleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,15 +19,15 @@ public interface IArticleReader {
 
     Page<ArticleDTO> search(String q, List<Long> categoryIds, Date startDate, Pageable pageable);
 
-    Page<ArticleDTO> getLatestArticles(Pageable pageable);
+    Page<LatestArticleResponse> getLatestArticles(Pageable pageable);
 
     Page<ArticleDTO> getAll(Pageable pageable);
 
-    Page<ArticleDTO> getFeaturedArticles(Pageable pageable);
+    Page<FeaturedArticleResponse> getFeaturedArticles(Pageable pageable);
 
     Page<ArticleDTO> getPendingArticles(Pageable pageable);
 
-    Page<ArticleDTO> getAllPublished(Pageable pageable);
+    Page<PopularArticleResponse> getAllPublished(Pageable pageable);
 
     Page<ArticleDTO> getAllPublishedByCategory(String categoryAlias, Pageable pageable);
 
