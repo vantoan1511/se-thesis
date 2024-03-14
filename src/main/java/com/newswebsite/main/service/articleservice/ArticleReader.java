@@ -1,9 +1,13 @@
 package com.newswebsite.main.service.articleservice;
 
 import com.newswebsite.main.dto.ArticleDTO;
+import com.newswebsite.main.dto.response.FeaturedArticleResponse;
+import com.newswebsite.main.dto.response.LatestArticleResponse;
+import com.newswebsite.main.dto.response.PopularArticleResponse;
 import com.newswebsite.main.entity.Article;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
+import com.newswebsite.main.mapper.ArticleMapper;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.ArticleRepo;
 import com.newswebsite.main.repository.CategoryRepo;
@@ -26,12 +30,21 @@ public class ArticleReader implements IArticleReader {
 
     private final CollectionMapper mapper;
 
+    private final ArticleMapper articleMapper;
+
     @Autowired
-    public ArticleReader(ArticleRepo articleRepo, CategoryRepo categoryRepo, MessageSource msg, CollectionMapper mapper) {
+    public ArticleReader(
+            ArticleRepo articleRepo,
+            CategoryRepo categoryRepo,
+            MessageSource msg,
+            CollectionMapper mapper,
+            ArticleMapper articleMapper
+    ) {
         this.articleRepo = articleRepo;
         this.categoryRepo = categoryRepo;
         this.msg = msg;
         this.mapper = mapper;
+        this.articleMapper = articleMapper;
     }
 
     @Override
@@ -64,9 +77,9 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public Page<ArticleDTO> getLatestArticles(Pageable pageable) {
-        return articleRepo.findAllByStateCode(ArticleState.PUBLISHED.name(), pageable)
-                .map(item -> mapper.map(item, ArticleDTO.class));
+    public Page<LatestArticleResponse> getLatestArticles(Pageable pageable) {
+        return articleRepo.findAllLatestArticles(ArticleState.PUBLISHED.name(), pageable)
+                .map(item -> mapper.map(item, LatestArticleResponse.class));
     }
 
     @Override
@@ -76,26 +89,26 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public Page<ArticleDTO> getFeaturedArticles(Pageable pageable) {
-        return articleRepo.findAllByFeatured(true, pageable)
-                .map(item -> mapper.map(item, ArticleDTO.class));
+    public Page<FeaturedArticleResponse> getFeaturedArticles(Pageable pageable) {
+        return articleRepo.findAllPublishedAndFeaturedArticles(true, ArticleState.PUBLISHED.name(), pageable)
+                .map(article -> mapper.map(article, FeaturedArticleResponse.class));
     }
 
     @Override
     public Page<ArticleDTO> getPendingArticles(Pageable pageable) {
-        return articleRepo.findAllByStateCode(ArticleState.PENDING.name(), pageable)
+        return articleRepo.findAllLatestArticles(ArticleState.PENDING.name(), pageable)
                 .map(item -> mapper.map(item, ArticleDTO.class));
     }
 
     @Override
-    public Page<ArticleDTO> getAllPublished(Pageable pageable) {
+    public Page<PopularArticleResponse> getAllPublished(Pageable pageable) {
         return articleRepo.findAllByStateCode(ArticleState.PUBLISHED.name(), pageable)
-                .map(item -> mapper.map(item, ArticleDTO.class));
+                .map(a -> mapper.map(a, PopularArticleResponse.class));
     }
 
     @Override
     public Page<ArticleDTO> getTrashArticles(Pageable pageable) {
-        return articleRepo.findAllByStateCode(ArticleState.TRASH.name(), pageable)
+        return articleRepo.findAllLatestArticles(ArticleState.TRASH.name(), pageable)
                 .map(item -> mapper.map(item, ArticleDTO.class));
     }
 
