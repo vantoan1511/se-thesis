@@ -95,7 +95,7 @@ public class ArticleController {
     @GetMapping({"/new", "/{id}"})
     public ModelAndView modifyArticle(@PathVariable(name = "id", required = false) Long id,
                                       @RequestParam(value = "previewMode", required = false) boolean previewMode) {
-        String viewName = previewMode ? "web/details" : "admin/articleDetails";
+        String viewName = previewMode ? "web/articleDetails" : "admin/articleDetails";
         List<String> roles = SecurityUtil.getAuthorities();
 
         ArticleDTO articleDTO = id == null ? new ArticleDTO() : articleReader.getById(id);

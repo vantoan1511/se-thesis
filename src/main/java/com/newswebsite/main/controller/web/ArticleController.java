@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller(value = "WebArticleController")
-@RequestMapping("/articles/{alias}")
+@RequestMapping("/{alias}")
 public class ArticleController {
 
     private final IArticleReader articleReader;
@@ -34,7 +34,7 @@ public class ArticleController {
             @PathVariable("alias") String alias,
             @RequestParam(value = "previewMode", required = false) boolean previewMode
     ) {
-        String viewName = "web/details";
+        String viewName = "web/articleDetails";
         List<String> roles = SecurityUtil.getAuthorities();
 
         ArticleDTO articleDTO = (previewMode && (roles.contains(Role.WRITER.name()) || roles.contains(Role.ADMIN.name()))) ?

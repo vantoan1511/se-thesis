@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ include file="../../../common/taglib.jsp" %>
+<%@ include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +10,7 @@
 <section class="single">
     <div class="container">
         <div class="row">
-
             <%@ include file="../components/web/recent.jsp" %>
-
             <div class="col-md-8">
                 <ol class="breadcrumb">
                     <li><a href="#">Trang chủ</a></li>
