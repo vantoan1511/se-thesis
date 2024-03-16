@@ -14,7 +14,6 @@ public interface CategoryRepo extends JpaRepository<Category, Long> {
     @Query("SELECT c, p FROM Category c LEFT JOIN c.parent p WHERE c.alias = :alias")
     Category findByAlias(@Param("alias") String alias);
 
-    @Query("SELECT c FROM Category c WHERE c.parent is NULL")
     List<Category> findAll();
 
     Page<Category> findAll(Pageable pageable);
