@@ -30,7 +30,7 @@ public class CategoryController {
     @GetMapping("/{categoryAlias}")
     public String getCategorizedArticles(@PathVariable("categoryAlias") String categoryAlias,
                                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                         @RequestParam(value = "size", required = false, defaultValue = "2") int size,
+                                         @RequestParam(value = "size", required = false, defaultValue = "10") int size,
                                          Model model) {
         Pageable pageable = new PageRequest(page - 1, size, Sort.Direction.DESC, "publishedAt");
         model.addAttribute("articles", articleReader.getAllPublishedByCategory(categoryAlias, pageable));
