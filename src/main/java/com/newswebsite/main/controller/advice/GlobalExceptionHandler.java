@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
     private final String DEFAULT_ADMIN_ERROR_VIEW = "admin/404";
     private final String DEFAULT_WEB_ERROR_VIEW = "web/404";
 
-    @ExceptionHandler(value = Exception.class)
+    //@ExceptionHandler(value = Exception.class)
     public ModelAndView defaultErrorHandler(Exception ex, HttpServletRequest req) throws Exception {
         if (AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class) != null) {
             throw ex;
