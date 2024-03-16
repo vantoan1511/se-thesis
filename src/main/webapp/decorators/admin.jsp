@@ -73,6 +73,5 @@
 <script src="<c:url value="/static/admin/plugins/bootstrap-switch/js/bootstrap-switch.min.js"/>"></script>
 <script src="<c:url value="/static/custom/js/utils.js"/>"></script>
 <script src="<c:url value="/static/custom/js/main.js"/>"></script>
-<script src="<c:url value="/static/niceselect/js/nice-select2.js"/>"></script>
 </body>
 </html>

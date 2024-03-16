@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ include file="../../../common/taglib.jsp" %>
-
-
+<%@ include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +54,7 @@
                                     <p>${article.description}</p>
                                     <footer>
                                         <a class="love"><i class="ion-eye"></i>
-                                        <div>${article.traffic}</div>
+                                            <div>${article.traffic}</div>
                                         </a>
                                         <a class="btn btn-primary more" href="/${article.alias}">
                                             <div>Đọc tiếp</div>

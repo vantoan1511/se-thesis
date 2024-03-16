@@ -4,7 +4,6 @@ $(function () {
     $previewThumbnailBtn.click(e => previewThumbnail(e));
 
     ckeditor();
-    niceSelectFunc();
     uploadImageFunc();
     bootstrapSwitchFunc();
     adminImageOptionsFunc();
@@ -74,10 +73,6 @@ function adminImageOptionsFunc() {
 
 function bootstrapSwitchFunc() {
     $('#featured').bootstrapSwitch();
-}
-
-function niceSelectFunc() {
-    NiceSelect.bind(document.getElementById("categoryCode"));
 }
 
 function ckeditor() {

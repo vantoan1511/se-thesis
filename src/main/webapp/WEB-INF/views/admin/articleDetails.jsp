@@ -99,7 +99,7 @@
                                     <div class="form-group">
                                         <label for="categoryCode">Chuyên mục</label>
                                         <form:select path="categoryAlias" id="categoryCode"
-                                                     cssClass="wide">
+                                                     cssClass="form-control">
                                             <form:option value="" label="--Chọn chuyên mục--"/>
                                             <form:options items="${categories}"/>
                                         </form:select>
