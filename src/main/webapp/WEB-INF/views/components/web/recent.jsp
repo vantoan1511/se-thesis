@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ include file="../../../../common/taglib.jsp"%>
+<%@ include file="/common/taglib.jsp" %>
 
 <div class="col-md-4 sidebar" id="sidebar">
     <aside>
         <div class="aside-body">
             <figure class="ads">
                 <img src="/static/web/images/ad.png">
-                <figcaption>Advertisement</figcaption>
+                <figcaption>Quảng cáo</figcaption>
             </figure>
         </div>
     </aside>
     <aside>
-        <h1 class="aside-title">Recent Post</h1>
-        <div class="aside-body">
+        <h1 class="aside-title">Đã xem gần đây</h1>
+        <%--<div class="aside-body">
             <article class="article-fw">
                 <div class="inner">
                     <figure>
@@ -86,24 +86,7 @@
                     </div>
                 </div>
             </article>
-        </div>
-    </aside>
-    <aside>
-        <div class="aside-body">
-            <form class="newsletter">
-                <div class="icon">
-                    <i class="ion-ios-email-outline"></i>
-                    <h1>Newsletter</h1>
-                </div>
-                <div class="input-group">
-                    <input type="email" class="form-control email" placeholder="Your mail">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary"><i class="ion-paper-airplane"></i></button>
-                    </div>
-                </div>
-                <p>By subscribing you will receive new articles in your email.</p>
-            </form>
-        </div>
+        </div>--%>
     </aside>
 </div>
 
