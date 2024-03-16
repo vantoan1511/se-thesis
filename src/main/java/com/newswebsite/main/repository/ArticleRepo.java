@@ -40,7 +40,7 @@ public interface ArticleRepo extends JpaRepository<Article, Long> {
     Page<Article> findAllByStateCodeNot(String stateCode, Pageable pageable);
 
     @Query("SELECT a FROM Article a INNER JOIN a.category c LEFT JOIN c.parent p " +
-            "WHERE c.alias=:categoryAlias OR p.alias=:categoryAlias")
+            "WHERE (c.alias=:categoryAlias OR p.alias=:categoryAlias) AND a.state.code='PUBLISHED'")
     Page<Article> searchAllPublishedByCategoryAlias(@Param("categoryAlias") String categoryAlias, Pageable pageable);
 
     Page<Article> findAllByCreatedByAndStateCode(String createdBy, String stateCode, Pageable pageable);
