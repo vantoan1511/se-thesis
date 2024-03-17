@@ -18,6 +18,7 @@ public class ReviewDTO extends BaseDTO {
     private Long userId;
     private String userFirstName;
     private String userLastName;
+    private String userAvatarUrl;
     private Long articleId;
     private String articleAlias;
     private Long parentId;

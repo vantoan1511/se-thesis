@@ -13,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Setter
 public class ArticleDTO extends ContentDTO {
+    private Long articleId;
     private String thumbnailUrl;
     private String text;
     private boolean featured;

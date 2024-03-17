@@ -34,7 +34,7 @@ const createReviews = (reviews) => {
         const $item = $('<div>').attr('id', review.id).addClass('item');
         const $user = $('<div>').addClass('user');
         const $figure = $('<figure>');
-        const $img = $('<img>').attr('src', '/static/web/images/img01.jpg');
+        const $img = $('<img>').attr('src', `${review.userAvatarUrl}`).addClass('avatar');
         const $details = $('<div>').addClass('details');
         const $username = $('<h5>').addClass('name').text(`${review.userFirstName} ${review.userLastName}#${review.createdBy}`);
         const $time = $('<div>').addClass('time').text(new Date(review.createdAt).toLocaleDateString('vi-VN', defaultDateFormatOptions));
