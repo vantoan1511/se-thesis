@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService implements IEmailService {
 
-    //@Value("${email.password}")
-    private String PW = System.getenv("EMAIL_PASSWORD");
+    @Value("${email.password}")
+    private String PW;
     @Value("${email.from}")
     private String from;
     @Value("${email.address}")
