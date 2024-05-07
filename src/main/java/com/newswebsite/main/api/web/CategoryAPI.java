@@ -1,6 +1,7 @@
 package com.newswebsite.main.api.web;
 
 import com.newswebsite.main.dto.CategoryDTO;
+import com.newswebsite.main.dto.response.CategoryResponse;
 import com.newswebsite.main.service.categoryservice.ICategoryReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class CategoryAPI {
     }
 
     @GetMapping
-    List<CategoryDTO> getAll() {
-        return categoryReader.getAll();
+    List<CategoryResponse> getCategoriesAsList() {
+        return categoryReader.getAsList();
     }
 }

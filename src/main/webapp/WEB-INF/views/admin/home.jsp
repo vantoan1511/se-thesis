@@ -22,7 +22,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-gradient-success">
                         <div class="inner">
-                            <h3>10</h3>
+                            <h3>${totalArticles}</h3>
                             <p>bài viết</p>
                         </div>
                         <div class="icon">
@@ -42,7 +42,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-info">
                             <div class="inner">
-                                <h3>10</h3>
+                                <h3>${totalUsers}</h3>
                                 <p>người dùng</p>
                             </div>
                             <div class="icon">
@@ -56,7 +56,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-gradient-warning">
                         <div class="inner">
-                            <h3>10</h3>
+                            <h3>${totalCategories}</h3>
                             <p>chuyên mục</p>
                         </div>
                         <div class="icon">
@@ -69,7 +69,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-gradient-gray">
                         <div class="inner">
-                            <h3>10</h3>
+                            <h3>${totalImages}</h3>
                             <p>ảnh</p>
                         </div>
                         <div class="icon">

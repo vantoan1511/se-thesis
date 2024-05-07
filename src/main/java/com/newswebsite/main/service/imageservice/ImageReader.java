@@ -34,4 +34,9 @@ public class ImageReader implements IImageReader {
         return imageRepo.findAllByCreatedBy(author, pageable)
                 .map(item -> mapper.map(item, ImageDTO.class));
     }
+
+    @Override
+    public long countTotalImages() {
+        return imageRepo.count();
+    }
 }

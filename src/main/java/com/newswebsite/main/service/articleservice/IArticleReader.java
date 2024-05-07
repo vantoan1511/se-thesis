@@ -1,9 +1,7 @@
 package com.newswebsite.main.service.articleservice;
 
 import com.newswebsite.main.dto.ArticleDTO;
-import com.newswebsite.main.dto.response.FeaturedArticleResponse;
-import com.newswebsite.main.dto.response.LatestArticleResponse;
-import com.newswebsite.main.dto.response.PopularArticleResponse;
+import com.newswebsite.main.dto.response.ArticleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,21 +11,21 @@ import java.util.List;
 public interface IArticleReader {
     ArticleDTO getById(long id);
 
-    ArticleDTO getByAlias(String alias);
+    ArticleResponse getByAlias(String alias);
 
-    ArticleDTO getPublished(String alias);
+    ArticleResponse getPublishedArticle(String alias);
 
     Page<ArticleDTO> search(String q, List<Long> categoryIds, Date startDate, Pageable pageable);
 
-    Page<LatestArticleResponse> getLatestArticles(Pageable pageable);
+    Page<ArticleResponse> getLatestArticles(Pageable pageable);
 
     Page<ArticleDTO> getAll(Pageable pageable);
 
-    Page<FeaturedArticleResponse> getFeaturedArticles(Pageable pageable);
+    Page<ArticleResponse> getFeaturedArticles(Pageable pageable);
 
     Page<ArticleDTO> getPendingArticles(Pageable pageable);
 
-    Page<PopularArticleResponse> getAllPublished(Pageable pageable);
+    Page<ArticleResponse> getAllPublishedArticles(Pageable pageable);
 
     Page<ArticleDTO> getAllPublishedByCategory(String categoryAlias, Pageable pageable);
 
@@ -39,4 +37,9 @@ public interface IArticleReader {
 
     Page<ArticleDTO> getAllByFeaturedAndAuthor(boolean featured, String author, Pageable pageable);
 
+    Page<ArticleResponse> getAllByStateCode(String stateCode, Pageable pageable);
+
+    Page<ArticleResponse> getAllByFeatured(boolean featured, Pageable pageable);
+
+    long countTotalArticles();
 }

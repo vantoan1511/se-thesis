@@ -47,7 +47,7 @@ public class User implements UserDetails, CredentialsContainer {
     @Column(columnDefinition = "tinyint default 1")
     private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

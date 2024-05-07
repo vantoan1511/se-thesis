@@ -91,7 +91,7 @@
 <script>
     $(function () {
         const $registerBtn = $('.register-btn');
-        $registerBtn.click(e => preloaderEffect(e));
+        /*$registerBtn.click(e => preloaderEffect(e));*/
 
         $('#register-user-form').validate({
             rules: {

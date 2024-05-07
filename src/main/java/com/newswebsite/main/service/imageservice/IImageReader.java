@@ -8,4 +8,6 @@ public interface IImageReader {
     ImageDTO getFile(String alias);
 
     Page<ImageDTO> getFiles(String author, Pageable pageable);
+
+    long countTotalImages();
 }

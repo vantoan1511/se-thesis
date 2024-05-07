@@ -60,7 +60,7 @@ public class UserController {
     @GetMapping("/reviews")
     public String getReviews(@PathVariable("username") String username,
                              @RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "size", defaultValue = "2") int size,
+                             @RequestParam(value = "size", defaultValue = "10") int size,
                              @RequestParam(value = "order", defaultValue = "DESC") String order,
                              @RequestParam(value = "by", defaultValue = "createdAt") String by,
                              Model model) {

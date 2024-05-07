@@ -90,4 +90,9 @@ public class UserReader implements IUserReader {
         page.forEach(item -> item.setPassword(null));
         return page;
     }
+
+    @Override
+    public long countTotalUsers() {
+        return userRepo.count();
+    }
 }

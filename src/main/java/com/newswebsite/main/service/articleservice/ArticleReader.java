@@ -1,16 +1,14 @@
 package com.newswebsite.main.service.articleservice;
 
 import com.newswebsite.main.dto.ArticleDTO;
-import com.newswebsite.main.dto.response.FeaturedArticleResponse;
-import com.newswebsite.main.dto.response.LatestArticleResponse;
-import com.newswebsite.main.dto.response.PopularArticleResponse;
+import com.newswebsite.main.dto.response.ArticleResponse;
+import com.newswebsite.main.dto.response.ArticleWithCategory;
+import com.newswebsite.main.dto.response.ArticleWithCategoryAndState;
 import com.newswebsite.main.entity.Article;
 import com.newswebsite.main.enums.ArticleState;
 import com.newswebsite.main.exception.ArticleNotFoundException;
-import com.newswebsite.main.mapper.ArticleMapper;
 import com.newswebsite.main.mapper.CollectionMapper;
 import com.newswebsite.main.repository.ArticleRepo;
-import com.newswebsite.main.repository.CategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
@@ -24,27 +22,21 @@ import java.util.List;
 public class ArticleReader implements IArticleReader {
     private final ArticleRepo articleRepo;
 
-    private final CategoryRepo categoryRepo;
 
     private final MessageSource msg;
 
     private final CollectionMapper mapper;
 
-    private final ArticleMapper articleMapper;
 
     @Autowired
     public ArticleReader(
             ArticleRepo articleRepo,
-            CategoryRepo categoryRepo,
             MessageSource msg,
-            CollectionMapper mapper,
-            ArticleMapper articleMapper
+            CollectionMapper mapper
     ) {
         this.articleRepo = articleRepo;
-        this.categoryRepo = categoryRepo;
         this.msg = msg;
         this.mapper = mapper;
-        this.articleMapper = articleMapper;
     }
 
     @Override
@@ -55,19 +47,19 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public ArticleDTO getByAlias(String alias) {
+    public ArticleResponse getByAlias(String alias) {
         Article article = articleRepo.findByAlias(alias);
         if (article == null)
             throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null) + alias);
-        return mapper.map(article, ArticleDTO.class);
+        return mapper.map(article, ArticleWithCategoryAndState.class);
     }
 
     @Override
-    public ArticleDTO getPublished(String alias) {
+    public ArticleResponse getPublishedArticle(String alias) {
         Article article = articleRepo.findByAliasAndStateCode(alias, ArticleState.PUBLISHED.name());
         if (article == null)
             throw new ArticleNotFoundException(msg.getMessage("article.not.found", null, null) + alias);
-        return mapper.map(article, ArticleDTO.class);
+        return mapper.map(article, ArticleWithCategory.class);
     }
 
     @Override
@@ -77,9 +69,9 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public Page<LatestArticleResponse> getLatestArticles(Pageable pageable) {
+    public Page<ArticleResponse> getLatestArticles(Pageable pageable) {
         return articleRepo.findAllLatestArticles(ArticleState.PUBLISHED.name(), pageable)
-                .map(item -> mapper.map(item, LatestArticleResponse.class));
+                .map(item -> mapper.map(item, ArticleWithCategory.class));
     }
 
     @Override
@@ -89,9 +81,9 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public Page<FeaturedArticleResponse> getFeaturedArticles(Pageable pageable) {
+    public Page<ArticleResponse> getFeaturedArticles(Pageable pageable) {
         return articleRepo.findAllPublishedAndFeaturedArticles(true, ArticleState.PUBLISHED.name(), pageable)
-                .map(article -> mapper.map(article, FeaturedArticleResponse.class));
+                .map(article -> mapper.map(article, ArticleWithCategory.class));
     }
 
     @Override
@@ -101,9 +93,9 @@ public class ArticleReader implements IArticleReader {
     }
 
     @Override
-    public Page<PopularArticleResponse> getAllPublished(Pageable pageable) {
+    public Page<ArticleResponse> getAllPublishedArticles(Pageable pageable) {
         return articleRepo.findAllByStateCode(ArticleState.PUBLISHED.name(), pageable)
-                .map(a -> mapper.map(a, PopularArticleResponse.class));
+                .map(a -> mapper.map(a, ArticleResponse.class));
     }
 
     @Override
@@ -131,6 +123,23 @@ public class ArticleReader implements IArticleReader {
     public Page<ArticleDTO> getAllByFeaturedAndAuthor(boolean featured, String author, Pageable pageable) {
         return articleRepo.findAllByFeaturedAndCreatedByAndStateCodeNot(featured, author, ArticleState.TRASH.name(), pageable)
                 .map(item -> mapper.map(item, ArticleDTO.class));
+    }
+
+    @Override
+    public Page<ArticleResponse> getAllByStateCode(String stateCode, Pageable pageable) {
+        return articleRepo.findAllByStateCode(stateCode, pageable)
+                .map(article -> mapper.map(article, ArticleWithCategoryAndState.class));
+    }
+
+    @Override
+    public Page<ArticleResponse> getAllByFeatured(boolean featured, Pageable pageable) {
+        return articleRepo.findAllByFeaturedAndStateCode(featured, ArticleState.PUBLISHED.name(), pageable)
+                .map(article -> mapper.map(article, ArticleWithCategoryAndState.class));
+    }
+
+    @Override
+    public long countTotalArticles() {
+        return articleRepo.count();
     }
 
     @Override

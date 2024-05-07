@@ -24,4 +24,6 @@ public interface IUserReader {
     UserProfileResponse getUserByUsername(String username);
 
     Page<UserDTO> getAllUsers(Pageable pageable);
+
+    long countTotalUsers();
 }

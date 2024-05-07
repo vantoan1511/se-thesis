@@ -48,7 +48,7 @@ public class ImageWriter implements IImageWriter {
             File destDir = new File(directory);
             if (!destDir.exists() && destDir.mkdirs()) {
                 file.transferTo(destDir);
-                return new ImageDTO(file.getSize(), Application.BASE_URL.concat("/resources/images/").concat(fileName), directory);
+                return new ImageDTO(file.getSize(), "/resources/images/".concat(fileName), directory);
             }
         }
         return null;

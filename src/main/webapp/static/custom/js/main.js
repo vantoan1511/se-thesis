@@ -1,5 +1,5 @@
 $(function () {
-    //loadCategories()
+    loadCategories()
     const currentPath = location.pathname + location.search
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
@@ -19,6 +19,17 @@ $(function () {
 })
 
 function loadCategories() {
+    const $listCategories = $('#list-categories');
+    $.get('/public/api/v1/categories').then((data) => {
+        data.forEach(category => {
+            let $ul = $('<ul>')
+                .append($('<li>').append($('<a>').attr('href', '/categories/' + category.alias).text(`#${category.title}`)));
+            $listCategories.append($ul)
+        })
+    })
+}
+
+/*function loadCategories() {
     let $listCategories = $('#list-categories');
     $.get('/public/api/v1/categories').then((data) => {
         data.forEach(category => {
@@ -34,7 +45,7 @@ function loadCategories() {
             }
         })
     })
-}
+}*/
 
 const scrollToTop = () => {
     if ($(window).scrollTop() > 20) {

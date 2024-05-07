@@ -1,6 +1,5 @@
 package com.newswebsite.main.controller.admin;
 
-import com.newswebsite.main.dto.ProfileRequest;
 import com.newswebsite.main.dto.UserDTO;
 import com.newswebsite.main.enums.Role;
 import com.newswebsite.main.security.SecurityUtil;

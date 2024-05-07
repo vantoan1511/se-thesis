@@ -51,24 +51,24 @@ public class ArticleController {
     public ModelAndView getListPage(@RequestParam(name = "tab", required = false, defaultValue = "all") String tab,
                                     @RequestParam(name = "page", defaultValue = "1") int page,
                                     @RequestParam(name = "limit", defaultValue = "10") int limit,
-                                    @RequestParam(name = "by", defaultValue = "lastModifiedAt") String by,
+                                    @RequestParam(name = "by", defaultValue = "publishedAt") String by,
                                     @RequestParam(name = "order", defaultValue = "DESC") String order) {
         String viewName = "admin/listArticles";
         String username = SecurityUtil.username();
         List<String> authorities = SecurityUtil.getAuthorities();
 
         Sort.Direction direction = Sort.Direction.fromString(order);
-        Pageable pageable = new PageRequest(page - 1, limit, new Sort(direction, by));
+        Pageable pageable = new PageRequest(page - 1, limit, direction, by);
 
         Page<?> contents = null;
 
         if (authorities.contains(Role.ADMIN.name())) {
             switch (tab) {
                 case "all" -> contents = articleReader.getNotTrashArticles(pageable);
-                case "published" -> contents = articleReader.getAllPublished(pageable);
-                case "pending" -> contents = articleReader.getPendingArticles(pageable);
-                case "trash" -> contents = articleReader.getTrashArticles(pageable);
-                case "featured" -> contents = articleReader.getFeaturedArticles(pageable);
+                case "published" -> contents = articleReader.getAllByStateCode(ArticleState.PUBLISHED.name(), pageable);
+                case "pending" -> contents = articleReader.getAllByStateCode(ArticleState.PENDING.name(), pageable);
+                case "trash" -> contents = articleReader.getAllByStateCode(ArticleState.TRASH.name(), pageable);
+                case "featured" -> contents = articleReader.getAllByFeatured(true, pageable);
                 default -> viewName = "admin/404";
             }
         } else {
