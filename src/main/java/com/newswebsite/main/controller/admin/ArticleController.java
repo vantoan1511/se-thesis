@@ -103,8 +103,8 @@ public class ArticleController {
         ModelAndView mav = new ModelAndView(viewName);
         mav.addObject("article", articleDTO);
         mav.addObject("categories", categoryReader.getAllAsMap());
-        /*mav.addObject("uploadedImages",
-                imageReader.getFiles(SecurityUtil.username(), new PageRequest(0, 99, Sort.Direction.DESC, "createdAt")));*/
+        mav.addObject("uploadedImages",
+                imageReader.getFiles(SecurityUtil.username(), new PageRequest(0, 99, Sort.Direction.DESC, "createdAt")));
         return mav;
     }
 }
