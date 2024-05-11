@@ -138,4 +138,11 @@ public class ArticleAPI {
         articleWriter.deleteArticles(ids);
         return ResponseEntity.ok(new SuccessResponse(new Date(), HttpStatus.OK, "Đã xóa thành công", ids));
     }
+
+    @DeleteMapping("/{id}")
+    public Object deleteArticle(@PathVariable("id") Long id) {
+        articleWriter.delete(id);
+        return ResponseEntity.ok(new SuccessResponse(new Date(), HttpStatus.OK, "Đã xóa thành công", id));
+    }
+
 }
